@@ -2,7 +2,7 @@
 
 
 This our group for making the board game. 
-//USE a # to show it is completed
+//USE a # to show it is completed /n
 Things we need to do for making the test files:
 - mostArc
 - mostPub
