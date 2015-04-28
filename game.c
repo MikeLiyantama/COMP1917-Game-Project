@@ -21,7 +21,7 @@ action decideAction (Game g) {
     action nextAction;
     nextAction.actionCode = PASS;
     
-    return NULL;
+    return newAction;
 }
 
 //sadewrwfdgdsfdwdew
