@@ -4,7 +4,7 @@
 This our group for making the board game. 
 //USE a # to show it is completed
 
-
+NOTE: If you use GitHub client for Windows/Mac OS, please sync first before and after you edit the code.
 
 Things we need to do for making the test files:
 - mostArc
