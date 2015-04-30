@@ -33,12 +33,27 @@ knowledgeIsland =  newGame (discipline[], dice[]);
 action player;
 player.actionCode = 1;
 player.destination = [L,L,R,R,B];
-player.disciplineFrom;  // used for the retrain students action
-player.disciplineTo;
+// used for the retrain students action
+player.disciplineFrom = STUDENT_THD;  
+player.disciplineTo = STUDENT_THD;
+
+
+//To test if placing UNIS works
 assert(isLegalAction (knowledgeIsland, player) == TRUE);
 makeAction (knowledgeIsland, Player);
 assert(isLegalAction (knowledgeIsland, player) == FALSE);
 
 
+player.actioncode = 7
+player.disciplineFrom = STUDENT_THD;  
+player.disciplineTo = STUDENT_M;
+assert(isLegalAction (knowledgeIsland, player) == TRUE);
+
+throwDice (knowledgeIsland, diceScore);
+
+
+
 disposeGame(knowledgeIsland);
 assert(knowledgeIsland == NULL);
+
+printf("All test passed, you are Awesome!");
