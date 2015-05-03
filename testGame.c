@@ -1,8 +1,10 @@
 // test_game.h
-//Created by Micheal, Jospher Lauchlan and Inura
+//Created by Micheal, Josfer Lauchlan and Inura
 //For COMP1917 to test whether the game.c of another group will work with our AI
 //Below are the interfaces we will use to make the test steps
 // action codes
+
+// aren't these codes meant to be #defined? (Josfer)
 // PASS                 0
 // BUILD_CAMPUS         1
 // BUILD_GO8            2
@@ -29,6 +31,16 @@ Game * knowledgeIsland;
 While(assert (knowledgeIsland =! NULL)){
 knowledgeIsland =  newGame (discipline[], dice[]);
 }
+
+//To test that the initial turn number is correct
+int turnNumber = 0;
+turnNumber = getTurnNumber(knowledgeIsland);
+assert (turnNumber == -1);
+
+//To test that the starting player is correct
+int whoseTurn = 0;
+whoseTurn = getWhoseTurn(knowledgeIsland);
+assert (whoseTurn == 1);
 
 action player;
 player.actionCode = 1;
