@@ -13,6 +13,7 @@
 #define PLAYER_TWO 2
 #define PLAYER_THREE 3
 #define START_TURN_NUMBER -1
+#define RETRAIN_COST 3
 
 typedef unsigned long long numberof;
 typedef struct _game {
@@ -37,6 +38,10 @@ typedef struct _player {
     numberof MJ = 0;
     numberof MTV = 0;	
     numberof M$ = 0;
-    numberof retrain_BPS
+    numberof retrain_BPS = RETRAIN_COST;
+    numberof retrain_B? = RETRAIN_COST;
+    numberof retrain_MJ = RETRAIN_COST;
+    numberof retrain_MTV = RETRAIN_COST;
+    numberof retrain_M$ = RETRAIN_COST;
 } player;
 
