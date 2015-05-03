@@ -12,6 +12,9 @@
 #define PLAYER_ONE 1
 #define PLAYER_TWO 2
 #define PLAYER_THREE 3
+#define NO_CAMPUS 0
+#define CAMPUS 1
+#define GO8 2
 #define START_TURN_NUMBER -1
 #define RETRAIN_COST 3
 
@@ -20,6 +23,9 @@ typedef struct _game {
     player one;
     player two;
     player three;
+    gameboard[53] = {0};
+    playercampus[53] = {NO_PLAYER}
+    playercampustype[53] = {0}
     unsigned char mostArc = NO_PLAYER;
     unsigned char mostPub = NO_PLAYER;
     long long currentTurn = START_TURN_NUMBER;
