@@ -20,16 +20,15 @@
 
 typedef unsigned long long numberof;
 typedef struct _game {
-    player one;
-    player two;
-    player three;
+    player playerone;
+    player playertwo;
+    player playerthree;
     gameboard[53] = {0};
     playercampus[53] = {NO_PLAYER}
     playercampustype[53] = {0}
     unsigned char mostArc = NO_PLAYER;
     unsigned char mostPub = NO_PLAYER;
     long long currentTurn = START_TURN_NUMBER;
-
 } Game;
 typedef struct _player {
     numberof KPI = 0;
