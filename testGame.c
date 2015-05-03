@@ -26,7 +26,7 @@
 // FALSE                0
 
 
-Written by Inura De Zoysa
+//Written by Inura De Zoysa
 Game * knowledgeIsland;
 While(assert (knowledgeIsland =! NULL)){
 knowledgeIsland =  newGame (discipline[], dice[]);
