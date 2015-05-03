@@ -1,11 +1,6 @@
-/*
- *  Mr Pass.  Brain the size of a planet!
- *
- *  Proundly Created by Richard Buckland
- *  Share Freely Creative Commons SA-BY-NC 3.0.
- *
- */
-
+//Created by Josfer, Micheal, Lachlan and Inura
+//For COMP1917 Knowledge Island board game 2015 edition
+//To simulate a board game with instructions included
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -13,22 +8,23 @@
 #include "Game.h"
 #include "mechanicalTurk.h"
 
+#define NO_PLAYER 0
+#define PLAYER_ONE 1
+#define PLAYER_TWO 2
+#define PLAYER_THREE 3
+#define START_TURN_NUMBER -1
+
 typedef struct _game {
-    mostArc
-    mostPub
-    KPI of each player
-    currentTurn
-    whoseTurn
-    currentDice
-    number of Arc
-    number of pubs
-    number of campuses
-    number of g08s
-    number of ips
-    number of students per player
+    player one;
+    player two;
+    player three;
+    unsigned char mostArc = NO_PLAYER;
+    unsigned char mostPub = NO_PLAYER;
+    long long currentTurn = START_TURN_NUMBER;
+
 } Game;
 typedef struct _player {
-KPI of each player
+    unsigned int KPI = 0;
     unsigned char Arc = 2;
     unsigned char pubs = 0;
     unsigned char campuses = 2;
@@ -41,13 +37,5 @@ KPI of each player
     unsigned int MJ = 0;
     unsigned int MTV = 0;	
     unsigned int M$ = 0;
-}
+} player;
 
-action decideAction (Game g) {
-    
-    
-    action nextAction;
-    nextAction.actionCode = PASS;
-    
-    return nextAction;
-}
