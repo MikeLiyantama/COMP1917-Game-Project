@@ -14,6 +14,7 @@
 #define PLAYER_THREE 3
 #define START_TURN_NUMBER -1
 
+typedef unsigned long long numberof;
 typedef struct _game {
     player one;
     player two;
@@ -24,18 +25,18 @@ typedef struct _game {
 
 } Game;
 typedef struct _player {
-    unsigned int KPI = 0;
-    unsigned char Arc = 2;
-    unsigned char pubs = 0;
-    unsigned char campuses = 2;
-    unsigned char g08s = 0;
-    unsigned int ips = 0;
-    unsigned long long int THD = 0;
-    unsigned int ThD = 0;
-    unsigned int BPS = 0;	
-    unsigned int B? = 0;
-    unsigned int MJ = 0;
-    unsigned int MTV = 0;	
-    unsigned int M$ = 0;
+    numberof KPI = 0;
+    numberof Arc = 2;
+    numberof pubs = 0;
+    numberof campuses = 2;
+    numberof g08s = 0;
+    numberof ips = 0;
+    numberof ThD = 0;
+    numberof BPS = 0;	
+    numberof B? = 0;
+    numberof MJ = 0;
+    numberof MTV = 0;	
+    numberof M$ = 0;
+    numberof retrain_BPS
 } player;
 
