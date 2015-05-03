@@ -28,24 +28,19 @@ typedef struct _game {
     number of students per player
 } Game;
 typedef struct _player {
-    mostArc
-mostPub
 KPI of each player
-currentTurn
-whoseTurn
-currentDice
-number of Arc
-number of pubs
-number of campuses
-number of g08s
-number of ips
-    int THD = 0;
-    int ThD = 0;
-    int BPS = 0;	
-    int B? = 0;
-    int MJ = 0;
-    int MTV = 0;	
-    int M$ = 0;
+    unsigned char Arc = 2;
+    unsigned char pubs = 0;
+    unsigned char campuses = 2;
+    unsigned char g08s = 0;
+    unsigned int ips = 0;
+    unsigned long long int THD = 0;
+    unsigned int ThD = 0;
+    unsigned int BPS = 0;	
+    unsigned int B? = 0;
+    unsigned int MJ = 0;
+    unsigned int MTV = 0;	
+    unsigned int M$ = 0;
 }
 
 action decideAction (Game g) {
