@@ -1,8 +1,8 @@
 //Created by Josfer, Micheal, Lachlan and Inura
 //For COMP1917 Knowledge Island board game 2015 edition
 //To simulate a board game with instructions included
-//B? has been changed to Bq to prevent the special property of ? from happening
-//Similarly M$ has been changed to MS
+//B? has been changed to BQN to prevent the special property of ? from happening
+//Similarly M$ has been changed to MMONEY
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -43,19 +43,19 @@ typedef struct _player {
     numberof ips = 0;
     numberof ThD = 0;
     numberof BPS = 0;	
-    numberof Bq = 0;
+    numberof BQN = 0;
     numberof MJ = 0;
     numberof MTV = 0;	
-    numberof MS = 0;
+    numberof MMONEY = 0;
     numberof retrain_BPS = RETRAIN_COST;
-    numberof retrain_Bq = RETRAIN_COST;
+    numberof retrain_BQN = RETRAIN_COST;
     numberof retrain_MJ = RETRAIN_COST;
     numberof retrain_MTV = RETRAIN_COST;
-    numberof retrain_MS = RETRAIN_COST;
+    numberof retrain_MMONEY = RETRAIN_COST;
 } player;
 
 //These are the prototypes for the functions that we have made for the project
-void changeStudents (Game g, int ThD , int BPS , int Bq ,int MJ,int MTV,int MS);
+void changeStudents (Game g, int ThD , int BPS , int BQN ,int MJ,int MTV,int MMONEY);
 void changeKPI (Game g, int KPI);
 void grandExchange(Game g, action a);
 
@@ -167,9 +167,91 @@ int getPublications (Game g, int player){
 }
 
 int getStudents (Game g, int player, int discipline){
-    
+    int studentnum = 0;
+    if (player == 1){
+        if (discipline == STUDENT_THD) {
+            studentnum = g.playerone.THD;
+        } else if (discipline == STUDENT_BPS){
+            studentnum = g.playerone.BPS;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerone.BQN;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerone.MJ;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerone.MTV;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerone.MMONEY;
+        }
+    } else if (player == 2){
+        if (discipline == STUDENT_THD) {
+            studentnum = g.playertwo.THD;
+        } else if (discipline == STUDENT_BPS){
+            studentnum = g.playertwo.BPS;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playertwo.BQN;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playertwo.MJ;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playertwo.MTV;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playertwo.MMONEY;
+        }
+    } else if (player == 3){
+        if (discipline == STUDENT_THD) {
+            studentnum = g.playerthree.THD;
+        } else if (discipline == STUDENT_BPS){
+            studentnum = g.playerthree.BPS;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerthree.BQN;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerthree.MJ;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerthree.MTV;
+        } else if (discipline == STUDENT_BPS) {
+            studentnum = g.playerthree.MMONEY;
+        }
+    }    
+    return studentnum;
 }
 
 int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
-    
+    int exchangeRate = 0;
+    if (player == 1){
+        if (disciplineFrom == STUDENT_BPS){
+            exchangeRate = g.playerone.retrain_BPS;
+        } else if (disciplineFrom == STUDENT_BQN) {
+            exchangeRate = g.playerone.retrain_BQN;
+        } else if (disciplineFrom == STUDENT_MJ) {
+            exchangeRate = g.playerone.retrain_MJ;
+        } else if (disciplineFrom == STUDENT_MTV) {
+            exchangeRate = g.playerone.retrain_MTV;
+        } else if (disciplineFrom == STUDENT_MMONEY) {
+            exchangeRate = g.playerone.retrain_MMONEY;
+        }
+    } else if (player == 2) {
+        if (disciplineFrom == STUDENT_BPS){
+            exchangeRate = g.playertwo.retrain_BPS;
+        } else if (disciplineFrom == STUDENT_BQN) {
+            exchangeRate = g.playertwo.retrain_BQN;
+        } else if (disciplineFrom == STUDENT_MJ) {
+            exchangeRate = g.playertwo.retrain_MJ;
+        } else if (disciplineFrom == STUDENT_MTV) {
+            exchangeRate = g.playertwo.retrain_MTV;
+        } else if (disciplineFrom == STUDENT_MMONEY) {
+            exchangeRate = g.playertwo.retrain_MMONEY;
+        }
+    } else if (player == 3) {
+        if (disciplineFrom == STUDENT_BPS){
+           exchangeRate =  g.playerthree.retrain_BPS;
+        } else if (disciplineFrom == STUDENT_BQN) {
+            exchangeRate = g.playerthree.retrain_BQN;
+        } else if (disciplineFrom == STUDENT_MJ) {
+            exchangeRate = g.playerthree.retrain_MJ;
+        } else if (disciplineFrom == STUDENT_MTV) {
+            exchangeRate = g.playerthree.retrain_MTV;
+        } else if (disciplineFrom == STUDENT_MMONEY) {
+            exchangeRate = g.playerthree.retrain_MMONEY;
+        }
+    }
+    return exchangeRate;
 }
