@@ -22,12 +22,14 @@
 
 typedef unsigned long long numberof;
 typedef struct _game {
+    int playerTurn = NO_PLAYER;
     player playerone;
     player playertwo;
     player playerthree;
     gameboard[53] = {0};
     playercampus[53] = {NO_PLAYER}
     playercampustype[53] = {0}
+    numberof GO8 = 0;
     unsigned char mostArc = NO_PLAYER;
     unsigned char mostPub = NO_PLAYER;
     long long currentTurn = START_TURN_NUMBER;
@@ -54,7 +56,8 @@ typedef struct _player {
 
 //These are the prototypes for the functions that we have made for the project
 void changeStudents (Game g, int ThD , int BPS , int Bq ,int MJ,int MTV,int MS);
-void changeKPI
+void changeKPI (Game g, int KPI);
+void grandExchange(Game g, action a);
 
 //These are functions that are part of the prototype provided in game.h
 //They are need to have the same inputs and out puts
@@ -80,17 +83,21 @@ void makeAction (Game g, action a){
         changeStudents(g, 0, -1, -1, -1, -1, 0);
         changeKPI(g, 10);
     } else if (a.Actioncode == BUILD_GO8) {
-        
+        //USE up two MJ and 3 MS 
+        changeStudents(g, 0, 0, 0, -2, 0, -3);
+        changeKPI(g, 10);
     } else if (a.Actioncode == OBTAIN_ARC) {
-        
+        changeStudents(g, 0, -1, -1, -1, -1, 0);
+        changeKPI(g, 10);
     } else if (a.Actioncode == START_SPINOFF) {
         //DO Nothing as this is an unexpected output
     } else if (a.Actioncode == OBTAIN_PUBLICATION) {
-        
+        changeStudents(g, 0, 0, 0, -1, -1, -1);
     } else if (a.Actioncode == OBTAIN_IP_PATENT) {
-        
+        changeStudents(g, 0, 0, 0, -1, -1, -1);
+        changeKPI(g, 10);
     } else if (a.Actioncode == RETRAIN_STUDENTS) {
-        
+        grandExchange(g, a);
     }
 
 }
