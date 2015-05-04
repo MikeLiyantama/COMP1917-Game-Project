@@ -29,7 +29,7 @@ typedef struct _game {
     gameboard[53] = {0};
     playercampus[53] = {NO_PLAYER}
     playercampustype[53] = {0}
-    numberof GO8 = 0;
+    numberof GOE = 0;
     unsigned char mostArc = NO_PLAYER;
     unsigned char mostPub = NO_PLAYER;
     long long currentTurn = START_TURN_NUMBER;
@@ -39,7 +39,7 @@ typedef struct _player {
     numberof Arc = 2;
     numberof pubs = 0;
     numberof campuses = 2;
-    numberof g08s = 0;
+    numberof GOEs = 0;
     numberof ips = 0;
     numberof ThD = 0;
     numberof BPS = 0;	
@@ -131,11 +131,11 @@ int getWhoseTurn (Game g){
 }
 
 int getCampus (Game g, path pathToVortex){
-    
+   
 }
 
 int getARC (Game g, path pathToEdge){
-    
+  
 }
 
 int isLegalAction (Game g, action a){
@@ -143,23 +143,59 @@ int isLegalAction (Game g, action a){
 }
 
 int getKPIpoints(Game g, int player){
-    
+    int KPI = 0;
+    if (player == 1) {
+        KPI = g.playerone.KPI;
+    } else if (player == 2) {
+        KPI = g.playertwo.KPI;    
+    } else if (player == 3) {
+        KPI = g.playerthree.KPI;    
+    }    
+    return KPI;
 }
 
 int getARCs (Game g, int player){
-    
+    int Arcs = 0;
+    if (player == 1) {
+        Arcs = g.playerone.Arc;
+    } else if (player == 2) {
+        Arcs = g.playertwo.Arc;    
+    } else if (player == 3) {
+        Arcs = g.playerthree.Arc;    
+    }    
+    return Arcs;
 }
 
 int getGO8s (Game g, int player){
-    
+    int GOE = 0;
+    if (player == 1) {
+        GOE = g.playerone.GOEs;
+    } else if (player == 2) {
+        GOE = g.playertwo.GOEs;    
+    } else if (player == 3) {
+        GOE = g.playerthree.GOEs;    
+    }    
 }
 
 int getCampuses (Game g, int player){
-    
+    if (player == 1) {
+        IP = g.playerone.ips;
+    } else if (player == 2) {
+        IP = g.playertwo.ips;    
+    } else if (player == 3) {
+        IP = g.playerthree.ips;    
+    }    
 }
 
 int getIPs (Game g, int player){
-    
+    int IP = 0;
+    if (player == 1) {
+        IP = g.playerone.ips;
+    } else if (player == 2) {
+        IP = g.playertwo.ips;    
+    } else if (player == 3) {
+        IP = g.playerthree.ips;    
+    }
 }
 
 int getPublications (Game g, int player){
