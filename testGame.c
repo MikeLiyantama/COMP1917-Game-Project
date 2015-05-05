@@ -1,5 +1,5 @@
 // test_game.h
-//Created by Micheal, Josfer Lauchlan and Inura
+//Created by Michael, Josfer Lauchlan and Inura
 //For COMP1917 to test whether the game.c of another group will work with our AI
 //Below are the interfaces we will use to make the test steps
 // action codes
