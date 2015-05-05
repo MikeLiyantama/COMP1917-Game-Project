@@ -130,6 +130,8 @@ int getTurnNumber (Game g){
 }
 
 int getWhoseTurn (Game g){
+    int turn = g.currentTurn;
+    return turn;
     
 }
 
@@ -206,7 +208,15 @@ int getIPs (Game g, int player){
 }
 
 int getPublications (Game g, int player){
-    
+    int pubs = 0;
+    if (player == 1) {
+        pubs = g.playerone.pubs;
+    } else if (player == 2) {
+        pubs = g.playertwo.pubs;    
+    } else if (player == 3) {
+        pubs = g.playerthree.pubs;    
+    }
+    return pubs;    
 }
 
 int getStudents (Game g, int player, int discipline){
