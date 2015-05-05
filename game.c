@@ -22,6 +22,7 @@
 
 typedef unsigned long long numberof;
 typedef struct _game {
+    int turnNumber = START_TURN_NUMBER;
     int playerTurn = NO_PLAYER;
     player playerone;
     player playertwo;
@@ -123,7 +124,9 @@ int getMostPublications(Game g){
 }
 
 int getTurnNumber (Game g){
-    
+    int turnNumber = 0;
+    turnNumber = g.turnNumber;
+    return turnNumber;
 }
 
 int getWhoseTurn (Game g){
