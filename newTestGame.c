@@ -72,6 +72,7 @@ typedef struct _action {
 
 void testGameState0 (Game g);
 void testPlayerState0 (Game g, int playerNumber);
+int rollDice(int request);
 
 int main (int argc, char *argv[]) {
 
@@ -81,7 +82,8 @@ int main (int argc, char *argv[]) {
    Game g = newGame(disciplines, dice);
 
    int diceScore = 0;
-   diceScore = rollDice;
+   int request = 4;
+   diceScore = rollDice(request);
    
    action a;
 
@@ -177,4 +179,11 @@ void testPlayerState0 (Game g, int playerNumber){
    disciplineFrom++;
    }   
 
+}
+
+int rollDice(int request){
+   int value = 0;
+   int diceOutcomes[12]={1,2,3,4,5,6,7,8,9,10,11,12}
+   value = diceOutcomes[request-1];
+   return value;
 }
