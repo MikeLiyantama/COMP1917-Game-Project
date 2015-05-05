@@ -70,6 +70,8 @@ typedef struct _action {
                 STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS }
 #define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
 
+void testGameState0 (Game g);
+void testPlayerState0 (Game g, int playerNumber);
 
 int main (int argc, char *argv[]) {
 
@@ -122,7 +124,7 @@ void testGameState0(Game g){
    }
 }
 
-void testPlayerState (g, playerNumber){
+void testPlayerState0 (Game g, int playerNumber){
 
    int KPIpoints = 0;
    KPIpoints = getKPIpoints();
