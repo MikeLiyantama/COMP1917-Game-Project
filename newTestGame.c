@@ -163,5 +163,18 @@ void testPlayerState0 (Game g, int playerNumber){
    int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
    }
+   
+   int exchangeRate = 0;
+   int disciplineFrom = STUDENT_THD;
+   int disciplineTo = STUDENT_THD;
+   while (disciplineFrom <= STUDENT_MMONEY){
+      while(disciplineTo <= STUDENT_MMONEY){
+         exchangeRate = getExchangeRate(g, playerNumber, disciplineFrom, disciplineTo)
+         assert(exchangeRate == 3);
+         disciplineTo++;
+      }
+   disciplineTo = STUDENT_THD;
+   disciplineFrom++;
+   }   
 
 }
