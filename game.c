@@ -64,7 +64,7 @@ void grandExchange(Game g, action a);
 //They are need to have the same inputs and out puts
 Game newGame (int discipline[], int dice[]){
     Game *g = NULL;
-    while ( g == NULL){
+    while ( g != NULL){
         g = (Game) malloc (sizeof Game);
     }
     return g;
@@ -178,16 +178,19 @@ int getGO8s (Game g, int player){
     } else if (player == 3) {
         GOE = g.playerthree.GOEs;    
     }    
+    return GOE;
 }
 
 int getCampuses (Game g, int player){
+    int campus = 0;
     if (player == 1) {
-        IP = g.playerone.ips;
+        campus = g.playerone.campuses;
     } else if (player == 2) {
-        IP = g.playertwo.ips;    
+        campus = g.playertwo.campuses;    
     } else if (player == 3) {
-        IP = g.playerthree.ips;    
+        campus = g.playerthree.campuses;    
     }    
+    return campus;
 }
 
 int getIPs (Game g, int player){
@@ -199,6 +202,7 @@ int getIPs (Game g, int player){
     } else if (player == 3) {
         IP = g.playerthree.ips;    
     }
+    return IP;
 }
 
 int getPublications (Game g, int player){
