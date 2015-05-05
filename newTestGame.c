@@ -119,19 +119,30 @@ void testGameState0(Game g){
 
 void testPlayerState (g, playerNumber){
 
-   getKPIpoints;
-   getARCs;
-   getG08s;
-   getCampuses;
-   getIPs;
-   getPublications;
+   int KPIpoints = 0;
+   KPIpoints = getKPIpoints();
+   assert(KPIpoints == 0);
    
-   int students[] = {0};
-   int discipline = STUDENT_THD;
-   while (discipline <= STUDENT_MMONEY) {
-      student[discipline] = getStudents(g, playerNumber, discipline);
-      assert (student[discipline] == 0);
-      discipline++;
-   }
+   int ARCS = 0;
+   ARCs = getARCs();
+   assert(ARCs == 0);
+  
+   int GO8s = 0;
+   GO8s = getGO8s();
+   assert(GO8s == 0);
+   
+   int campuses = 0;
+   campuses = getCampuses();
+   assert(campuses == 0);
+  
+   int IPs = 0;
+   IPs = getIPs();
+   assert(IPs == 0);
+   
+   int pub = 0;
+   pub = getPublications();
+   assert(pub == 0);
+   
+   getStudents;
 
 }
