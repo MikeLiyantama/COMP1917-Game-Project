@@ -1,7 +1,7 @@
 testGame.c
 
 #define NUM_UNIS 3
-#define TERRA_NULLIS -1
+#define TERRA_NULLIUS -1
  
 // player ID of each university
 #define NO_ONE 0
@@ -110,7 +110,7 @@ void testGameState0(Game g){
 
    int currentTurn = 0;
    currentTurn = getTurnNumber();
-   assert (currentTurn == TERRA_NULLIS);
+   assert (currentTurn == TERRA_NULLIUS);
 
    while (playerNumber <= 3){
       testPlayerState(g, playerNumber);
