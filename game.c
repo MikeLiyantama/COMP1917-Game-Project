@@ -1,4 +1,4 @@
-//Created by Josfer, Micheal, Lachlan and Inura
+//Created by Josfer, Michael, Lachlan and Inura
 //For COMP1917 Knowledge Island board game 2015 edition
 //To simulate a board game with instructions included
 //B? has been changed to BQN to prevent the special property of ? from happening
@@ -20,6 +20,65 @@
 #define START_TURN_NUMBER -1
 #define RETRAIN_COST 3
 
+#define TRUE 1
+#define FALSE 0
+
+#define NUM_UNIS 3
+
+// player ID of each university
+#define NO_ONE 0
+#define UNI_A 1
+#define UNI_B 2
+#define UNI_C 3
+
+// contents of an ARC
+#define VACANT_ARC 0
+#define ARC_A 1
+#define ARC_B 2
+#define ARC_C 3
+
+// contents of a VERTEX
+#define VACANT_VERTEX 0
+#define CAMPUS_A 1
+#define CAMPUS_B 2
+#define CAMPUS_C 3
+#define GO8_A 4
+#define GO8_B 5
+#define GO8_C 6
+
+// action codes
+#define PASS 0
+#define BUILD_CAMPUS 1
+#define BUILD_GO8 2
+#define OBTAIN_ARC 3
+#define START_SPINOFF 4
+#define OBTAIN_PUBLICATION 5
+#define OBTAIN_IP_PATENT 6
+#define RETRAIN_STUDENTS 7
+
+// disciplines
+#define STUDENT_THD 0
+#define STUDENT_BPS 1
+#define STUDENT_BQN 2
+#define STUDENT_MJ  3
+#define STUDENT_MTV 4
+#define STUDENT_MMONEY 5
+
+#define NUM_REGIONS 19
+#define PATH_LIMIT 150
+
+#define TRUE 1
+#define FALSE 0
+
+typedef struct _action {
+    int actionCode;  // see #defines above
+    path destination; // if the action operates on a vertex or ARC this
+    // specifies *which* vertex or path.  unused
+    // otherwise
+    int disciplineFrom;  // used for the retrain students action
+    int disciplineTo;    // used for the retrain students action
+} action;
+
 typedef unsigned long long numberof;
 typedef struct _game {
     int turnNumber = START_TURN_NUMBER;
@@ -36,6 +95,7 @@ typedef struct _game {
     long long currentTurn = START_TURN_NUMBER;
     
     int pubsCreated = 0; // To count pubs created for getMostPublications
+    int ARCsCreated = 0; // same as above but for ARCs.
 } Game;
 typedef struct _player {
     numberof KPI = 0;
@@ -59,7 +119,9 @@ typedef struct _player {
 
 //These are the prototypes for the functions that we have made for the project
 void changeStudents (Game g, int ThD , int BPS , int BQN ,int MJ,int MTV,int MMONEY);
-void changeKPI (Game g, int KPI);
+void changeKPI (Game g, int KPI){
+    
+};
 void grandExchange(Game g, action a);
 
 //These are functions that are part of the prototype provided in game.h
@@ -92,6 +154,7 @@ void makeAction (Game g, action a){
     } else if (a.Actioncode == OBTAIN_ARC) {
         changeStudents(g, 0, -1, -1, -1, -1, 0);
         changeKPI(g, 10);
+        g.ARCsCreated++;
     } else if (a.Actioncode == START_SPINOFF) {
         //DO Nothing as this is an unexpected output
     } else if (a.Actioncode == OBTAIN_PUBLICATION) {
@@ -114,24 +177,37 @@ int getDiscipline (Game g, int regionID){
     
 }
 
-int getDiceValue (Game g, int regionID){
-    
+int getDiceValue (Game g, int regionID){ //Unfinished
+    g.turnNumber++;
 }
 
-int getMostARCs(Game g){
-    
-}
-
-int getMostPublications(Game g){ //Draft (I believe there has be a shorter way [Michael])
+int getMostARCs(Game g){ //Draft (I believe there has to be a shorter way [Michael])
     int ID = NO_ONE;
-    if(g.pubsCreated>0){
-        if(g.playerone.pubs>g.playertwo.pubs && g.playerone.pubs>g.playerthree.pubs){
+    if(g.ARCsCreated>0){
+        if((g.playerone.Arc > g.playertwo.Arc) && (g.playerone.Arc > g.playerthree.Arc)){
             ID = PLAYER_ONE;
         }
-        else if(g.playertwo.pubs>g.playerone.pubs && g.playertwo.pubs>g.playerthree.pubs){
+        else if((g.playertwo.Arc > g.playerone.Arc) && (g.playertwo.Arc > g.playerthree.Arc)){
             ID = PLAYER_TWO;
         }
-        else if(g.playerone.pubs>g.playertwo.pubs && g.playerone.pubs>g.playerthree.pubs){
+        else if((g.playerone.Arc > g.playertwo.Arc) && (g.playerone.Arc > g.playerthree.Arc)){
+            ID = PLAYER_THREE;
+        }
+    }
+    return ID;
+
+}
+
+int getMostPublications(Game g){ //Draft (I believe there has to be a shorter way [Michael])
+    int ID = NO_ONE;
+    if(g.pubsCreated>0){
+        if((g.playerone.pubs > g.playertwo.pubs) && (g.playerone.pubs > g.playerthree.pubs)){
+            ID = PLAYER_ONE;
+        }
+        else if((g.playertwo.pubs > g.playerone.pubs) && (g.playertwo.pubs > g.playerthree.pubs)){
+            ID = PLAYER_TWO;
+        }
+        else if((g.playerone.pubs > g.playertwo.pubs) && (g.playerone.pubs > g.playerthree.pubs)){
             ID = PLAYER_THREE;
         }
     }
@@ -145,9 +221,22 @@ int getTurnNumber (Game g){
 }
 
 int getWhoseTurn (Game g){
-    int turn = g.currentTurn;
-    return turn;
+    int ID = 0;
+    if(g.turnNumber == -1){
+        ID = NO_ONE;
+    }else if (g.turnNumber % 3 == 0){
+        ID = PLAYER_ONE;
+    }
+    else if (g.turnNumber % 3 == 1){
+        ID = PLAYER_TWO;
+    }
+    else if (g.turnNumber % 3 == 2){
+        ID = PLAYER_THREE;
+    }
     
+    return ID;
+    //int turn = g.currentTurn;
+    //return turn;
 }
 
 int getCampus (Game g, path pathToVortex){
@@ -241,13 +330,13 @@ int getStudents (Game g, int player, int discipline){
             studentnum = g.playerone.THD;
         } else if (discipline == STUDENT_BPS){
             studentnum = g.playerone.BPS;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_BQN) {
             studentnum = g.playerone.BQN;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MJ) {
             studentnum = g.playerone.MJ;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MTV) {
             studentnum = g.playerone.MTV;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MMONEY) {
             studentnum = g.playerone.MMONEY;
         }
     } else if (player == 2){
@@ -255,13 +344,13 @@ int getStudents (Game g, int player, int discipline){
             studentnum = g.playertwo.THD;
         } else if (discipline == STUDENT_BPS){
             studentnum = g.playertwo.BPS;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_BQN) {
             studentnum = g.playertwo.BQN;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MJ) {
             studentnum = g.playertwo.MJ;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MTV) {
             studentnum = g.playertwo.MTV;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MMONEY) {
             studentnum = g.playertwo.MMONEY;
         }
     } else if (player == 3){
@@ -269,13 +358,13 @@ int getStudents (Game g, int player, int discipline){
             studentnum = g.playerthree.THD;
         } else if (discipline == STUDENT_BPS){
             studentnum = g.playerthree.BPS;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_BQN) {
             studentnum = g.playerthree.BQN;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MJ) {
             studentnum = g.playerthree.MJ;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MTV) {
             studentnum = g.playerthree.MTV;
-        } else if (discipline == STUDENT_BPS) {
+        } else if (discipline == STUDENT_MMONEY) {
             studentnum = g.playerthree.MMONEY;
         }
     }    
