@@ -1,7 +1,7 @@
 testGame.c
 
 #define NUM_UNIS 3
-#define TERRA_NULLIUS -1
+#define TERRA_NULLIS -1
  
 // player ID of each university
 #define NO_ONE 0
