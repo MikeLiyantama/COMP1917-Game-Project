@@ -34,6 +34,8 @@ typedef struct _game {
     unsigned char mostArc = NO_PLAYER;
     unsigned char mostPub = NO_PLAYER;
     long long currentTurn = START_TURN_NUMBER;
+    
+    int pubsCreated = 0; // To count pubs created for getMostPublications
 } Game;
 typedef struct _player {
     numberof KPI = 0;
@@ -94,6 +96,7 @@ void makeAction (Game g, action a){
         //DO Nothing as this is an unexpected output
     } else if (a.Actioncode == OBTAIN_PUBLICATION) {
         changeStudents(g, 0, 0, 0, -1, -1, -1);
+        g.pubsCreated++;
     } else if (a.Actioncode == OBTAIN_IP_PATENT) {
         changeStudents(g, 0, 0, 0, -1, -1, -1);
         changeKPI(g, 10);
@@ -119,8 +122,20 @@ int getMostARCs(Game g){
     
 }
 
-int getMostPublications(Game g){
-    
+int getMostPublications(Game g){ //Draft (I believe there has be a shorter way [Michael])
+    int ID = NO_ONE;
+    if(g.pubsCreated>0){
+        if(g.playerone.pubs>g.playertwo.pubs && g.playerone.pubs>g.playerthree.pubs){
+            ID = PLAYER_ONE;
+        }
+        else if(g.playertwo.pubs>g.playerone.pubs && g.playertwo.pubs>g.playerthree.pubs){
+            ID = PLAYER_TWO;
+        }
+        else if(g.playerone.pubs>g.playertwo.pubs && g.playerone.pubs>g.playerthree.pubs){
+            ID = PLAYER_THREE;
+        }
+    }
+    return ID;
 }
 
 int getTurnNumber (Game g){
@@ -189,7 +204,7 @@ int getCampuses (Game g, int player){
         campus = g.playerone.campuses;
     } else if (player == 2) {
         campus = g.playertwo.campuses;    
-    } else if (player == 3) {
+    } else if (player == 3) { 
         campus = g.playerthree.campuses;    
     }    
     return campus;
