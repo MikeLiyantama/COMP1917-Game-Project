@@ -56,7 +56,7 @@ makeAction (knowledgeIsland, Player);
 assert(isLegalAction (knowledgeIsland, player) == FALSE);
 
 
-player.actioncode = 7
+player.actioncode = 7;
 player.disciplineFrom = STUDENT_THD;  
 player.disciplineTo = STUDENT_M;
 assert(isLegalAction (knowledgeIsland, player) == TRUE);
