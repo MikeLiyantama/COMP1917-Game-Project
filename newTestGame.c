@@ -143,6 +143,12 @@ void testPlayerState (g, playerNumber){
    pub = getPublications();
    assert(pub == 0);
    
-   getStudents;
+   int students[] = {0};
+   int discipline = STUDENT_THD;
+   while (discipline <= STUDENT_MMONEY) {
+      student[discipline] = getStudents(g, playerNumber, discipline);
+      assert (student[discipline] == 0);
+      discipline++;
+   }
 
 }
