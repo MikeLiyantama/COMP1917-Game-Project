@@ -125,6 +125,13 @@ void testPlayerState (g, playerNumber){
    getCampuses;
    getIPs;
    getPublications;
-   getStudents;
+   
+   int students[] = {0};
+   int discipline = STUDENT_THD;
+   while (discipline <= STUDENT_MMONEY) {
+      student[discipline] = getStudents(g, playerNumber, discipline);
+      assert (student[discipline] == 0);
+      discipline++;
+   }
 
 }
