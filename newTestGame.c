@@ -90,11 +90,22 @@ void testGameState0(Game g){
    int mostARCs = 0;
    mostARCs = getMostARCs();
    assert(mostARCs == NO_ONE);   
-
+   
+   int whoseTurn = 0;
+   whoseTurn = getWhoseTurn();
+   assert(whoseTurn == NO_ONE);
+   
+   int campus = 0;
+   campus = getCampus();
+   assert(campus == VACANT_VERTEX);
+   
+   int arc = 0;
+   arc = getArc();
+   assert(arc == VACANT_ARC);
+   
    int mostPub = 0;
    mostPub = getMostPublications();
    assert(mostPub == NO_ONE);
-
 
    int currentTurn = 0;
    currentTurn = getTurnNumber();
