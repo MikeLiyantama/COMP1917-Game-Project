@@ -10,19 +10,12 @@
 #include "Game.h"
 #include "mechanicalTurk.h"
 
-#define NO_PLAYER 0
-#define PLAYER_ONE 1
-#define PLAYER_TWO 2
-#define PLAYER_THREE 3
-#define NO_CAMPUS 0
+//NOTE: I have altered the #define to mirrors the ones in game.h
+
 #define CAMPUS 1
 #define GO8 2
 #define START_TURN_NUMBER -1
 #define RETRAIN_COST 3
-
-#define TRUE 1
-#define FALSE 0
-
 #define NUM_UNIS 3
 
 // player ID of each university
@@ -70,6 +63,8 @@
 #define TRUE 1
 #define FALSE 0
 
+#define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
+
 typedef struct _action {
     int actionCode;  // see #defines above
     path destination; // if the action operates on a vertex or ARC this
@@ -82,16 +77,16 @@ typedef struct _action {
 typedef unsigned long long numberof;
 typedef struct _game {
     int turnNumber = START_TURN_NUMBER;
-    int playerTurn = NO_PLAYER;
+    int playerTurn = NO_ONE;
     player playerone;
     player playertwo;
     player playerthree;
     gameboard[53] = {0};
-    playercampus[53] = {NO_PLAYER}
+    playercampus[53] = {NO_ONE}
     playercampustype[53] = {0}
     numberof GOE = 0;
-    unsigned char mostArc = NO_PLAYER;
-    unsigned char mostPub = NO_PLAYER;
+    unsigned char mostArc = NO_ONE;
+    unsigned char mostPub = NO_ONE;
     long long currentTurn = START_TURN_NUMBER;
     
     int pubsCreated = 0; // To count pubs created for getMostPublications
@@ -125,8 +120,15 @@ void changeKPI (Game g, int KPI){
 void grandExchange(Game g, action a);
 
 //These are functions that are part of the prototype provided in game.h
-//They are need to have the same inputs and out puts
+//They are need to have the same inputs and outputs
+
+int dice[] = DEFAULT_DICE;
+int disciplines[] = DEFAULT_DISCIPLINES;
+
 Game newGame (int discipline[], int dice[]){
+    
+    
+    
     Game *g = NULL;
     while ( g != NULL){
         g = (Game) malloc (sizeof Game);
@@ -185,13 +187,13 @@ int getMostARCs(Game g){ //Draft (I believe there has to be a shorter way [Micha
     int ID = NO_ONE;
     if(g.ARCsCreated>0){
         if((g.playerone.Arc > g.playertwo.Arc) && (g.playerone.Arc > g.playerthree.Arc)){
-            ID = PLAYER_ONE;
+            ID = UNI_A;
         }
         else if((g.playertwo.Arc > g.playerone.Arc) && (g.playertwo.Arc > g.playerthree.Arc)){
-            ID = PLAYER_TWO;
+            ID = UNI_B;
         }
         else if((g.playerone.Arc > g.playertwo.Arc) && (g.playerone.Arc > g.playerthree.Arc)){
-            ID = PLAYER_THREE;
+            ID = UNI_C;
         }
     }
     return ID;
@@ -202,13 +204,13 @@ int getMostPublications(Game g){ //Draft (I believe there has to be a shorter wa
     int ID = NO_ONE;
     if(g.pubsCreated>0){
         if((g.playerone.pubs > g.playertwo.pubs) && (g.playerone.pubs > g.playerthree.pubs)){
-            ID = PLAYER_ONE;
+            ID = UNI_A;
         }
         else if((g.playertwo.pubs > g.playerone.pubs) && (g.playertwo.pubs > g.playerthree.pubs)){
-            ID = PLAYER_TWO;
+            ID = UNI_B;
         }
         else if((g.playerone.pubs > g.playertwo.pubs) && (g.playerone.pubs > g.playerthree.pubs)){
-            ID = PLAYER_THREE;
+            ID = UNI_C;
         }
     }
     return ID;
@@ -225,15 +227,14 @@ int getWhoseTurn (Game g){
     if(g.turnNumber == -1){
         ID = NO_ONE;
     }else if (g.turnNumber % 3 == 0){
-        ID = PLAYER_ONE;
+        ID = UNI_A;
     }
     else if (g.turnNumber % 3 == 1){
-        ID = PLAYER_TWO;
+        ID = UNI_B;
     }
     else if (g.turnNumber % 3 == 2){
-        ID = PLAYER_THREE;
+        ID = UNI_C;
     }
-    
     return ID;
     //int turn = g.currentTurn;
     //return turn;
