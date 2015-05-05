@@ -98,7 +98,7 @@ void testGameState0(Game g){
    
    int campus = 0;
    campus = getCampus();
-   assert(campus == VACANT_VERTEX);
+   assert(campus == 2);
    
    int arc = 0;
    arc = getArc();
@@ -122,7 +122,7 @@ void testPlayerState (g, playerNumber){
 
    int KPIpoints = 0;
    KPIpoints = getKPIpoints();
-   assert(KPIpoints == 0);
+   assert(KPIpoints == 20);
    
    int ARCS = 0;
    ARCs = getARCs();
@@ -134,7 +134,7 @@ void testPlayerState (g, playerNumber){
    
    int campuses = 0;
    campuses = getCampuses();
-   assert(campuses == 0);
+   assert(campuses == 2);
   
    int IPs = 0;
    IPs = getIPs();
