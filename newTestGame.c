@@ -1,4 +1,8 @@
-testGame.c
+//testGame.c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 
 #define NUM_UNIS 3
 #define TERRA_NULLIUS -1
@@ -144,12 +148,18 @@ void testPlayerState (g, playerNumber){
    pub = getPublications();
    assert(pub == 0);
    
-   int students[] = {0};
-   int discipline = STUDENT_THD;
-   while (discipline <= STUDENT_MMONEY) {
-      student[discipline] = getStudents(g, playerNumber, discipline);
-      assert (student[discipline] == 0);
-      discipline++;
+   int numStudents = getStudents(g, playerNumber, STUDENT_THD);
+   assert (numStudents == 0);
+   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   assert (numStudents == 3);
+   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   assert (numStudents == 3);
+   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   assert (numStudents == 1);
+   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   assert (numStudents == 1);
+   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   assert (numStudents == 1);
    }
 
 }
