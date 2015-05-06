@@ -90,6 +90,8 @@ int main (int argc, char *argv[]) {
    testGameState0(g);
    throwDice(g, diceScore);
    makeAction(g,a);
+   
+   printf("All tests passed!\n You are awesome!!\n");
 
    return EXIT_SUCCESS;
 }
@@ -124,6 +126,7 @@ void testGameState0(Game g){
       testPlayerState(g, playerNumber);
       playerNumber++;
    }
+   printf("Test Game State 0 passed!\n");
 }
 
 void testPlayerState0 (Game g, int playerNumber){
@@ -178,6 +181,7 @@ void testPlayerState0 (Game g, int playerNumber){
    disciplineTo = STUDENT_THD;
    disciplineFrom++;
    }   
+   printf("test player state 0 passed!\n");
 
 }
 
