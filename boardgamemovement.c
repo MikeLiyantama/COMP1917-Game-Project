@@ -4,10 +4,10 @@
 typedef int columntype;
 typedef struct _board {
   columntype columnzero[7] = {0};
-  columntype columnzero[9] = {0};
-  columntype columnzero[11] = {0};
-  columntype columnzero[9] = {0};
-  columntype columnzero[7] = {0};
+  columntype columnone[9] = {0};
+  columntype columntwo[11] = {0};
+  columntype columnthree[9] = {0};
+  columntype columnfour[7] = {0};
 } board;
 
 typdef struct co-ordinate {
@@ -45,3 +45,7 @@ co-ordinate movement (co-ordinate position, int route){
   position.orientation = ((travel + (NUMBER_OF_DIRECTIONS/2)) % NUMBER_OF_DIRECTIONS); 
   return position;
   }
+  
+//movement is legal test
+//FOr each row it means that if the number is greater than 
+//the elements in the row or less than zero then the action is illegal
