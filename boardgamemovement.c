@@ -49,3 +49,10 @@ co-ordinate movement (co-ordinate position, int route){
 //movement is legal test
 //FOr each row it means that if the number is greater than 
 //the elements in the row or less than zero then the action is illegal
+int islegalmovement ( co-ordinate position) {
+  int move = FALSE;
+  if(position.column > 0 &&   position.column < (2*(2-(position.row%3))+7) ){
+    move = TRUE;
+  }
+  return move;
+}
