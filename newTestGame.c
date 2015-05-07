@@ -81,45 +81,47 @@ int main (int argc, char *argv[]) {
 
    Game g = newGame(disciplines, dice);
 
-   int diceScore = 0;
+   /*int diceScore = 0;
    int request = 4;
-   diceScore = rollDice(request);
+   diceScore = rollDice(request);*/
    
    action a;
 
    testGameState0(g);
-   throwDice(g, diceScore);
-   makeAction(g,a);
+   throwDice(g, diceScore); //can just enter a number between 2-12, so if u want to test if the first dice roll was 5
+                            // type in 5 instead of diceScore
+   makeAction(g,a);         
    
    printf("All tests passed!\n You are awesome!!\n");
 
    return EXIT_SUCCESS;
 }
 
+//tests the state of the game at Terra Nullis
 void testGameState0(Game g){
 
    int mostARCs = 0;
-   mostARCs = getMostARCs();
+   mostARCs = getMostARCs(g);
    assert(mostARCs == NO_ONE);   
    
    int whoseTurn = 0;
-   whoseTurn = getWhoseTurn();
+   whoseTurn = getWhoseTurn(g);
    assert(whoseTurn == NO_ONE);
    
    int campus = 0;
-   campus = getCampus();
+   campus = getCampus(g);
    assert(campus == 2);
    
    int arc = 0;
-   arc = getArc();
+   arc = getArc(g);
    assert(arc == VACANT_ARC);
    
    int mostPub = 0;
-   mostPub = getMostPublications();
+   mostPub = getMostPublications(g);
    assert(mostPub == NO_ONE);
 
    int currentTurn = 0;
-   currentTurn = getTurnNumber();
+   currentTurn = getTurnNumber(g);
    assert (currentTurn == TERRA_NULLIUS);
 
    while (playerNumber <= 3){
@@ -129,30 +131,31 @@ void testGameState0(Game g){
    printf("Test Game State 0 passed!\n");
 }
 
+//test state of the player at Terra Nullis
 void testPlayerState0 (Game g, int playerNumber){
 
    int KPIpoints = 0;
-   KPIpoints = getKPIpoints();
+   KPIpoints = getKPIpoints(g, playerNumber);
    assert(KPIpoints == 20);
    
    int ARCS = 0;
-   ARCs = getARCs();
+   ARCs = getARCs(g, playerNumber);
    assert(ARCs == 0);
   
    int GO8s = 0;
-   GO8s = getGO8s();
+   GO8s = getGO8s(g, playerNumber);
    assert(GO8s == 0);
    
    int campuses = 0;
-   campuses = getCampuses();
+   campuses = getCampuses(g, playerNumber);
    assert(campuses == 2);
   
    int IPs = 0;
-   IPs = getIPs();
+   IPs = getIPs(g, playerNumber);
    assert(IPs == 0);
    
    int pub = 0;
-   pub = getPublications();
+   pub = getPublications(g, playerNumber);
    assert(pub == 0);
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
