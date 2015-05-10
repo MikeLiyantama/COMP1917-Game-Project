@@ -113,36 +113,34 @@ typedef struct _player {
 } player;
 
 //These are the prototypes for the functions that we have made for the project
-void changeStudents (Game g, int ThD , int BPS , int BQN ,int MJ,int MTV,int MMONEY){
-    if(getWhoseTurn == UNI_A){
-        g.playerone.ThD = g.playerone.ThD + ThD;
-        g.playerone.BPS = g.playerone.BPS + BPS;
-        g.playerone.MJ = g.playerone.MJ + MJ;
-        g.playerone.MTV = g.playerone.MTV + MTV;
-        g.playerone.MMONEY = g.playerone.MMONEY + MMONEY;
-    }else if(getWhoseTurn == UNI_B){
-        g.playertwo.ThD = g.playertwo.ThD + ThD;
-        g.playertwo.BPS = g.playertwo.BPS + BPS;
-        g.playertwo.MJ = g.playertwo.MJ + MJ;
-        g.playertwo.MTV = g.playertwo.MTV + MTV;
-        g.playertwo.MMONEY = g.playertwo.MMONEY + MMONEY;
-    }else if(getWhoseTurn == UNI_C){
-        g.playerthree.ThD = g.playerthree.ThD + ThD;
-        g.playerthree.BPS = g.playerthree.BPS + BPS;
-        g.playerthree.MJ = g.playerthree.MJ + MJ;
-        g.playerthree.MTV = g.playerthree.MTV + MTV;
-        g.playerthree.MMONEY = g.playerthree.MMONEY + MMONEY;
+void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
+   player *temp = {0};
+   if (g.playerTurn == UNI_A){
+      temp = g.playerone;
+   } else if (g.playerTurn == UNI_B){
+      temp = g.playertwo;
+   } else if (g.playerTurn == UNI_C){
+      temp = g.playerthree;
+   }
 
-    }
+   temp.ThD = temp.ThD + ThD;
+   temp.BPS = temp.BPS + BPS;
+   temp.BQN = temp.BQN + BQN;
+   temp.MJ = temp.MJ + MJ;
+   temp.MTV = temp.MTV + MTV;
+   temp.MMONEY = temp.MMONEY + MMONEY;
 }
 void changeKPI (Game g, int KPI){
-    if(getWhoseTurn == UNI_A){
-        g.playerone.KPI = g.playerone.KPI + KPI;
-    }else if(getWhoseTurn == UNI_B){
-        g.playertwo.KPI = g.playertwo.KPI + KPI;
-    }else if(getWhoseTurn == UNI_C){
-        g.playerthree.KPI = g.playerthree.KPI + KPI;
-    }
+   player *temp = {0};
+   if (g.playerTurn == UNI_A){
+      temp = g.playerone;
+   } else if (g.playerTurn == UNI_B){
+      temp = g.playertwo;
+   } else if (g.playerTurn == UNI_C){
+      temp = g.playerthree;
+   }
+
+   temp.KPI = temp.KPI + KPI;
 }
 
 void grandExchange(Game g, action a);
@@ -441,32 +439,15 @@ int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
     }
     return exchangeRate;
 }
-void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
-   player *temp = {0};
-   if (g.playerTurn == UNI_A){
-      temp = g.playerone;
-   } else if (g.playerTurn == UNI_B){
-      temp = g.playertwo;
-   } else if (g.playerTurn == UNI_C){
-      temp = g.playerthree;
-   }
 
-   temp.ThD = temp.ThD + ThD;
-   temp.BPS = temp.BPS + BPS;
-   temp.BQN = temp.BQN + BQN;
-   temp.MJ = temp.MJ + MJ;
-   temp.MTV = temp.MTV + MTV;
-   temp.MMONEY = temp.MMONEY + MMONEY;
-}
+/*
 void changeKPI (Game g, int KPI){
-   player *temp = {0};
-   if (g.playerTurn == UNI_A){
-      temp = g.playerone;
-   } else if (g.playerTurn == UNI_B){
-      temp = g.playertwo;
-   } else if (g.playerTurn == UNI_C){
-      temp = g.playerthree;
-   }
-
-   temp.KPI = temp.KPI + KPI;
+    if(getWhoseTurn == UNI_A){
+        g.playerone.KPI = g.playerone.KPI + KPI;
+    }else if(getWhoseTurn == UNI_B){
+        g.playertwo.KPI = g.playertwo.KPI + KPI;
+    }else if(getWhoseTurn == UNI_C){
+        g.playerthree.KPI = g.playerthree.KPI + KPI;
+    }
 }
+*/
