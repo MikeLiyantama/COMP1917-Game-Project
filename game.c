@@ -113,10 +113,38 @@ typedef struct _player {
 } player;
 
 //These are the prototypes for the functions that we have made for the project
-void changeStudents (Game g, int ThD , int BPS , int BQN ,int MJ,int MTV,int MMONEY);
+void changeStudents (Game g, int ThD , int BPS , int BQN ,int MJ,int MTV,int MMONEY){
+    if(getWhoseTurn == UNI_A){
+        g.playerone.ThD = g.playerone.ThD + ThD;
+        g.playerone.BPS = g.playerone.BPS + BPS;
+        g.playerone.MJ = g.playerone.MJ + MJ;
+        g.playerone.MTV = g.playerone.MTV + MTV;
+        g.playerone.MMONEY = g.playerone.MMONEY + MMONEY;
+    }else if(getWhoseTurn == UNI_B){
+        g.playertwo.ThD = g.playertwo.ThD + ThD;
+        g.playertwo.BPS = g.playertwo.BPS + BPS;
+        g.playertwo.MJ = g.playertwo.MJ + MJ;
+        g.playertwo.MTV = g.playertwo.MTV + MTV;
+        g.playertwo.MMONEY = g.playertwo.MMONEY + MMONEY;
+    }else if(getWhoseTurn == UNI_C){
+        g.playerthree.ThD = g.playerthree.ThD + ThD;
+        g.playerthree.BPS = g.playerthree.BPS + BPS;
+        g.playerthree.MJ = g.playerthree.MJ + MJ;
+        g.playerthree.MTV = g.playerthree.MTV + MTV;
+        g.playerthree.MMONEY = g.playerthree.MMONEY + MMONEY;
+
+    }
+}
 void changeKPI (Game g, int KPI){
-    
-};
+    if(getWhoseTurn == UNI_A){
+        g.playerone.KPI = g.playerone.KPI + KPI;
+    }else if(getWhoseTurn == UNI_B){
+        g.playertwo.KPI = g.playertwo.KPI + KPI;
+    }else if(getWhoseTurn == UNI_C){
+        g.playerthree.KPI = g.playerthree.KPI + KPI;
+    }
+}
+
 void grandExchange(Game g, action a);
 
 //These are functions that are part of the prototype provided in game.h
@@ -183,7 +211,7 @@ int getDiceValue (Game g, int regionID){ //Unfinished
     g.turnNumber++;
 }
 
-int getMostARCs(Game g){ //Draft (I believe there has to be a shorter way [Michael])
+int getMostARCs(Game g){
     int ID = NO_ONE;
     if(g.ARCsCreated>0){
         if((g.playerone.Arc > g.playertwo.Arc) && (g.playerone.Arc > g.playerthree.Arc)){
@@ -200,7 +228,7 @@ int getMostARCs(Game g){ //Draft (I believe there has to be a shorter way [Micha
 
 }
 
-int getMostPublications(Game g){ //Draft (I believe there has to be a shorter way [Michael])
+int getMostPublications(Game g){
     int ID = NO_ONE;
     if(g.pubsCreated>0){
         if((g.playerone.pubs > g.playertwo.pubs) && (g.playerone.pubs > g.playerthree.pubs)){
