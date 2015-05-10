@@ -413,3 +413,20 @@ int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
     }
     return exchangeRate;
 }
+void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
+   player *temp = {0};
+   if (g.playerTurn == UNI_A){
+      temp = g.playerone;
+   } else if (g.playerTurn == UNI_B){
+      temp = g.playertwo;
+   } else if (g.playerTurn == UNI_C){
+      temp = g.playerthree;
+   }
+
+   temp.ThD == temp.ThD + ThD;
+   temp.BPS == temp.BPS + BPS;
+   temp.BQN == temp.BQN + BQN;
+   temp.MJ == temp.MJ + MJ;
+   temp.MTV == temp.MTV + MTV;
+   temp.MMONEY == temp.MMONEY + MMONEY;
+}
