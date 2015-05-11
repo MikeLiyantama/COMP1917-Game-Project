@@ -76,7 +76,6 @@ typedef struct _action {
 
 typedef unsigned long long numberof;
 typedef struct _game {
-    int turnNumber = START_TURN_NUMBER;
     int playerTurn = NO_ONE;
     player playerone;
     player playertwo;
@@ -87,7 +86,7 @@ typedef struct _game {
     numberof GOE = 0;
     unsigned char mostArc = NO_ONE;
     unsigned char mostPub = NO_ONE;
-    long long currentTurn = START_TURN_NUMBER;
+    int currentTurn = START_TURN_NUMBER;
     
     int pubsCreated = 0; // To count pubs created for getMostPublications
     int ARCsCreated = 0; // same as above but for ARCs.
