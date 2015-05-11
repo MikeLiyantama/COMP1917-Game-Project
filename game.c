@@ -142,7 +142,36 @@ void changeKPI (Game g, int KPI){
    temp.KPI = temp.KPI + KPI;
 }
 
-void grandExchange(Game g, action a);
+void grandExchange(Game g, action a){
+    
+   int disciplineFrom = a.disciplineFrom;
+   int disciplineTo = a.disciplineTo;
+   int rate = getExchangeRate(g,temp,disciplineFrom,disciplineTo);
+   
+   if (disciplineFrom = STUDENT_BPS){
+      changeStudents(g,0,rate,0,0,0,0);
+   }else if (disciplineFrom = STUDENT_BQN){
+      changeStudents(g,0,0,rate,0,0,0);
+   }else if (disciplineFrom = STUDENT_MJ){
+      changeStudents(g,0,0,0,rate,0,0);
+   }else if (disciplineFrom = STUDENT_MTV){
+      changeStudents(g,0,0,0,0,rate,0);
+   }else if (disciplineFrom = STUDENT_MMONEY){
+      changeStudents(g,0,0,0,0,0,rate);
+   }
+   
+   if (disciplineTo = STUDENT_BPS){
+      changeStudents(g,0,1,0,0,0,0);
+   }else if (disciplineTo = STUDENT_BQN){
+      changeStudents(g,0,0,1,0,0,0);
+   }else if (disciplineTo = STUDENT_MJ){
+      changeStudents(g,0,0,0,1,0,0);
+   }else if (disciplineTo = STUDENT_MTV){
+      changeStudents(g,0,0,0,0,1,0);
+   }else if (disciplineTo = STUDENT_MMONEY){
+      changeStudents(g,0,0,0,0,0,1);
+   }
+}
 
 //These are functions that are part of the prototype provided in game.h
 //They are need to have the same inputs and outputs
