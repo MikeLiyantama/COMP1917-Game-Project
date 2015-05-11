@@ -3,12 +3,7 @@
 #define NUMBER_OF_DIRECTIONS 6
 typedef int columntype;
 typedef struct _board {
-  columntype columnzero[7] = {0};
-  columntype columnone[9] = {0};
-  columntype columntwo[11] = {0};
-  columntype columnthree[11] = {0}
-  columntype columnfour[9] = {0};
-  columntype columnfive[7] = {0};
+  columntype gameboard [21] [11] = {0};
 } board;
 
 typdef struct co-ordinate {
