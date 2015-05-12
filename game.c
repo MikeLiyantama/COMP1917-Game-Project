@@ -174,6 +174,10 @@ void grandExchange(Game g, action a){
 //These are functions that are part of the prototype provided in game.h
 //They are need to have the same inputs and outputs
 
+void writeToBoard (Game g, path destination, int building){
+    
+}
+
 Game newGame (int discipline[], int dice[]){ // ??
     
     Game *g = NULL;
@@ -189,33 +193,106 @@ void disposeGame (Game g){
 }
 
 void makeAction (Game g, action a){
-    if ( a.Actioncode == PASS){
-        //DO nothing as they have passed their turn
-    } else if (a.Actioncode == BUILD_CAMPUS){
-        //This builds a campus at the price of 
-        // 1 BPS, 1 B?, 1 MJ , 1 MTV
-        changeStudents(g, 0, -1, -1, -1, -1, 0);
-        changeKPI(g, 10);
-    } else if (a.Actioncode == BUILD_GO8) {
-        //USE up two MJ and 3 MS 
-        changeStudents(g, 0, 0, 0, -2, 0, -3);
-        changeKPI(g, 10);
-    } else if (a.Actioncode == OBTAIN_ARC) {
-        changeStudents(g, 0, -1, -1, -1, -1, 0);
-        changeKPI(g, 10);
-        g.ARCsCreated++;
-    } else if (a.Actioncode == START_SPINOFF) {
-        //DO Nothing as this is an unexpected output
-    } else if (a.Actioncode == OBTAIN_PUBLICATION) {
-        changeStudents(g, 0, 0, 0, -1, -1, -1);
-        g.pubsCreated++;
-    } else if (a.Actioncode == OBTAIN_IP_PATENT) {
-        changeStudents(g, 0, 0, 0, -1, -1, -1);
-        changeKPI(g, 10);
-    } else if (a.Actioncode == RETRAIN_STUDENTS) {
-        grandExchange(g, a);
+    player *temp = {0};
+    if (getWhoseTurn(g) == UNI_A){
+        temp = g.playerone;
+    } else if (getWhoseTurn(g) == UNI_B){
+        temp = g.playertwo;
+    } else if (getWhoseTurn(g) == UNI_C){
+        temp = g.playerthree;
     }
 
+    if(temp==g.playerone){
+       if ( a.Actioncode == PASS){
+           //DO nothing as they have passed their turn
+       } else if (a.Actioncode == BUILD_CAMPUS){
+           //This builds a campus at the price of
+           // 1 BPS, 1 B?, 1 MJ , 1 MTV
+           changeStudents(g, 0, -1, -1, -1, -1, 0);
+           changeKPI(g, 10);
+           writeToBoard(g,a.destination,CAMPUS_A);
+       } else if (a.Actioncode == BUILD_GO8) {
+           //USE up two MJ and 3 MS
+           changeStudents(g, 0, 0, 0, -2, 0, -3);
+           changeKPI(g, 10);
+           writeToBoard(g,a.destination,GO8_A);
+       } else if (a.Actioncode == OBTAIN_ARC) {
+           changeStudents(g, 0, -1, -1, -1, -1, 0);
+           changeKPI(g, 10);
+           writeToBoard(g,a.destination,ARC_A);
+           g.ARCsCreated++;
+       } else if (a.Actioncode == START_SPINOFF) {
+           //DO Nothing as this is an unexpected output
+       } else if (a.Actioncode == OBTAIN_PUBLICATION) {
+           changeStudents(g, 0, 0, 0, -1, -1, -1);
+           g.pubsCreated++;
+       } else if (a.Actioncode == OBTAIN_IP_PATENT) {
+           changeStudents(g, 0, 0, 0, -1, -1, -1);
+           changeKPI(g, 10);
+       } else if (a.Actioncode == RETRAIN_STUDENTS) {
+           grandExchange(g, a);
+       }
+    }else if(temp==g.playertwo){
+        if ( a.Actioncode == PASS){
+            //DO nothing as they have passed their turn
+        } else if (a.Actioncode == BUILD_CAMPUS){
+            //This builds a campus at the price of
+            // 1 BPS, 1 B?, 1 MJ , 1 MTV
+            changeStudents(g, 0, -1, -1, -1, -1, 0);
+            changeKPI(g, 10);
+            writeToBoard(g,a.destination,CAMPUS_B);
+        } else if (a.Actioncode == BUILD_GO8) {
+            //USE up two MJ and 3 MS
+            changeStudents(g, 0, 0, 0, -2, 0, -3);
+            changeKPI(g, 10);
+            writeToBoard(g,a.destination,GO8_B);
+        } else if (a.Actioncode == OBTAIN_ARC) {
+            changeStudents(g, 0, -1, -1, -1, -1, 0);
+            changeKPI(g, 10);
+            writeToBoard(g,a.destination,ARC_B);
+            g.ARCsCreated++;
+        } else if (a.Actioncode == START_SPINOFF) {
+            //DO Nothing as this is an unexpected output
+        } else if (a.Actioncode == OBTAIN_PUBLICATION) {
+            changeStudents(g, 0, 0, 0, -1, -1, -1);
+            g.pubsCreated++;
+        } else if (a.Actioncode == OBTAIN_IP_PATENT) {
+            changeStudents(g, 0, 0, 0, -1, -1, -1);
+            changeKPI(g, 10);
+        } else if (a.Actioncode == RETRAIN_STUDENTS) {
+            grandExchange(g, a);
+        }
+    }else if(temp==g.playerthree){
+        if ( a.Actioncode == PASS){
+            //DO nothing as they have passed their turn
+        } else if (a.Actioncode == BUILD_CAMPUS){
+            //This builds a campus at the price of
+            // 1 BPS, 1 B?, 1 MJ , 1 MTV
+            changeStudents(g, 0, -1, -1, -1, -1, 0);
+            changeKPI(g, 10);
+            writeToBoard(g,a.destination,CAMPUS_C);
+        } else if (a.Actioncode == BUILD_GO8) {
+            //USE up two MJ and 3 MS
+            changeStudents(g, 0, 0, 0, -2, 0, -3);
+            changeKPI(g, 10);
+            writeToBoard(g,a.destination,GO8_C);
+        } else if (a.Actioncode == OBTAIN_ARC) {
+            changeStudents(g, 0, -1, -1, -1, -1, 0);
+            changeKPI(g, 10);
+            writeToBoard(g,a.destination,ARC_C);
+            g.ARCsCreated++;
+        } else if (a.Actioncode == START_SPINOFF) {
+            //DO Nothing as this is an unexpected output
+        } else if (a.Actioncode == OBTAIN_PUBLICATION) {
+            changeStudents(g, 0, 0, 0, -1, -1, -1);
+            g.pubsCreated++;
+        } else if (a.Actioncode == OBTAIN_IP_PATENT) {
+            changeStudents(g, 0, 0, 0, -1, -1, -1);
+            changeKPI(g, 10);
+        } else if (a.Actioncode == RETRAIN_STUDENTS) {
+            grandExchange(g, a);
+        }
+    }
 }
 
 void throwDice (Game g, int diceScore){
