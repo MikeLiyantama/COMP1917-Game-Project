@@ -64,6 +64,7 @@
 #define FALSE 0
 
 #define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
+// #define DEFAULT_DISCIPLINES {}
 
 typedef struct _action {
     int actionCode;  // see #defines above
@@ -76,7 +77,7 @@ typedef struct _action {
 
 typedef unsigned long long numberof;
 typedef struct _game {
-    int playerTurn = NO_ONE;
+    //int playerTurn = NO_ONE;
     player playerone;
     player playertwo;
     player playerthree;
@@ -87,6 +88,9 @@ typedef struct _game {
     unsigned char mostArc = NO_ONE;
     unsigned char mostPub = NO_ONE;
     int currentTurn = START_TURN_NUMBER;
+    
+    int dice[] = DEFAULT_DICE;
+    int disciplines[] = DEFAULT_DISCIPLINES;
     
     int pubsCreated = 0; // To count pubs created for getMostPublications
     int ARCsCreated = 0; // same as above but for ARCs.
@@ -128,6 +132,29 @@ void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMO
    temp.MJ = temp.MJ + MJ;
    temp.MTV = temp.MTV + MTV;
    temp.MMONEY = temp.MMONEY + MMONEY;
+    
+   /* Alternative form:
+    
+    if(getWhoseTurn == UNI_A){
+       g.playerone.ThD = g.playerone.ThD + ThD;
+       g.playerone.BPS = g.playerone.BPS + BPS;
+       g.playerone.MJ = g.playerone.MJ + MJ;
+       g.playerone.MTV = g.playerone.MTV + MTV;
+       g.playerone.MMONEY = g.playerone.MMONEY + MMONEY;
+    } else if(getWhoseTurn == UNI_B){
+       g.playertwo.ThD = g.playertwo.ThD + ThD;
+       g.playertwo.BPS = g.playertwo.BPS + BPS;
+       g.playertwo.MJ = g.playertwo.MJ + MJ;
+       g.playertwo.MTV = g.playertwo.MTV + MTV;
+       g.playertwo.MMONEY = g.playertwo.MMONEY + MMONEY;
+    }else if(getWhoseTurn == UNI_C){
+       g.playerthree.ThD = g.playerthree.ThD + ThD;
+       g.playerthree.BPS = g.playerthree.BPS + BPS;
+       g.playerthree.MJ = g.playerthree.MJ + MJ;
+       g.playerthree.MTV = g.playerthree.MTV + MTV;
+       g.playerthree.MMONEY = g.playerthree.MMONEY + MMONEY;
+    
+    */
 }
 void changeKPI (Game g, int KPI){
    player *temp = {0};
@@ -138,8 +165,19 @@ void changeKPI (Game g, int KPI){
    } else if (g.playerTurn == UNI_C){
       temp = g.playerthree;
    }
-
    temp.KPI = temp.KPI + KPI;
+    
+   /* Alternative Form:
+    
+    if(getWhoseTurn == UNI_A){
+       g.playerone.KPI = g.playerone.KPI + KPI;
+    } else if(getWhoseTurn == UNI_B){
+       g.playertwo.KPI = g.playertwo.KPI + KPI;
+    } else if(getWhoseTurn == UNI_C){
+       g.playerthree.KPI = g.playerthree.KPI + KPI;
+    }
+    
+    */
 }
 
 void grandExchange(Game g, action a){
@@ -176,12 +214,9 @@ void grandExchange(Game g, action a){
 //These are functions that are part of the prototype provided in game.h
 //They are need to have the same inputs and outputs
 
-int dice[] = DEFAULT_DICE;
-int disciplines[] = DEFAULT_DISCIPLINES;
 
-Game newGame (int discipline[], int dice[]){
-    
-    
+
+Game newGame (int discipline[], int dice[]){ // ??
     
     Game *g = NULL;
     while ( g != NULL){
@@ -226,15 +261,19 @@ void makeAction (Game g, action a){
 }
 
 void throwDice (Game g, int diceScore){
-
+    while(diceScore >= 2 && diceScore <= 12 && g.currentTurn == -1){
+        g.currentTurn++;
+    }
 }
 
 int getDiscipline (Game g, int regionID){
-    
+    int discipline = g.disciplines[regionID];
+    return discipline;
 }
 
-int getDiceValue (Game g, int regionID){ //Unfinished
-    g.turnNumber++;
+int getDiceValue (Game g, int regionID){
+    int defaultDice = g.dice[regionID];
+    return defaultDice;
 }
 
 int getMostARCs(Game g){
@@ -272,26 +311,24 @@ int getMostPublications(Game g){
 
 int getTurnNumber (Game g){
     int turnNumber = 0;
-    turnNumber = g.turnNumber;
+    turnNumber = g.currentTurn;
     return turnNumber;
 }
 
 int getWhoseTurn (Game g){
     int ID = 0;
-    if(g.turnNumber == -1){
+    if(g.currentTurn == -1){
         ID = NO_ONE;
-    }else if (g.turnNumber % 3 == 0){
+    }else if (g.currentTurn % 3 == 0){
         ID = UNI_A;
     }
-    else if (g.turnNumber % 3 == 1){
+    else if (g.currentTurn % 3 == 1){
         ID = UNI_B;
     }
-    else if (g.turnNumber % 3 == 2){
+    else if (g.currentTurn % 3 == 2){
         ID = UNI_C;
     }
     return ID;
-    //int turn = g.currentTurn;
-    //return turn;
 }
 
 int getCampus (Game g, path pathToVortex){
@@ -467,15 +504,3 @@ int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
     }
     return exchangeRate;
 }
-
-/*
-void changeKPI (Game g, int KPI){
-    if(getWhoseTurn == UNI_A){
-        g.playerone.KPI = g.playerone.KPI + KPI;
-    }else if(getWhoseTurn == UNI_B){
-        g.playertwo.KPI = g.playertwo.KPI + KPI;
-    }else if(getWhoseTurn == UNI_C){
-        g.playerthree.KPI = g.playerthree.KPI + KPI;
-    }
-}
-*/
