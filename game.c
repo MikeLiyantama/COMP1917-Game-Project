@@ -76,7 +76,7 @@ typedef struct _player {
 } player;
 
 //These are the prototypes for the functions that we have made for the project
-void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
+static void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
    player *temp = {0};
    if (g.playerTurn == UNI_A){
       temp = g.playerone;
@@ -116,7 +116,7 @@ void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMO
     
     */
 }
-void changeKPI (Game g, int KPI){
+static void changeKPI (Game g, int KPI){
    player *temp = {0};
    if (getWhoseTurn(g) == UNI_A){
       temp = g.playerone;
@@ -140,7 +140,7 @@ void changeKPI (Game g, int KPI){
     */
 }
 
-void grandExchange(Game g, action a){
+static void grandExchange(Game g, action a){
     
    int disciplineFrom = a.disciplineFrom;
    int disciplineTo = a.disciplineTo;
@@ -174,7 +174,7 @@ void grandExchange(Game g, action a){
 //These are functions that are part of the prototype provided in game.h
 //They are need to have the same inputs and outputs
 
-void writeToBoard (Game g, path destination, int building){
+static void writeToBoard (Game g, path destination, int building){
    co_ordinate point = movedecoder(destination, type);
    g.gameboard[point.row][point.column] = building;
 }
