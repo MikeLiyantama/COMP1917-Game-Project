@@ -175,7 +175,8 @@ void grandExchange(Game g, action a){
 //They are need to have the same inputs and outputs
 
 void writeToBoard (Game g, path destination, int building){
-    
+   co_ordinate point = movedecoder(destination, type);
+   g.gameboard[point.row][point.column] = building;
 }
 
 Game newGame (int discipline[], int dice[]){ // ??
