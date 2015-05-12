@@ -164,11 +164,11 @@ void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMO
 }
 void changeKPI (Game g, int KPI){
    player *temp = {0};
-   if (g.playerTurn == UNI_A){
+   if (getWhoseTurn(g) == UNI_A){
       temp = g.playerone;
-   } else if (g.playerTurn == UNI_B){
+   } else if (getWhoseTurn(g) == UNI_B){
       temp = g.playertwo;
-   } else if (g.playerTurn == UNI_C){
+   } else if (getWhoseTurn(g) == UNI_C){
       temp = g.playerthree;
    }
    temp.KPI = temp.KPI + KPI;
@@ -355,7 +355,7 @@ int isLegalAction (Game g, action a){
     }
     // Check for sufficient students to do action(s)
     
-    if(a.Actioncode == BUILD_CAMPUS){
+    if(a.Actioncode == BUILD_CAMPUS || a.Actioncode == OBTAIN_ARC){
         int temp = 0;
         if(getWhoseTurn == UNI_A){
             temp = g.playerone;
@@ -365,7 +365,36 @@ int isLegalAction (Game g, action a){
             temp = g.playerthree;
         }
         
-        if(temp.BPS >= 1 || temp.BQN >= 1 || temp.MJ >= 1 || temp.MTV >=1){
+        if(temp.BPS >= 1 && temp.BQN >= 1 && temp.MJ >= 1 && temp.MTV >=1){
+            bool == TRUE;
+        }
+    }
+    
+    if(a.Actioncode == BUILD_GO8){
+        int temp = 0;
+        if(getWhoseTurn == UNI_A){
+            temp = g.playerone;
+        }else if(getWhoseTurn == UNI_B){
+            temp = g.playertwo;
+        }else if(getWhoseTurn == UNI_C){
+            temp = g.playerthree;
+        }
+        
+        if(temp.MJ >= 2 && temp.MS >=3){
+            bool == TRUE;
+        }
+    }
+    if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
+        int temp = 0;
+        if(getWhoseTurn == UNI_A){
+            temp = g.playerone;
+        }else if(getWhoseTurn == UNI_B){
+            temp = g.playertwo;
+        }else if(getWhoseTurn == UNI_C){
+            temp = g.playerthree;
+        }
+        
+        if(temp.MJ >= 1 && temp.MTV >=1 && temp.MMONEY >= 1){
             bool == TRUE;
         }
     }
