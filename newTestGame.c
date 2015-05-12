@@ -175,14 +175,6 @@ void testGameState0(Game g){
       count++;
    }
    
-   assert(getCampus(g,"RB")==CAMPUS_A);
-   assert(getCampus(g,"RLRLRLRLLRR")==CAMPUS_A);
-   assert(getCampus(g,"RRLRL")==CAMPUS_B);
-   assert(getCampus(g,"LRLRLRRLRL")==CAMPUS_B);
-   assert(getCampus(g,"LRLRL")==CAMPUS_C);
-   assert(getCampus(g,"RRLRLLRLRL")==CAMPUS_C);
-   
-   
    int count = 0;
    char tempPath[90] = {'\0'};
    char workingPath[90] = WORKING_PATH;
