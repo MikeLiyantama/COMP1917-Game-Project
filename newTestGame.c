@@ -49,7 +49,7 @@
  
 #define TRUE 1
 #define FALSE 0
-#define WORKING_PATH {'L','R','R','1B','R','R','R','2B','R','R','R','R','3B','R','R','R','4B','R','R','R','R','5B','R','R','R','6B','R','R','R','R','7B','R','R','R','8B','R','R','R','R','9B','R','R','R','10B','R','R','R','R','11B','R','R','L','12B','R','R','R','R','13B','R','R','R','R','14B','R','R','R','R','15B','R','R','R','R','16B','R','R','R','R','17B','R','R','R','L','18B','R','R','R','R','R','R','R'}
+#define WORKING_PATH {'L','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','L','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','L','B','R','R','R','R','R','R','R'}
  
 typedef struct _game * Game;
 typedef char path[PATH_LIMIT];
