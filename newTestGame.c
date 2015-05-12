@@ -102,32 +102,44 @@ int main (int argc, char *argv[]) {
    testGameState1(g);
    
    p1={OBTAIN_ARC,[R],0,0};
+   assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
-   p1={OBTAIN_ARC,[RR],0,0};
+   p1.destination=[RR];
+   assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
-   p1={BUILD_CAMPUS,[RR],0,0};
+   p1.actionCode=BUILD_CAMPUS;
+   assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
-   p1={PASS,0,0,0};
+   p1.actionCode=PASS;
+   assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
    throwDice(g, 9);
    
    p2={OBTAIN_ARC,[RRLRLL],0,0};
+   assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    p2={OBTAIN_ARC,[RRLRLLL],0,0};
+   assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    p2.actionCode=BUILD_CAMPUS;
+   assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    p2.actionCode=PASS;
+   assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    throwDICE(g, 7);
    
    p3={OBTAIN_ARC,[LRLRLB],0,0};
+   assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    p3.destination=[LRLRR];
+   assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    p3.destination=[LRLRRR];
+   assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    p3.actionCode=PASS;
+   assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    throwDice(g, 8);
    
