@@ -88,6 +88,20 @@ int main (int argc, char *argv[]) {
    throwDice(g, 8);
    
    testGameState2(g);
+   
+   
+   int counter=0;
+   while (counter<12){
+      assert(getDiscipline(g,counter)==DEFAULT_DISCIPLINES[counter]);
+      counter++;
+   }
+
+   counter = 0;
+
+   while (counter<12){
+      assert(getDiceValue(g,counter)==DEFAULT_DICE[counter]);
+      counter++;
+   }
 
    disposeGame(g);        
    
@@ -518,3 +532,4 @@ void testPlayer3State2 (Game g, int playerNumber){
    printf("test player 3 state 2 passed!\n");
 
 }
+
