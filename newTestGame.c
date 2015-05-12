@@ -163,17 +163,25 @@ void testGameState0(Game g){
    char workingPath[90] = WORKING_PATH;
    while(count<90){
       tempPath[count] == workingPath[count];
-      if(count == 27 || count == 54){
+      if(count == 26 || count == 53){
          assert(getCampus(g, tempPath) == CAMPUS_A);
-      } else if(count == 18 || count == 45){
+      } else if(count == 17 || count == 44){
          assert(getCampus(g, tempPath) == CAMPUS_B);
-      } else if(count == 9 || count == 36){
+      } else if(count == 8 || count == 35){
          assert(getCampus(g, tempPath) == CAMPUS_C);
       } else {
          assert(getCampus(g, tempPath) == VACANT_VERTEX);
       } 
       count++;
    }
+   
+   assert(getCampus(g,"RB")==CAMPUS_A);
+   assert(getCampus(g,"RLRLRLRLLRR")==CAMPUS_A);
+   assert(getCampus(g,"RRLRL")==CAMPUS_B);
+   assert(getCampus(g,"LRLRLRRLRL")==CAMPUS_B);
+   assert(getCampus(g,"LRLRL")==CAMPUS_C);
+   assert(getCampus(g,"RRLRLLRLRL")==CAMPUS_C);
+   
    
    int count = 0;
    char tempPath[90] = {'\0'};
@@ -246,11 +254,11 @@ void testGameState1(Game g){
    char workingPath[90] = WORKING_PATH;
    while(count<90){
       tempPath[count] == workingPath[count];
-      if(count == 27 || count == 54){
+      if(count == 26 || count == 53){
          assert(getCampus(g, tempPath) == CAMPUS_A);
-      } else if(count == 18 || count == 45){
+      } else if(count == 17 || count == 44){
          assert(getCampus(g, tempPath) == CAMPUS_B);
-      } else if(count == 9 || count == 36){
+      } else if(count == 8 || count == 35){
          assert(getCampus(g, tempPath) == CAMPUS_C);
       } else {
          assert(getCampus(g, tempPath) == VACANT_VERTEX);
@@ -281,7 +289,7 @@ void testGameState1(Game g){
       }
       playerNumber++;
    }
-   printf("Test Game State 0 passed!\n");
+   printf("Test Game State 1 passed!\n");
 }
 
 void testPlayer1State1 (Game g, int playerNumber){
@@ -411,11 +419,11 @@ void testGameState2(Game g);
    char workingPath[90] = WORKING_PATH;
    while(count<90){
       tempPath[count] == workingPath[count];
-      if(count == 27 || count == 52 || count == 54){
+      if(count == 26 || count == 51 || count == 53){
          assert(getCampus(g, tempPath) == CAMPUS_A);
-      } else if(count == 18 || count == 45 || count == 43){
+      } else if(count == 17 || count == 44 || count == 42){
          assert(getCampus(g, tempPath) == CAMPUS_B);
-      } else if(count == 9 || count == 36){
+      } else if(count == 8 || count == 35){
          assert(getCampus(g, tempPath) == CAMPUS_C);
       } else {
          assert(getCampus(g, tempPath) == VACANT_VERTEX);
@@ -428,14 +436,14 @@ void testGameState2(Game g);
    char workingPath[90] = WORKING_PATH;
    while(count<90){
       tempPath[count] == workingPath[count];
-      if(count == 52 || count == 53 || count == 54){
-         assert(getCampus(g, tempPath) == CAMPUS_A);
-      } else if(count == 18 || count == 45 || count == 44 || count == 43){
-         assert(getCampus(g, tempPath) == CAMPUS_B);
-      } else if(count == 9 || count == 7 || count == 8 || count == 57){
-         assert(getCampus(g, tempPath) == CAMPUS_C);
+      if(count == 51 || count == 52 || count == 53){
+         assert(getArc(g, tempPath) == ARC_A);
+      } else if(count == 44 || count == 43 || count == 42){
+         assert(getArc(g, tempPath) == ARC_B);
+      } else if(count == 8 || count == 6 || count == 7 || count == 58){
+         assert(getArc(g, tempPath) == ARC_C);
       } else {
-         assert(getCampus(g, tempPath) == VACANT_VERTEX);
+         assert(getArc(g, tempPath) == VACANT_ARC);
       } 
       assert(getArc(g, tempPath) == VACANT_ARC);
       count++;
