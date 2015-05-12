@@ -265,8 +265,9 @@ void makeAction (Game g, action a){
 }
 
 void throwDice (Game g, int diceScore){
-    while(diceScore >= 2 && diceScore <= 12 && g.currentTurn == -1){
+    if(diceScore >= 2 && diceScore <= 12){
         g.currentTurn++;
+        makeAction(Game g, PASS)
     }
 }
 
@@ -342,7 +343,32 @@ int getARC (Game g, path pathToEdge){
 }
 
 int isLegalAction (Game g, action a){
+    int bool = TRUE;
+    if(g.currentTurn == -1){
+        bool == FALSE;
+    }
+    if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
+        bool == FALSE
+    }
+    if(/* Anything related to vertex/movement here*/){
+        
+    }
+    // Check for sufficient students to do action(s)
     
+    if(a.Actioncode == BUILD_CAMPUS){
+        int temp = 0;
+        if(getWhoseTurn == UNI_A){
+            temp = g.playerone;
+        }else if(getWhoseTurn == UNI_B){
+            temp = g.playertwo;
+        }else if(getWhoseTurn == UNI_C){
+            temp = g.playerthree;
+        }
+        
+        if(temp.BPS >= 1 || temp.BQN >= 1 || temp.MJ >= 1 || temp.MTV >=1){
+            bool == TRUE;
+        }
+    }
 }
 
 int getKPIpoints(Game g, int player){
