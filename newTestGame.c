@@ -1,69 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
+#include "Game.h"
 
-#define NUM_UNIS 3
 #define TERRA_NULLIUS -1
- 
-// player ID of each university
-#define NO_ONE 0
-#define UNI_A 1
-#define UNI_B 2
-#define UNI_C 3
- 
-// contents of an ARC
-#define VACANT_ARC 0
-#define ARC_A 1
-#define ARC_B 2
-#define ARC_C 3
- 
-// contents of a VERTEX
-#define VACANT_VERTEX 0  
-#define CAMPUS_A 1
-#define CAMPUS_B 2
-#define CAMPUS_C 3
-#define GO8_A 4
-#define GO8_B 5
-#define GO8_C 6
- 
-// action codes
-#define PASS 0
-#define BUILD_CAMPUS 1
-#define BUILD_GO8 2
-#define OBTAIN_ARC 3
-#define START_SPINOFF 4
-#define OBTAIN_PUBLICATION 5
-#define OBTAIN_IP_PATENT 6
-#define RETRAIN_STUDENTS 7
-
-// disciplines
-#define STUDENT_THD 0
-#define STUDENT_BPS 1
-#define STUDENT_BQN 2
-#define STUDENT_MJ  3
-#define STUDENT_MTV 4
-#define STUDENT_MMONEY 5
- 
-#define NUM_REGIONS 19
-#define PATH_LIMIT 150
- 
-#define TRUE 1
-#define FALSE 0
 #define WORKING_PATH {'L','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','L','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','L','B','R','R','R','R','R','R','R'}
- 
-typedef struct _game * Game;
-typedef char path[PATH_LIMIT];
-typedef struct _action {
-   int actionCode;  // see #defines above
-   path destination; // if the action operates on a vertex or ARC this
-                     // specifies *which* vertex or path.  unused 
-                     // otherwise
-   int disciplineFrom;  // used for the retrain students action
-   int disciplineTo;    // used for the retrain students action
-} action;
-
-#define DEFAULT_DISCIPLINES {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS }
+#define DEFAULT_DISCIPLINES {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS}
 #define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
+
+int disciplines[] = DEFAULT_DISCIPLINES;
+int dice[] = DEFAULT_DICE;
+Game g = newGame (disciplines, dice);
 
 void testGameState0 (Game g);
 void testPlayerState0 (Game g, int playerNumber);
