@@ -557,7 +557,6 @@ int getStudents (Game g, int player, int discipline){
 }
 
 int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
-    /* OBSOLETE
     int exchangeRate = 0;
     if (player == 1){
         if (disciplineFrom == STUDENT_BPS){
@@ -597,5 +596,4 @@ int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
         }
     }
     return exchangeRate;
-     */
 }
