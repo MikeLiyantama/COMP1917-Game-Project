@@ -15,15 +15,17 @@ typdef struct co-ordinate {
   int row;
   int orientation;
   int valid;
+  int isARC;
 } co-ordinate;
 
 co-ordinate movedecoder (char* directions[],char type) {
    int counter = 0;
    int route;
-   co-ordinate point = {0,4,0};
+   co-ordinate point = {0,4,0,TRUE,FALSE};
    if (type == ARCco){
-      point.column = 1;
-      point.row = 5;
+      point.column = 5;
+      point.row = 1;
+      point.isARC = TRUE;
    }
    while ( (directions[counter] != 0) && (point.valid == TRUE)) {
       route = direction[counter];
@@ -46,20 +48,27 @@ co-ordinate movement (co-ordinate position, int route){
   }
   int move = direction + turning + position.orientation;
   int travel = (move % 6);
-
+  int rowMove = 0;
+  int columnMove = 0;
   if (travel == 0){
-    position.row -= 2;
+    rowMove = -DIVISION;
   } else if (travel == 1) {
-    position.column -= DIVISION;
+    columnMove = -DIVISION;
   } else if (travel == 2) {
-    position.row += DIVISION;       
+    rowMove = DIVISION;       
   } else if (travel == 3) {
-    position.row += DIVISION;
+    rowMove = DIVISION;
   } else if (travel == 4) {
-    position.column += DIVISION;
+    columnMove = DIVISION;
   } else if (travel == 5) {
-    position.row -= DIVISION;
+    rowMove = -DIVISION;
   }
+  /*
+  if (position.isARC == FALSE){
+    rowMove = 2*rowMove;
+    columnMove = 2*columnMove;
+  }
+  */
   position.orientation = ((travel + (NUMBER_OF_DIRECTIONS/2)) % NUMBER_OF_DIRECTIONS); 
   return position;
 }
@@ -70,13 +79,42 @@ co-ordinate movement (co-ordinate position, int route){
 int islegalmovement ( co-ordinate position) {
   int move = FALSE;
   if((postion.column == 0) || (position.column == 10)){
-    if((position.row > -1) && (postion.row < 13) {
+    if((position.row >= 5) && (postion.row <= 8) {
     move = TRUE;
     }
   }
-  if((position.column == 
-  if((position.column > 4) && (position.column < 6)){
-    if((position.row > -1) && (position.row < 21)){
+  if((postion.column == 1) || (position.column == 9)){
+    if((position.row >= 5 ) && (postion.row <= 8) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 2) || (position.column == 8)){
+    if((position.row >= 2) && (postion.row < 10) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 3) || (position.column == 7)){
+    if((position.row >= 2) && (postion.row < 10) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 4) || (position.column == 8)){
+    if((position.row >= 2) && (postion.row < 10) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 5) || (position.column == 9)){
+    if((position.row >= 2) && (postion.row < 13) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 6) || (position.column == 8)){
+    if((position.row > 0) && (postion.row < 13) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 7)){
+    if((position.row >= 0) && (postion.row >= ) {
     move = TRUE;
     }
   }
