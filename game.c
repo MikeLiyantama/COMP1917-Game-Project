@@ -64,7 +64,12 @@
 #define FALSE 0
 
 #define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
-// #define DEFAULT_DISCIPLINES {}
+#define DEFAULT_DISCIPLINES {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, \
+STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, \
+STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN,\
+STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS}
+
+typedef char path[PATH_LIMIT];
 
 typedef struct _action {
     int actionCode;  // see #defines above
@@ -213,8 +218,6 @@ void grandExchange(Game g, action a){
 
 //These are functions that are part of the prototype provided in game.h
 //They are need to have the same inputs and outputs
-
-
 
 Game newGame (int discipline[], int dice[]){ // ??
     
