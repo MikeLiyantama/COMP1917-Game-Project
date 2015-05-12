@@ -122,7 +122,7 @@ int main (int argc, char *argv[]) {
    }
 
    disposeGame(g);        
-   
+   assert(g == NULL);
    printf("All tests passed!\n You are awesome!!\n");
 
    return EXIT_SUCCESS;
