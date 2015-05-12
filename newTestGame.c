@@ -83,33 +83,54 @@ int main (int argc, char *argv[]) {
 
    Game g = newGame(disciplines, dice);
    
-   action a;
+   action p1 = {PASS,0,0,0};
+   action p2 = {PASS,0,0,0};
+   action p3 = {PASS,0,0,0};
    
 
    testGameState0(g);
    throwDice(g, 4); 
-   makeAction(g, PASS); 
+   assert(isLegalAction(g,p1)==TRUE);
+   makeAction(g, p1); 
    throwDice(g, 5);
-   makeAction(g, PASS);
+   assert(isLegalAction(g,p2)==TRUE);
+   makeAction(g, p2);
    throwDice(g, 5);
-   makeAction(g,PASS);
+   assert(isLegalAction(g,p3)==TRUE);
+   makeAction(g, p3);
    throwDice(g, 8);
    testGameState1(g);
-   makeAction(g, OBTAIN_ARC, workingPath['R']);
-   makeAction(g, OBTAIN_ARC, workingPath['R','R']);
-   makeAction(g, BUILD_CAMPUS, workingPath['R','R']);
-   makeAction(g, PASS);
+   
+   p1={OBTAIN_ARC,[R],0,0};
+   makeAction(g, p1);
+   p1={OBTAIN_ARC,[RR],0,0};
+   makeAction(g, p1);
+   p1={BUILD_CAMPUS,[RR],0,0};
+   makeAction(g, p1);
+   p1={PASS,0,0,0};
+   makeAction(g, p1);
    throwDice(g, 9);
-   makeAction(g, OBTAIN_ARC, workingPath['R','L','L','L','L','L']);
-   makeAction(g, OBTAIN_ARC, workingPath['R','L','L','L','L','L','R']); 
-   makeAction(g, BUILD_CAMPUS, workingPath['R','L','L','L','L','L','R']);
-   makeAction(g, PASS);
+   
+   p2={OBTAIN_ARC,[RRLRLL],0,0};
+   makeAction(g, p2);
+   p2={OBTAIN_ARC,[RRLRLLL],0,0};
+   makeAction(g, p2);
+   p2.actionCode=BUILD_CAMPUS;
+   makeAction(g, p2);
+   p2.actionCode=PASS;
+   makeAction(g, p2);
    throwDICE(g, 7);
-   makeAction(g, OBTAIN_ARC, workingPath['L','R','L','R','L','B']);
-   makeAction(g, OBTAIN_ARC, workingPath['L''R''L''R''R']);
-   makeAction(g, OBTAIN_ARC, workingPath['L','R','L','R','R','R']);
-   makeAction(g, PASS);
+   
+   p3={OBTAIN_ARC,[LRLRLB],0,0};
+   makeAction(g, p3);
+   p3.destination=[LRLRR];
+   makeAction(g, p3);
+   p3.destination=[LRLRRR];
+   makeAction(g, p3);
+   p3.actionCode=PASS;
+   makeAction(g, p3);
    throwDice(g, 8);
+   
    testGameState2(g);
 
    disposeGame(g);        
@@ -235,7 +256,7 @@ void testGameState1(Game g){
    }
    
    assert(getMostPublications(g) == NO_ONE);
-   assert(getTurnNumber(g) == 3)
+   assert(getTurnNumber(g) == 3);
 
    int playerNumber = 1;
    while (playerNumber <= 3){
