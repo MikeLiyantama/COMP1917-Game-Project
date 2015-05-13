@@ -314,17 +314,30 @@ void throwDice (Game g, int diceScore){
 //part of throwDice by Josfer
 static int diceToRegionID( Game g, int diceScore){
    int counter = 0;
-   while((g->dice[counter]!=diceScore)&&(counter<=19)){
+   while((g->dice[counter]!=diceScore)&&(counter<19)){
       counter++;
    }
    return counter;
 }
 
+/*static int studentAtRegion(game g, int regionID){
+ 
+   int students[19] = {0};
+   int tempCount = 0;
+   int count = 0;
+   while (count < 19) {
+      if(g->dice[count] == diceValue) {
+         students[tempCount] = discipline[count];
+         tempCount++;
+      }
+      count++;
+   }*/
+
 //part of throwDice by Josfer
-static int regionIDToStudent(Game g, int regionID){
+/*static int regionIDToStudent(Game g, int regionID){
    int student= disciplines[regionID];
    return student;
-}
+}*/
 
 int getDiscipline (Game g, int regionID){
     int discipline = g.disciplines[regionID];
