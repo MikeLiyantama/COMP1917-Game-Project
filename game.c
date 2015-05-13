@@ -299,10 +299,31 @@ void makeAction (Game g, action a){
 }
 
 void throwDice (Game g, int diceScore){
-    if(diceScore >= 2 && diceScore <= 12){
-        g.currentTurn++;
-        makeAction(Game g, PASS)
-    }
+   int regionID = diceToRegionID(g, diceScore);
+   int student = regionToStudent(g, regionID);
+   //edited by Josfer
+   //only takes into account if no duplicates in DEFAULT_DICE
+   //if anyone can think of a solution feel free to change
+   //missing function to give which coordinates are around the region
+   //then check if anyone has a campus or GO8 in those coordinates
+   //give them the students if they do
+   //maybe a linked list of coordinates? but im still trying to learn them
+   g.currentTurn++;
+}
+
+//part of throwDice by Josfer
+static int diceToRegionID( Game g, int diceScore){
+   int counter = 0;
+   while((g->dice[counter]!=diceScore)&&(counter<=19)){
+      counter++;
+   }
+   return counter;
+}
+
+//part of throwDice by Josfer
+static int regionIDToStudent(Game g, int regionID){
+   int student= disciplines[regionID];
+   return student;
 }
 
 int getDiscipline (Game g, int regionID){
