@@ -22,8 +22,8 @@ void testPlayer3State3 (Game g, int playerNumber);
 
 int main (int argc, char *argv[]) {
 
-   int disciplines[] = {DEFAULT_DISCIPLINES};
-   int dice[] = {DEFAULT_DICE};
+   int disciplines[NUM_REGIONS] = {DEFAULT_DISCIPLINES};
+   int dice[NUM_REGIONS] = {DEFAULT_DICE};
 
    Game g = newGame(disciplines, dice);
    
