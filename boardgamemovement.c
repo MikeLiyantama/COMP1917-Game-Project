@@ -22,7 +22,7 @@ co_ordinate movedecoder (char* directions,char type);
 co_ordinate movement (co_ordinate position, char route);
 void studentgenerator (int regionID);
 
-void studentgenerator (int regionID) {
+void studentgenerator (g, int regionID) {
     int start;
     int column;
     if(regionID == 0) {
@@ -74,12 +74,16 @@ void studentgenerator (int regionID) {
         column = 6;
         start = 14;
     } else if (regionID == 16) {
-        
+        column = 8;
+        start = 4;
     } else if (regionID == 17) {
-        
+        column = 8;
+        start = 8;
     } else if (regionID == 18) {
-        
+        column = 8;
+        start = 12;
     }
+    generateStudents (g, start, column);
 }
 
 co_ordinate movedecoder (char* directions,char type) {
