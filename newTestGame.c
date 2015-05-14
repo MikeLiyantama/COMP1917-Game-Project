@@ -1,3 +1,6 @@
+// tests for Game.c
+//Created by Michael, Josfer Lauchlan and Inura
+
 #include "Game.h"
 
 #define TERRA_NULLIUS -1
