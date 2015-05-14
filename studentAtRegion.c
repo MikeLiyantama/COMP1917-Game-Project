@@ -1,6 +1,5 @@
 
-int studentAtRegion(game g, int regionID){
-
+void studentAtRegion(game g, int regionID){
    int students[19] = {0};
    int tempCount = 0;
    int count = 0;
@@ -9,7 +8,12 @@ int studentAtRegion(game g, int regionID){
          students[tempCount] = discipline[count];
          tempCount++;
       }
+      
       count++;
+   }
+   count = 0;
+   while ( count <= 20){
+   
    }
 //define new function above main
 //returns studentNumber with that discipline
