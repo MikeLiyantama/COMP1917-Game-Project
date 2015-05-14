@@ -12,8 +12,11 @@ void studentAtRegion(game g, int regionID){
       count++;
    }
    count = 0;
-   while ( count <= 20){
-   
+   int studentType; 
+   while ( count <= 18){
+      studentType = students[counter];
+      studentgenerator (g, count, studentType);
+      counter++;
    }
 //define new function above main
 //returns studentNumber with that discipline
