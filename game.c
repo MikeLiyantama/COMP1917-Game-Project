@@ -8,7 +8,6 @@
 #include <assert.h>
 
 #include "Game.h"
-#include "mechanicalTurk.h"
 
 //NOTE: I have altered the #define to mirrors the ones in game.h
 
