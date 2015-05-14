@@ -20,7 +20,67 @@ typedef struct _co_ordinate {
 int islegalmovement ( co_ordinate position);
 co_ordinate movedecoder (char* directions,char type);
 co_ordinate movement (co_ordinate position, char route);
+void studentgenerator (int regionID);
 
+void studentgenerator (int regionID) {
+    int start;
+    int column;
+    if(regionID == 0) {
+        column = 0;
+        start = 4;
+    } else if (regionID == 1) {
+        column = 0;
+        start  = 8; 
+    } else if (regionID == 2) {
+        column = 0;
+        start = 12;
+    } else if (regionID == 3) {
+        column = 2;
+        start = 2;
+    } else if (regionID == 4) {
+        column = 2;
+        start = 6;
+    } else if (regionID == 5) {
+        column = 2;
+        start = 10;
+    } else if (regionID == 6) {
+        column = 2;
+        start = 14;
+    } else if (regionID == 7) {
+        column = 4;
+        start = 0;
+    } else if (regionID == 8) {
+        column = 4;
+        start = 4;
+    } else if (regionID == 9) {
+        column = 4;
+        start = 8;
+    } else if (regionID == 10) {
+        column = 4;
+        start = 12;
+    } else if (regionID == 11) {
+        column = 4;
+        start = 16;
+    } else if (regionID == 12) {
+        column = 6;
+        start = 2;
+    } else if (regionID == 13) {
+        column = 6;
+        start = 6;
+    } else if (regionID == 14) {
+        column = 6;
+        start = 10;
+    } else if (regionID == 15) {
+        column = 6;
+        start = 14;
+    } else if (regionID == 16) {
+        
+    } else if (regionID == 17) {
+        
+    } else if (regionID == 18) {
+        
+    }
+}
 
 co_ordinate movedecoder (char* directions,char type) {
    int counter = 0;
