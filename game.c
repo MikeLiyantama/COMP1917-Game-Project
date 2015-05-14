@@ -60,18 +60,18 @@ typedef struct _game {
 
     int pubsCreated; // To count pubs created for getMostPublications
     int ARCsCreated; // same as above but for ARCs.
-} _game;
+} game;
 
 // Here are the movement functions written by Inura
 // Game board representation using method though up by our group
 
 //Prototypes
-static int islegalmovement ( co_ordinate position);
-static co_ordinate movedecoder (char* directions,char type);
+static int isLegalMovement ( co_ordinate position);
+static co_ordinate moveDecoder (char* directions,char type);
 static co_ordinate movement (co_ordinate position, char route);
-static void studentgenerator (Game g, int regionID, int studentType);
+static void studentGenerator (Game g, int regionID, int studentType);
 
-static void studentgenerator (Game g, int regionID, int studentType) {
+static void studentGenerator (Game g, int regionID, int studentType) {
     int start;
     int column;
     if(regionID == 0) {
@@ -135,7 +135,7 @@ static void studentgenerator (Game g, int regionID, int studentType) {
     generateStudents (g, start, column, studentType);
 }
 
-static co_ordinate movedecoder (char* directions,char type) {
+static co_ordinate moveDecoder (char* directions,char type) {
    int counter = 0;
    char route;
    co_ordinate point = {0,4,0,TRUE,FALSE};
@@ -147,7 +147,7 @@ static co_ordinate movedecoder (char* directions,char type) {
    while ( (directions[counter] != 0) && (point.valid == TRUE)) {
       route = directions[counter];
       point = movement(point, route);
-      point.valid = islegalmovement (point);
+      point.valid = isLegalMovement (point);
       counter++;
    }
    return point;
@@ -197,7 +197,7 @@ static co_ordinate movement (co_ordinate position, char route){
 //movement is legal test
 //FOr each row it means that if the number is greater than
 //the elements in the row or less than zero then the action is illegal
-static int islegalmovement ( co_ordinate position) {
+static int isLegalMovement ( co_ordinate position) {
   int move = FALSE;
   if((position.column == 0) || (position.column == 10)){
     if((position.row >= 5) && (position.row <= 8)) {
@@ -259,7 +259,7 @@ void studentAtRegion(Game g, int diceValue){
    int studentType;
    while ( count <= 19){
       studentType = students[count];
-      studentgenerator (g, count, studentType);
+      studentGenerator (g, count, studentType);
       count++;
    }
 }
@@ -267,6 +267,10 @@ void studentAtRegion(Game g, int diceValue){
 static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
    player *temp = {0};
 
+   // enter 0 for playerNumber if this function is used during a player's turn
+   // enter UNI_A, UNI_B, or UNI_C if used to update students when it is not their turn
+   // ie. during throwDice
+   if (playerNumber == NO_ONE){ 
       if ((g->currentTurn%3) == UNI_A){
          playerNumber = UNI_A;
       } else if ((g->currentTurn%3) == UNI_B){
@@ -274,6 +278,7 @@ static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int B
       } else if ((g->currentTurn%3) == UNI_C){
          playerNuber = UNI_C;
       }
+   }
    if (playerNumber == UNI_A){
       temp = g->playerone;
    } else if (playerNumber == UNI_B){
@@ -285,7 +290,7 @@ static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int B
    int studentCount = 0;
    int addStudent[NUM_DISCIPLINES] = {ThD,BPS,BQN,MJ,MTV,MMONEY};
    while(studentCount <= NUM_DISCIPLINES){
-      temp.student[studentCount] == temp.student[studentCount] + addStudent[studentCount];
+      temp->student[studentCount] == temp->student[studentCount] + addStudent[studentCount];
       studentCount++;
    }
 }
@@ -322,7 +327,7 @@ static void changeKPI (Game g, int KPI){
    } else if (getWhoseTurn(g) == UNI_C){
       temp = g->playerthree;
    }
-   temp.KPI = temp.KPI + KPI;
+   temp->KPI = temp->KPI + KPI;
 
    /* Alternative Form:
 
@@ -402,17 +407,17 @@ static void generateStudents (Game g, int start, int column, int studentType){
         campus = g->gameboard[counter][column];
         if(campus > 0) {
             if(campus == CAMPUS_A){
-                changeStudents( g, PLAYER_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
+                changeStudents( g, UNI_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == CAMPUS_B){
-                changeStudents( g, PLAYER_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
             } else if ( campus == CAMPUS_C){
-                changeStudents( g, PLAYER_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
             } else if ( campus == GO8_A){
-                changeStudents( g, PLAYER_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+                changeStudents( g, UNI_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             } else if ( campus == GO8_B){
-                changeStudents( g, PLAYER_B, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+                changeStudents( g, UNI_B, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             }else if ( campus == GO8_C){
-                changeStudents( g, PLAYER_C, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+                changeStudents( g, UNI_C, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             }
         }
         counter += 2;
@@ -422,17 +427,17 @@ static void generateStudents (Game g, int start, int column, int studentType){
         campus = g->gameboard[counter][column+2];
         if(campus > 0) {
             if(campus == CAMPUS_A){
-                changeStudents( g, PLAYER_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
+                changeStudents( g, UNI_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == CAMPUS_B){
-                changeStudents( g, PLAYER_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
             } else if ( campus == CAMPUS_C){
-                changeStudents( g, PLAYER_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
             } else if ( campus == GO8_A){
-                changeStudents( g, PLAYER_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+                changeStudents( g, UNI_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             } else if ( campus == GO8_B){
-                changeStudents( g, PLAYER_B, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+                changeStudents( g, UNI_B, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             }else if ( campus == GO8_C){
-                changeStudents( g, PLAYER_C, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+                changeStudents( g, UNI_C, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             }
         }
         counter += 2;
@@ -562,7 +567,7 @@ void makeAction (Game g, action a){
 
 void throwDice (Game g, int diceScore){
 
-   int students[19] = {-1};
+   /*int students[19] = {-1};
    int RegionID = 0;
    int count = 0;
 
@@ -588,7 +593,7 @@ void throwDice (Game g, int diceScore){
          IDcounter++;
       }
       count++;
-   }
+   }*/
    if (g->playerTurn == UNI_C){
       g->playerTurn == UNI_A;
    } else {
@@ -690,14 +695,14 @@ int getWhoseTurn (Game g){
 
 int getCampus (Game g, path pathToVortex){
     co_ordinate point;
-    point = movedecoder (pathToVortex, 7);
+    point = moveDecoder (pathToVortex, 7);
     int campus = g->gameboard[point.row][point.column];
     return campus;
 }
 
 int getARC (Game g, path pathToEdge){
     co_ordinate point;
-    point = movedecoder (pathToEdge, 7);
+    point = moveDecoder (pathToEdge, 7);
     int arc = g->gameboard[point.row][point.column];
     return arc;
 }
