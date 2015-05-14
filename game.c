@@ -11,8 +11,6 @@
 
 //NOTE: I have altered the #define to mirrors the ones in game.h
 
-#define CAMPUS 1
-#define GO8 2
 #define START_TURN_NUMBER -1
 #define RETRAIN_COST 3
 #define NUM_DISCIPLINES 6
@@ -21,6 +19,7 @@
 #define NUMBER_OF_DIRECTIONS 6
 
 typedef unsigned long long numberof;
+typedef int columntype;
 typedef struct _board {
   columntype gameboard[21][11];
 } board;
@@ -38,7 +37,7 @@ typedef struct _player {
     numberof campuses;
     numberof GOEs;
     numberof ips;
-    numberof students[6] = {0};
+    numberof students[6];
     numberof retrain_BPS;
     numberof retrain_BQN;
     numberof retrain_MJ;
@@ -51,24 +50,20 @@ typedef struct _game {
     player playertwo;
     player playerthree;
     board gameboard;
-    numberof GOE = 0;
-    unsigned char mostArc = NO_ONE;
-    unsigned char mostPub = NO_ONE;
-    int currentTurn = START_TURN_NUMBER;
+    numberof GOE;
+    unsigned char mostArc;
+    unsigned char mostPub;
+    int currentTurn;
     
-    int dice[] = DEFAULT_DICE;
-    int disciplines[] = DEFAULT_DISCIPLINES;
+    int dice[19];
+    int disciplines[19];
     
-    int pubsCreated = 0; // To count pubs created for getMostPublications
-    int ARCsCreated = 0; // same as above but for ARCs.
+    int pubsCreated; // To count pubs created for getMostPublications
+    int ARCsCreated; // same as above but for ARCs.
 } Game;
 
 // Here are the movement functions written by Inura
 // Game board representation using method though up by our group
-#define ARCco 'A'
-#define DIVISION 2
-#define NUMBER_OF_DIRECTIONS 6
-typedef int columntype;
 
 //Prototypes 
 int islegalmovement ( co_ordinate position);
@@ -76,7 +71,7 @@ co_ordinate movedecoder (char* directions,char type);
 co_ordinate movement (co_ordinate position, char route);
 void studentgenerator (int regionID);
 
-static void studentgenerator (g, int regionID, int studentType) {
+static void studentgenerator (Game g, int regionID, int studentType) {
     int start;
     int column;
     if(regionID == 0) {
@@ -137,7 +132,7 @@ static void studentgenerator (g, int regionID, int studentType) {
         column = 8;
         start = 12;
     }
-    generateStudents (Game g, start, column, studentType);
+    generateStudents (g, start, column, studentType);
 }
 
 static co_ordinate movedecoder (char* directions,char type) {
@@ -248,7 +243,7 @@ static int islegalmovement ( co_ordinate position) {
 }
 
 // Here is the function Lachlan wrote
-void studentAtRegion(game g, int regionID){
+void studentAtRegion(Game g){
    int students[19] = {0};
    int tempCount = 0;
    int count = 0;
@@ -262,7 +257,7 @@ void studentAtRegion(game g, int regionID){
    }
    count = 0;
    int studentType; 
-   while ( count <= 18){
+   while ( count <= 19){
       studentType = students[counter];
       studentgenerator (g, count, studentType);
       counter++;
@@ -292,7 +287,7 @@ static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int B
    int studentCount = 0;
    int addStudent[NUM_DISCIPLINES] = {ThD,BPS,BQN,MJ,MTV,MMONEY};
    while(studentCount <= NUM_DISCIPLINES){
-      temp->student[studentCount] == temp->student[studentCount] + addStudent[studentCount];
+      temp.student[studentCount] == temp.student[studentCount] + addStudent[studentCount];
       studentCount++;
    }
 }
@@ -329,7 +324,7 @@ static void changeKPI (Game g, int KPI){
    } else if (getWhoseTurn(g) == UNI_C){
       temp = g->playerthree;
    }
-   temp->KPI = temp->KPI + KPI;
+   temp.KPI = temp.KPI + KPI;
     
    /* Alternative Form:
     
@@ -463,16 +458,17 @@ void disposeGame (Game g){
 
 void makeAction (Game g, action a){
     player *temp = {0};
-    if (getWhoseTurn(g) == UNI_A){
-        temp = g.playerone;
-    } else if (getWhoseTurn(g) == UNI_B){
-        temp = g.playertwo;
-    } else if (getWhoseTurn(g) == UNI_C){
-        temp = g.playerthree;
+    int turn = getWhoseturn(g);
+    if (turn == UNI_A){
+        temp = g->playerone;
+    } else if (turn == UNI_B){
+        temp = g->playertwo;
+    } else if (turn == UNI_C){
+        temp = g->playerthree;
     }
 
     if(isLegalAction(g,a) == TRUE){
-       if(temp==g.playerone){
+       if(turn == UNI_A){
           if ( a.Actioncode == PASS){
               //DO nothing as they have passed their turn
           } else if (a.Actioncode == BUILD_CAMPUS){
@@ -490,19 +486,19 @@ void makeAction (Game g, action a){
               changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
               changeKPI(g, 10);
               writeToBoard(g,a.destination,ARC_A);
-              g.ARCsCreated++;
+              g->ARCsCreated++;
           } else if (a.Actioncode == START_SPINOFF) {
               //DO Nothing as this is an unexpected output
           } else if (a.Actioncode == OBTAIN_PUBLICATION) {
               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
-              g.pubsCreated++;
+              g->pubsCreated++;
           } else if (a.Actioncode == OBTAIN_IP_PATENT) {
               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
               changeKPI(g, 10);
           } else if (a.Actioncode == RETRAIN_STUDENTS) {
               grandExchange(g, a);
           }
-       }else if(temp==g.playertwo){
+       }else if(turn == UNI_B){
            if ( a.Actioncode == PASS){
                //DO nothing as they have passed their turn
            } else if (a.Actioncode == BUILD_CAMPUS){
@@ -520,19 +516,19 @@ void makeAction (Game g, action a){
                changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,ARC_B);
-               g.ARCsCreated++;
+               g->ARCsCreated++;
            } else if (a.Actioncode == START_SPINOFF) {
                //DO Nothing as this is an unexpected output
            } else if (a.Actioncode == OBTAIN_PUBLICATION) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
-               g.pubsCreated++;
+               g->pubsCreated++;
            } else if (a.Actioncode == OBTAIN_IP_PATENT) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                changeKPI(g, 10);
            } else if (a.Actioncode == RETRAIN_STUDENTS) {
                grandExchange(g, a);
            }
-       }else if(temp==g.playerthree){
+       }else if(turn == UNI_C){
            if ( a.Actioncode == PASS){
                //DO nothing as they have passed their turn
            } else if (a.Actioncode == BUILD_CAMPUS){
@@ -550,12 +546,12 @@ void makeAction (Game g, action a){
                changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,ARC_C);
-               g.ARCsCreated++;
+               g->ARCsCreated++;
            } else if (a.Actioncode == START_SPINOFF) {
                //DO Nothing as this is an unexpected output
            } else if (a.Actioncode == OBTAIN_PUBLICATION) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
-               g.pubsCreated++;
+               g->pubsCreated++;
            } else if (a.Actioncode == OBTAIN_IP_PATENT) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                changeKPI(g, 10);
@@ -632,25 +628,25 @@ void throwDice (Game g, int diceScore){
 }*/
 
 int getDiscipline (Game g, int regionID){
-    int discipline = g.disciplines[regionID];
+    int discipline = g->disciplines[regionID];
     return discipline;
 }
 
 int getDiceValue (Game g, int regionID){
-    int defaultDice = g.dice[regionID];
+    int defaultDice = g->dice[regionID];
     return defaultDice;
 }
 
 int getMostARCs(Game g){
     int ID = NO_ONE;
-    if(g.ARCsCreated>0){
-        if((g.playerone.Arc > g.playertwo.Arc) && (g.playerone.Arc > g.playerthree.Arc)){
+    if(g->ARCsCreated>0){
+        if((g->playerone.Arc > g->playertwo.Arc) && (g->playerone.Arc > g->playerthree.Arc)){
             ID = UNI_A;
         }
-        else if((g.playertwo.Arc > g.playerone.Arc) && (g.playertwo.Arc > g.playerthree.Arc)){
+        else if((g->playertwo.Arc > g->playerone.Arc) && (g->playertwo.Arc > g->playerthree.Arc)){
             ID = UNI_B;
         }
-        else if((g.playerone.Arc > g.playertwo.Arc) && (g.playerone.Arc > g.playerthree.Arc)){
+        else if((g->playerone.Arc > g->playertwo.Arc) && (g->playerone.Arc > g->playerthree.Arc)){
             ID = UNI_C;
         }
     }
@@ -661,13 +657,13 @@ int getMostARCs(Game g){
 int getMostPublications(Game g){
     int ID = NO_ONE;
     if(g.pubsCreated>0){
-        if((g.playerone.pubs > g.playertwo.pubs) && (g.playerone.pubs > g.playerthree.pubs)){
+        if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
             ID = UNI_A;
         }
-        else if((g.playertwo.pubs > g.playerone.pubs) && (g.playertwo.pubs > g.playerthree.pubs)){
+        else if((g->playertwo.pubs > g->playerone.pubs) && (g->playertwo.pubs > g->playerthree.pubs)){
             ID = UNI_B;
         }
-        else if((g.playerone.pubs > g.playertwo.pubs) && (g.playerone.pubs > g.playerthree.pubs)){
+        else if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
             ID = UNI_C;
         }
     }
@@ -676,37 +672,41 @@ int getMostPublications(Game g){
 
 int getTurnNumber (Game g){
     int turnNumber = 0;
-    turnNumber = g.currentTurn;
+    turnNumber = g->currentTurn;
     return turnNumber;
 }
 
 int getWhoseTurn (Game g){
     int ID = NO_ONE;
-    if (g.currentTurn % 3 == 0){
+    if (g->currentTurn % 3 == 0){
         ID = UNI_A;
     }
-    else if (g.currentTurn % 3 == 1){
+    else if (g->currentTurn % 3 == 1){
         ID = UNI_B;
     }
-    else if (g.currentTurn % 3 == 2){
+    else if (g->currentTurn % 3 == 2){
         ID = UNI_C;
     }
     return ID;
 }
 
 int getCampus (Game g, path pathToVortex){
-    int campus = pathToVortex;
+    co_ordinate point;
+    point = movedecoder (pathToVortex, 7);
+    int campus = g->gameboard[point.row][point.column];
     return campus;
 }
 
 int getARC (Game g, path pathToEdge){
-    int arc = pathToEdge;
+    co_ordinate point;
+    point = movedecoder (pathToEdge, 7);
+    int arc = g->gameboard[point.row][point.column];
     return arc;
 }
 
 int isLegalAction (Game g, action a){
     int bool = TRUE;
-    if(g.currentTurn == -1){
+    if(g->currentTurn == -1){
         bool == FALSE;
     }
     if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
@@ -720,11 +720,11 @@ int isLegalAction (Game g, action a){
     if(a.Actioncode == BUILD_CAMPUS || a.Actioncode == OBTAIN_ARC){
         int temp = 0;
         if(getWhoseTurn == UNI_A){
-            temp = g.playerone;
+            temp = g->playerone;
         }else if(getWhoseTurn == UNI_B){
-            temp = g.playertwo;
+            temp = g->playertwo;
         }else if(getWhoseTurn == UNI_C){
-            temp = g.playerthree;
+            temp = g->playerthree;
         }
         
         if(temp.BPS >= 1 && temp.BQN >= 1 && temp.MJ >= 1 && temp.MTV >=1){
@@ -735,11 +735,11 @@ int isLegalAction (Game g, action a){
     if(a.Actioncode == BUILD_GO8){
         int temp = 0;
         if(getWhoseTurn == UNI_A){
-            temp = g.playerone;
+            temp = g->playerone;
         }else if(getWhoseTurn == UNI_B){
-            temp = g.playertwo;
+            temp = g->playertwo;
         }else if(getWhoseTurn == UNI_C){
-            temp = g.playerthree;
+            temp = g->playerthree;
         }
         
         if(temp.MJ >= 2 && temp.MS >=3){
@@ -749,11 +749,11 @@ int isLegalAction (Game g, action a){
     if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
         int temp = 0;
         if(getWhoseTurn == UNI_A){
-            temp = g.playerone;
+            temp = g->playerone;
         }else if(getWhoseTurn == UNI_B){
-            temp = g.playertwo;
+            temp = g->playertwo;
         }else if(getWhoseTurn == UNI_C){
-            temp = g.playerthree;
+            temp = g->playerthree;
         }
         
         if(temp.MJ >= 1 && temp.MTV >=1 && temp.MMONEY >= 1){
@@ -765,11 +765,11 @@ int isLegalAction (Game g, action a){
 int getKPIpoints(Game g, int player){
     int KPI = 0;
     if (player == 1) {
-        KPI = g.playerone.KPI;
+        KPI = g->playerone.KPI;
     } else if (player == 2) {
-        KPI = g.playertwo.KPI;    
+        KPI = g->playertwo.KPI;    
     } else if (player == 3) {
-        KPI = g.playerthree.KPI;    
+        KPI = g->playerthree.KPI;    
     }    
     return KPI;
 }
@@ -777,11 +777,11 @@ int getKPIpoints(Game g, int player){
 int getARCs (Game g, int player){
     int Arcs = 0;
     if (player == 1) {
-        Arcs = g.playerone.Arc;
+        Arcs = g->playerone.Arc;
     } else if (player == 2) {
-        Arcs = g.playertwo.Arc;    
+        Arcs = g->playertwo.Arc;    
     } else if (player == 3) {
-        Arcs = g.playerthree.Arc;    
+        Arcs = g->playerthree.Arc;    
     }    
     return Arcs;
 }
@@ -789,11 +789,11 @@ int getARCs (Game g, int player){
 int getGO8s (Game g, int player){
     int GOE = 0;
     if (player == 1) {
-        GOE = g.playerone.GOEs;
+        GOE = g->playerone.GOEs;
     } else if (player == 2) {
-        GOE = g.playertwo.GOEs;    
+        GOE = g->playertwo.GOEs;    
     } else if (player == 3) {
-        GOE = g.playerthree.GOEs;    
+        GOE = g->playerthree.GOEs;    
     }    
     return GOE;
 }
@@ -801,11 +801,11 @@ int getGO8s (Game g, int player){
 int getCampuses (Game g, int player){
     int campus = 0;
     if (player == 1) {
-        campus = g.playerone.campuses;
+        campus = g->playerone.campuses;
     } else if (player == 2) {
-        campus = g.playertwo.campuses;    
+        campus = g->playertwo.campuses;    
     } else if (player == 3) { 
-        campus = g.playerthree.campuses;    
+        campus = g->playerthree.campuses;    
     }    
     return campus;
 }
@@ -813,11 +813,11 @@ int getCampuses (Game g, int player){
 int getIPs (Game g, int player){
     int IP = 0;
     if (player == 1) {
-        IP = g.playerone.ips;
+        IP = g->playerone.ips;
     } else if (player == 2) {
-        IP = g.playertwo.ips;    
+        IP = g->playertwo.ips;    
     } else if (player == 3) {
-        IP = g.playerthree.ips;    
+        IP = g->playerthree.ips;    
     }
     return IP;
 }
@@ -825,58 +825,58 @@ int getIPs (Game g, int player){
 int getPublications (Game g, int player){
     int pubs = 0;
     if (player == 1) {
-        pubs = g.playerone.pubs;
+        pubs = g->playerone.pubs;
     } else if (player == 2) {
-        pubs = g.playertwo.pubs;    
+        pubs = g->playertwo.pubs;    
     } else if (player == 3) {
-        pubs = g.playerthree.pubs;    
+        pubs = g->playerthree.pubs;    
     }
     return pubs;    
 }
 
 int getStudents (Game g, int player, int discipline){
     int studentnum = 0;
-    if (player == 1){
+    if (player == UNI_A){
         if (discipline == STUDENT_THD) {
-            studentnum = g.playerone.THD;
+            studentnum = g->playerone.THD;
         } else if (discipline == STUDENT_BPS){
-            studentnum = g.playerone.BPS;
+            studentnum = g->playerone.BPS;
         } else if (discipline == STUDENT_BQN) {
-            studentnum = g.playerone.BQN;
+            studentnum = g->playerone.BQN;
         } else if (discipline == STUDENT_MJ) {
-            studentnum = g.playerone.MJ;
+            studentnum = g->playerone.MJ;
         } else if (discipline == STUDENT_MTV) {
-            studentnum = g.playerone.MTV;
+            studentnum = g->playerone.MTV;
         } else if (discipline == STUDENT_MMONEY) {
-            studentnum = g.playerone.MMONEY;
+            studentnum = g->playerone.MMONEY;
         }
-    } else if (player == 2){
+    } else if (player == UNI_B){
         if (discipline == STUDENT_THD) {
-            studentnum = g.playertwo.THD;
+            studentnum = g->playertwo.THD;
         } else if (discipline == STUDENT_BPS){
-            studentnum = g.playertwo.BPS;
+            studentnum = g->playertwo.BPS;
         } else if (discipline == STUDENT_BQN) {
-            studentnum = g.playertwo.BQN;
+            studentnum = g->playertwo.BQN;
         } else if (discipline == STUDENT_MJ) {
-            studentnum = g.playertwo.MJ;
+            studentnum = g->playertwo.MJ;
         } else if (discipline == STUDENT_MTV) {
-            studentnum = g.playertwo.MTV;
+            studentnum = g->playertwo.MTV;
         } else if (discipline == STUDENT_MMONEY) {
-            studentnum = g.playertwo.MMONEY;
+            studentnum = g->playertwo.MMONEY;
         }
-    } else if (player == 3){
+    } else if (player == UNI_C){
         if (discipline == STUDENT_THD) {
-            studentnum = g.playerthree.THD;
+            studentnum = g->playerthree.THD;
         } else if (discipline == STUDENT_BPS){
-            studentnum = g.playerthree.BPS;
+            studentnum = g->playerthree.BPS;
         } else if (discipline == STUDENT_BQN) {
-            studentnum = g.playerthree.BQN;
+            studentnum = g->playerthree.BQN;
         } else if (discipline == STUDENT_MJ) {
-            studentnum = g.playerthree.MJ;
+            studentnum = g->playerthree.MJ;
         } else if (discipline == STUDENT_MTV) {
-            studentnum = g.playerthree.MTV;
+            studentnum = g->playerthree.MTV;
         } else if (discipline == STUDENT_MMONEY) {
-            studentnum = g.playerthree.MMONEY;
+            studentnum = g->playerthree.MMONEY;
         }
     }    
     return studentnum;
@@ -884,41 +884,41 @@ int getStudents (Game g, int player, int discipline){
 
 int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
     int exchangeRate = 0;
-    if (player == 1){
+    if (player == UNI_A){
         if (disciplineFrom == STUDENT_BPS){
-            exchangeRate = g.playerone.retrain_BPS;
+            exchangeRate = g->playerone.retrain_BPS;
         } else if (disciplineFrom == STUDENT_BQN) {
-            exchangeRate = g.playerone.retrain_BQN;
+            exchangeRate = g->playerone.retrain_BQN;
         } else if (disciplineFrom == STUDENT_MJ) {
-            exchangeRate = g.playerone.retrain_MJ;
+            exchangeRate = g->playerone.retrain_MJ;
         } else if (disciplineFrom == STUDENT_MTV) {
-            exchangeRate = g.playerone.retrain_MTV;
+            exchangeRate = g->playerone.retrain_MTV;
         } else if (disciplineFrom == STUDENT_MMONEY) {
-            exchangeRate = g.playerone.retrain_MMONEY;
+            exchangeRate = g->playerone.retrain_MMONEY;
         }
-    } else if (player == 2) {
+    } else if (player == UNI_B) {
         if (disciplineFrom == STUDENT_BPS){
-            exchangeRate = g.playertwo.retrain_BPS;
+            exchangeRate = g->playertwo.retrain_BPS;
         } else if (disciplineFrom == STUDENT_BQN) {
-            exchangeRate = g.playertwo.retrain_BQN;
+            exchangeRate = g->playertwo.retrain_BQN;
         } else if (disciplineFrom == STUDENT_MJ) {
-            exchangeRate = g.playertwo.retrain_MJ;
+            exchangeRate = g->playertwo.retrain_MJ;
         } else if (disciplineFrom == STUDENT_MTV) {
-            exchangeRate = g.playertwo.retrain_MTV;
+            exchangeRate = g->playertwo.retrain_MTV;
         } else if (disciplineFrom == STUDENT_MMONEY) {
-            exchangeRate = g.playertwo.retrain_MMONEY;
+            exchangeRate = g->playertwo.retrain_MMONEY;
         }
-    } else if (player == 3) {
+    } else if (player == UNI_C) {
         if (disciplineFrom == STUDENT_BPS){
-           exchangeRate =  g.playerthree.retrain_BPS;
+           exchangeRate =  g->playerthree.retrain_BPS;
         } else if (disciplineFrom == STUDENT_BQN) {
-            exchangeRate = g.playerthree.retrain_BQN;
+            exchangeRate = g->playerthree.retrain_BQN;
         } else if (disciplineFrom == STUDENT_MJ) {
-            exchangeRate = g.playerthree.retrain_MJ;
+            exchangeRate = g->playerthree.retrain_MJ;
         } else if (disciplineFrom == STUDENT_MTV) {
-            exchangeRate = g.playerthree.retrain_MTV;
+            exchangeRate = g->playerthree.retrain_MTV;
         } else if (disciplineFrom == STUDENT_MMONEY) {
-            exchangeRate = g.playerthree.retrain_MMONEY;
+            exchangeRate = g->playerthree.retrain_MMONEY;
         }
     }
     return exchangeRate;
