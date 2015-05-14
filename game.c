@@ -21,6 +21,30 @@
 #define NUMBER_OF_DIRECTIONS 6
 
 typedef unsigned long long numberof;
+typedef struct _board {
+  columntype gameboard[21][11];
+} board;
+typedef struct _co_ordinate {
+  int column;
+  int row;
+  int orientation;
+  int valid;
+  int isARC;
+} co_ordinate;
+typedef struct _player {
+    numberof KPI;
+    numberof Arc;
+    numberof pubs;
+    numberof campuses;
+    numberof GOEs;
+    numberof ips;
+    numberof students[6] = {0};
+    numberof retrain_BPS;
+    numberof retrain_BQN;
+    numberof retrain_MJ;
+    numberof retrain_MTV;
+    numberof retrain_MMONEY;
+} player;
 typedef struct _game {
     //int playerTurn = NO_ONE;
     player playerone;
@@ -38,38 +62,13 @@ typedef struct _game {
     int pubsCreated = 0; // To count pubs created for getMostPublications
     int ARCsCreated = 0; // same as above but for ARCs.
 } Game;
-typedef struct _player {
-    numberof KPI = 0;
-    numberof Arc = 2;
-    numberof pubs = 0;
-    numberof campuses = 2;
-    numberof GOEs = 0;
-    numberof ips = 0;
-    numberof students[6] = {0};
-    numberof retrain_BPS = RETRAIN_COST;
-    numberof retrain_BQN = RETRAIN_COST;
-    numberof retrain_MJ = RETRAIN_COST;
-    numberof retrain_MTV = RETRAIN_COST;
-    numberof retrain_MMONEY = RETRAIN_COST;
-} player;
+
 // Here are the movement functions written by Inura
 // Game board representation using method though up by our group
 #define ARCco 'A'
 #define DIVISION 2
 #define NUMBER_OF_DIRECTIONS 6
 typedef int columntype;
-
-typedef struct _board {
-  columntype gameboard[21][11];
-} board;
-
-typedef struct _co_ordinate {
-  int column;
-  int row;
-  int orientation;
-  int valid;
-  int isARC;
-} co_ordinate;
 
 //Prototypes 
 int islegalmovement ( co_ordinate position);
