@@ -54,22 +54,22 @@ typedef struct _game {
     unsigned char mostArc;
     unsigned char mostPub;
     int currentTurn;
-    
+
     int dice[19];
     int disciplines[19];
-    
+
     int pubsCreated; // To count pubs created for getMostPublications
     int ARCsCreated; // same as above but for ARCs.
-} Game;
+} _game;
 
 // Here are the movement functions written by Inura
 // Game board representation using method though up by our group
 
-//Prototypes 
-int islegalmovement ( co_ordinate position);
-co_ordinate movedecoder (char* directions,char type);
-co_ordinate movement (co_ordinate position, char route);
-void studentgenerator (int regionID);
+//Prototypes
+static int islegalmovement ( co_ordinate position);
+static co_ordinate movedecoder (char* directions,char type);
+static co_ordinate movement (co_ordinate position, char route);
+static void studentgenerator (Game g, int regionID, int studentType);
 
 static void studentgenerator (Game g, int regionID, int studentType) {
     int start;
@@ -79,7 +79,7 @@ static void studentgenerator (Game g, int regionID, int studentType) {
         start = 4;
     } else if (regionID == 1) {
         column = 0;
-        start  = 8; 
+        start  = 8;
     } else if (regionID == 2) {
         column = 0;
         start = 12;
@@ -148,7 +148,7 @@ static co_ordinate movedecoder (char* directions,char type) {
       route = directions[counter];
       point = movement(point, route);
       point.valid = islegalmovement (point);
-      counter++;      
+      counter++;
    }
    return point;
 }
@@ -173,7 +173,7 @@ static co_ordinate movement (co_ordinate position, char route){
   } else if (travel == 1) {
     columnMove = -DIVISION;
   } else if (travel == 2) {
-    rowMove = DIVISION;       
+    rowMove = DIVISION;
   } else if (travel == 3) {
     rowMove = DIVISION;
   } else if (travel == 4) {
@@ -190,52 +190,52 @@ static co_ordinate movement (co_ordinate position, char route){
   position.row += rowMove;
   position.column += columnMove;
 
-  position.orientation = ((travel + (NUMBER_OF_DIRECTIONS/2)) % NUMBER_OF_DIRECTIONS); 
+  position.orientation = ((travel + (NUMBER_OF_DIRECTIONS/2)) % NUMBER_OF_DIRECTIONS);
   return position;
 }
-  
+
 //movement is legal test
-//FOr each row it means that if the number is greater than 
+//FOr each row it means that if the number is greater than
 //the elements in the row or less than zero then the action is illegal
 static int islegalmovement ( co_ordinate position) {
   int move = FALSE;
   if((position.column == 0) || (position.column == 10)){
-    if((position.row >= 5) && (postion.row <= 8)) {
+    if((position.row >= 5) && (position.row <= 8)) {
     move = TRUE;
     }
   }
-  if((postion.column == 1) || (position.column == 9)){
-    if((position.row >= 5 ) && (postion.row <= 8)) {
+  if((position.column == 1) || (position.column == 9)){
+    if((position.row >= 5 ) && (position.row <= 8)) {
     move = TRUE;
     }
   }
-  if((postion.column == 2) || (position.column == 8)){
-    if((position.row >= 2) && (postion.row < 10)) {
+  if((position.column == 2) || (position.column == 8)){
+    if((position.row >= 2) && (position.row < 10)) {
     move = TRUE;
     }
   }
-  if((postion.column == 3) || (position.column == 7)){
-    if((position.row >= 2) && (postion.row < 10)) {
+  if((position.column == 3) || (position.column == 7)){
+    if((position.row >= 2) && (position.row < 10)) {
     move = TRUE;
     }
   }
-  if((postion.column == 4) || (position.column == 8)){
-    if((position.row >= 2) && (postion.row < 10)) {
+  if((position.column == 4) || (position.column == 8)){
+    if((position.row >= 2) && (position.row < 10)) {
     move = TRUE;
     }
   }
-  if((postion.column == 5) || (position.column == 9)){
-    if((position.row >= 2) && (postion.row < 13)) {
+  if((position.column == 5) || (position.column == 9)){
+    if((position.row >= 2) && (position.row < 13)) {
     move = TRUE;
     }
   }
-  if((postion.column == 6) || (position.column == 8)){
-    if((position.row > 0) && (postion.row <= 13)) {
+  if((position.column == 6) || (position.column == 8)){
+    if((position.row > 0) && (position.row <= 13)) {
     move = TRUE;
     }
   }
-  if((postion.column == 7)){
-    if((position.row >= 0) && (postion.row <= 13)) {
+  if((position.column == 7)){
+    if((position.row >= 0) && (position.row <= 13)) {
     move = TRUE;
     }
   }
@@ -243,39 +243,37 @@ static int islegalmovement ( co_ordinate position) {
 }
 
 // Here is the function Lachlan wrote
-void studentAtRegion(Game g){
+void studentAtRegion(Game g, int diceValue){
    int students[19] = {0};
    int tempCount = 0;
    int count = 0;
    while (count < 19) {
       if(g->dice[count] == diceValue) {
-         students[tempCount] = discipline[count];
+         students[tempCount] = g->disciplines[count];
          tempCount++;
       }
-      
+
       count++;
    }
    count = 0;
-   int studentType; 
+   int studentType;
    while ( count <= 19){
-      studentType = students[counter];
+      studentType = students[count];
       studentgenerator (g, count, studentType);
-      counter++;
+      count++;
    }
 }
 //These are the prototypes for the functions that we have made for the project
 static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
    player *temp = {0};
 
-   if(playerNumber == NO_ONE){
-      if (g->playerTurn == UNI_A){
+      if ((g->currentTurn%3) == UNI_A){
          playerNumber = UNI_A;
-      } else if (g->playerTurn == UNI_B){
+      } else if ((g->currentTurn%3) == UNI_B){
          playerNumber = UNI_B;
-      } else if (g->playerTurn == UNI_C){
+      } else if ((g->currentTurn%3) == UNI_C){
          playerNuber = UNI_C;
       }
-   } 
    if (playerNumber == UNI_A){
       temp = g->playerone;
    } else if (playerNumber == UNI_B){
@@ -291,9 +289,9 @@ static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int B
       studentCount++;
    }
 }
-    
+
    /* Alternative form:
-    
+
     if(getWhoseTurn == UNI_A){
        g.playerone.ThD = g.playerone.ThD + ThD;
        g.playerone.BPS = g.playerone.BPS + BPS;
@@ -312,8 +310,8 @@ static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int B
        g.playerthree.MJ = g.playerthree.MJ + MJ;
        g.playerthree.MTV = g.playerthree.MTV + MTV;
        g.playerthree.MMONEY = g.playerthree.MMONEY + MMONEY;
-    
-    
+
+
 }*/
 static void changeKPI (Game g, int KPI){
    player *temp = {0};
@@ -325,9 +323,9 @@ static void changeKPI (Game g, int KPI){
       temp = g->playerthree;
    }
    temp.KPI = temp.KPI + KPI;
-    
+
    /* Alternative Form:
-    
+
     if(getWhoseTurn == UNI_A){
        g.playerone.KPI = g.playerone.KPI + KPI;
     } else if(getWhoseTurn == UNI_B){
@@ -335,16 +333,16 @@ static void changeKPI (Game g, int KPI){
     } else if(getWhoseTurn == UNI_C){
        g.playerthree.KPI = g.playerthree.KPI + KPI;
     }
-    
+
     */
 }
 
 static void grandExchange(Game g, action a){
-    
+
    int disciplineFrom = a.disciplineFrom;
    int disciplineTo = a.disciplineTo;
    int rate = getExchangeRate(g,temp,disciplineFrom,disciplineTo);
-   
+
    if (disciplineFrom = STUDENT_BPS){
       changeStudents(g,0,0,rate,0,0,0,0);
    }else if (disciplineFrom = STUDENT_BQN){
@@ -356,7 +354,7 @@ static void grandExchange(Game g, action a){
    }else if (disciplineFrom = STUDENT_MMONEY){
       changeStudents(g,0,0,0,0,0,0,rate);
    }
-   
+
    if (disciplineTo = STUDENT_BPS){
       changeStudents(g,0,0,1,0,0,0,0);
    }else if (disciplineTo = STUDENT_BQN){
@@ -441,9 +439,9 @@ static void generateStudents (Game g, int start, int column, int studentType){
     }
 }
 
-  
+
 Game newGame (int discipline[], int dice[]){ // ??
-    
+
     Game *g = NULL;
     while ( g != NULL){
         g = (Game) malloc (sizeof Game);
@@ -559,7 +557,7 @@ void makeAction (Game g, action a){
                grandExchange(g, a);
            }
        }
-        
+
 }
 
 void throwDice (Game g, int diceScore){
@@ -567,7 +565,7 @@ void throwDice (Game g, int diceScore){
    int students[19] = {-1};
    int RegionID = 0;
    int count = 0;
-   
+
    while (regionID < 19) {
       if(g->dice[regionID] == diceValue) {
          students[count] = regionID;
@@ -609,7 +607,7 @@ void throwDice (Game g, int diceScore){
 }*/
 
 /*static int studentAtRegion(game g, int regionID){
- 
+
    int students[19] = {0};
    int tempCount = 0;
    int count = 0;
@@ -714,9 +712,9 @@ int isLegalAction (Game g, action a){
     }
     //if(/* Anything related to vertex/movement here*/){
     //}
-    
+
     // Check for sufficient students to do action(s)
-    
+
     if(a.Actioncode == BUILD_CAMPUS || a.Actioncode == OBTAIN_ARC){
         int temp = 0;
         if(getWhoseTurn == UNI_A){
@@ -726,12 +724,12 @@ int isLegalAction (Game g, action a){
         }else if(getWhoseTurn == UNI_C){
             temp = g->playerthree;
         }
-        
+
         if(temp.BPS >= 1 && temp.BQN >= 1 && temp.MJ >= 1 && temp.MTV >=1){
             bool == TRUE;
         }
     }
-    
+
     if(a.Actioncode == BUILD_GO8){
         int temp = 0;
         if(getWhoseTurn == UNI_A){
@@ -741,7 +739,7 @@ int isLegalAction (Game g, action a){
         }else if(getWhoseTurn == UNI_C){
             temp = g->playerthree;
         }
-        
+
         if(temp.MJ >= 2 && temp.MS >=3){
             bool == TRUE;
         }
@@ -755,7 +753,7 @@ int isLegalAction (Game g, action a){
         }else if(getWhoseTurn == UNI_C){
             temp = g->playerthree;
         }
-        
+
         if(temp.MJ >= 1 && temp.MTV >=1 && temp.MMONEY >= 1){
             bool == TRUE;
         }
@@ -767,10 +765,10 @@ int getKPIpoints(Game g, int player){
     if (player == 1) {
         KPI = g->playerone.KPI;
     } else if (player == 2) {
-        KPI = g->playertwo.KPI;    
+        KPI = g->playertwo.KPI;
     } else if (player == 3) {
-        KPI = g->playerthree.KPI;    
-    }    
+        KPI = g->playerthree.KPI;
+    }
     return KPI;
 }
 
@@ -779,10 +777,10 @@ int getARCs (Game g, int player){
     if (player == 1) {
         Arcs = g->playerone.Arc;
     } else if (player == 2) {
-        Arcs = g->playertwo.Arc;    
+        Arcs = g->playertwo.Arc;
     } else if (player == 3) {
-        Arcs = g->playerthree.Arc;    
-    }    
+        Arcs = g->playerthree.Arc;
+    }
     return Arcs;
 }
 
@@ -791,10 +789,10 @@ int getGO8s (Game g, int player){
     if (player == 1) {
         GOE = g->playerone.GOEs;
     } else if (player == 2) {
-        GOE = g->playertwo.GOEs;    
+        GOE = g->playertwo.GOEs;
     } else if (player == 3) {
-        GOE = g->playerthree.GOEs;    
-    }    
+        GOE = g->playerthree.GOEs;
+    }
     return GOE;
 }
 
@@ -803,10 +801,10 @@ int getCampuses (Game g, int player){
     if (player == 1) {
         campus = g->playerone.campuses;
     } else if (player == 2) {
-        campus = g->playertwo.campuses;    
-    } else if (player == 3) { 
-        campus = g->playerthree.campuses;    
-    }    
+        campus = g->playertwo.campuses;
+    } else if (player == 3) {
+        campus = g->playerthree.campuses;
+    }
     return campus;
 }
 
@@ -815,9 +813,9 @@ int getIPs (Game g, int player){
     if (player == 1) {
         IP = g->playerone.ips;
     } else if (player == 2) {
-        IP = g->playertwo.ips;    
+        IP = g->playertwo.ips;
     } else if (player == 3) {
-        IP = g->playerthree.ips;    
+        IP = g->playerthree.ips;
     }
     return IP;
 }
@@ -827,11 +825,11 @@ int getPublications (Game g, int player){
     if (player == 1) {
         pubs = g->playerone.pubs;
     } else if (player == 2) {
-        pubs = g->playertwo.pubs;    
+        pubs = g->playertwo.pubs;
     } else if (player == 3) {
-        pubs = g->playerthree.pubs;    
+        pubs = g->playerthree.pubs;
     }
-    return pubs;    
+    return pubs;
 }
 
 int getStudents (Game g, int player, int discipline){
@@ -878,7 +876,7 @@ int getStudents (Game g, int player, int discipline){
         } else if (discipline == STUDENT_MMONEY) {
             studentnum = g->playerthree.MMONEY;
         }
-    }    
+    }
     return studentnum;
 }
 
