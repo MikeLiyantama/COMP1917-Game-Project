@@ -16,6 +16,10 @@
 #define GO8 2
 #define START_TURN_NUMBER -1
 #define RETRAIN_COST 3
+#define NUM_DISCIPLINES 6
+#define ARCco 'A'
+#define DIVISION 2
+#define NUMBER_OF_DIRECTIONS 6
 
 #define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
 #define DEFAULT_DISCIPLINES {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, \
@@ -62,12 +66,7 @@ typedef struct _player {
     numberof campuses = 2;
     numberof GOEs = 0;
     numberof ips = 0;
-    numberof ThD = 0;
-    numberof BPS = 0;	
-    numberof BQN = 0;
-    numberof MJ = 0;
-    numberof MTV = 0;	
-    numberof MMONEY = 0;
+    numberof students[6] = {0};
     numberof retrain_BPS = RETRAIN_COST;
     numberof retrain_BQN = RETRAIN_COST;
     numberof retrain_MJ = RETRAIN_COST;
@@ -75,23 +74,48 @@ typedef struct _player {
     numberof retrain_MMONEY = RETRAIN_COST;
 } player;
 
+typedef int columntype;
+ 
+typedef struct _board {
+  columntype gameboard[21][11];
+} board;
+ 
+typedef struct _co_ordinate {
+  int column;
+  int row;
+  int orientation;
+  int valid;
+  int isARC;
+} co_ordinate;
+
 //These are the prototypes for the functions that we have made for the project
-static void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
+static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
    player *temp = {0};
-   if (g.playerTurn == UNI_A){
-      temp = g.playerone;
-   } else if (g.playerTurn == UNI_B){
-      temp = g.playertwo;
-   } else if (g.playerTurn == UNI_C){
-      temp = g.playerthree;
+
+   if(playerNumber == NO_ONE){
+      if (g->playerTurn == UNI_A){
+         playerNumber = UNI_A;
+      } else if (g->playerTurn == UNI_B){
+         playerNumber = UNI_B;
+      } else if (g->playerTurn == UNI_C){
+         playerNuber = UNI_C;
+      }
+   } 
+   if (playerNumber == UNI_A){
+      temp = g->playerone;
+   } else if (playerNumber == UNI_B){
+      temp = g->playertwo;
+   } else if (playerNumber == UNI_C){
+      temp = g->playerthree;
    }
 
-   temp.ThD = temp.ThD + ThD;
-   temp.BPS = temp.BPS + BPS;
-   temp.BQN = temp.BQN + BQN;
-   temp.MJ = temp.MJ + MJ;
-   temp.MTV = temp.MTV + MTV;
-   temp.MMONEY = temp.MMONEY + MMONEY;
+   int studentCount = 0;
+   int addStudent[NUM_DISCIPLINES] = {ThD,BPS,BQN,MJ,MTV,MMONEY};
+   while(studentCount <= NUM_DISCIPLINES){
+      temp->student[studentCount] == temp->student[studentCount] + addStudent[studentCount];
+      studentCount++;
+   }
+}
     
    /* Alternative form:
     
@@ -114,18 +138,18 @@ static void changeStudents (Game g, int ThD, int BPS, int BQN, int MJ, int MTV, 
        g.playerthree.MTV = g.playerthree.MTV + MTV;
        g.playerthree.MMONEY = g.playerthree.MMONEY + MMONEY;
     
-    */
-}
+    
+}*/
 static void changeKPI (Game g, int KPI){
    player *temp = {0};
    if (getWhoseTurn(g) == UNI_A){
-      temp = g.playerone;
+      temp = g->playerone;
    } else if (getWhoseTurn(g) == UNI_B){
-      temp = g.playertwo;
+      temp = g->playertwo;
    } else if (getWhoseTurn(g) == UNI_C){
-      temp = g.playerthree;
+      temp = g->playerthree;
    }
-   temp.KPI = temp.KPI + KPI;
+   temp->KPI = temp->KPI + KPI;
     
    /* Alternative Form:
     
@@ -147,27 +171,27 @@ static void grandExchange(Game g, action a){
    int rate = getExchangeRate(g,temp,disciplineFrom,disciplineTo);
    
    if (disciplineFrom = STUDENT_BPS){
-      changeStudents(g,0,rate,0,0,0,0);
+      changeStudents(g,0,0,rate,0,0,0,0);
    }else if (disciplineFrom = STUDENT_BQN){
-      changeStudents(g,0,0,rate,0,0,0);
+      changeStudents(g,0,0,0,rate,0,0,0);
    }else if (disciplineFrom = STUDENT_MJ){
-      changeStudents(g,0,0,0,rate,0,0);
+      changeStudents(g,0,0,0,0,rate,0,0);
    }else if (disciplineFrom = STUDENT_MTV){
-      changeStudents(g,0,0,0,0,rate,0);
+      changeStudents(g,0,0,0,0,0,rate,0);
    }else if (disciplineFrom = STUDENT_MMONEY){
-      changeStudents(g,0,0,0,0,0,rate);
+      changeStudents(g,0,0,0,0,0,0,rate);
    }
    
    if (disciplineTo = STUDENT_BPS){
-      changeStudents(g,0,1,0,0,0,0);
+      changeStudents(g,0,0,1,0,0,0,0);
    }else if (disciplineTo = STUDENT_BQN){
-      changeStudents(g,0,0,1,0,0,0);
+      changeStudents(g,0,0,0,1,0,0,0);
    }else if (disciplineTo = STUDENT_MJ){
-      changeStudents(g,0,0,0,1,0,0);
+      changeStudents(g,0,0,0,0,1,0,0);
    }else if (disciplineTo = STUDENT_MTV){
-      changeStudents(g,0,0,0,0,1,0);
+      changeStudents(g,0,0,0,0,0,1,0);
    }else if (disciplineTo = STUDENT_MMONEY){
-      changeStudents(g,0,0,0,0,0,1);
+      changeStudents(g,0,0,0,0,0,0,1);
    }
 }
 
@@ -179,6 +203,112 @@ static void writeToBoard (Game g, path destination, int building){
    g.gameboard[point.row][point.column] = building;
 }
 
+co_ordinate movedecoder (char* directions,char type) {
+   int counter = 0;
+   char route;
+   co_ordinate point = {0,4,0,TRUE,FALSE};
+   if (type == ARCco){
+      point.column = 5;
+      point.row = 1;
+      point.isARC = TRUE;
+   }
+   while ( (directions[counter] != 0) && (point.valid == TRUE)) {
+      route = directions[counter];
+      point = movement(point, route);
+      point.valid = islegalmovement (point);
+      counter++;      
+   }
+   return point;
+}
+
+co_ordinate movement (co_ordinate position, char route){
+  unsigned long long direction = (PATH_LIMIT * NUMBER_OF_DIRECTIONS);
+  int turning;
+  if (route == 'R') {
+    turning = -2;
+  } else if ( route == 'L') {
+    turning = 2;
+  } else {
+    turning = 0;
+  }
+  int move = direction + turning + position.orientation;
+  int travel = (move % 6);
+  int rowMove = 0;
+  int columnMove = 0;
+  if (travel == 0){
+    rowMove = -DIVISION;
+  } else if (travel == 1) {
+    columnMove = -DIVISION;
+  } else if (travel == 2) {
+    rowMove = DIVISION;       
+  } else if (travel == 3) {
+    rowMove = DIVISION;
+  } else if (travel == 4) {
+    columnMove = DIVISION;
+  } else if (travel == 5) {
+    rowMove = -DIVISION;
+  }
+  /*
+  if (position.isARC == FALSE){
+    rowMove = 2*rowMove;
+    columnMove = 2*columnMove;
+  }
+  */
+  position.row += rowMove;
+  position.column += columnMove;
+ 
+  position.orientation = ((travel + (NUMBER_OF_DIRECTIONS/2)) % NUMBER_OF_DIRECTIONS); 
+  return position;
+}
+
+//movement is legal test
+//FOr each row it means that if the number is greater than 
+//the elements in the row or less than zero then the action is illegal
+int islegalmovement ( co_ordinate position) {
+  int move = FALSE;
+  if((position.column == 0) || (position.column == 10)){
+    if((position.row >= 5) && (postion.row <= 8)) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 1) || (position.column == 9)){
+    if((position.row >= 5 ) && (postion.row <= 8)) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 2) || (position.column == 8)){
+    if((position.row >= 2) && (postion.row < 10)) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 3) || (position.column == 7)){
+    if((position.row >= 2) && (postion.row < 10)) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 4) || (position.column == 8)){
+    if((position.row >= 2) && (postion.row < 10)) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 5) || (position.column == 9)){
+    if((position.row >= 2) && (postion.row < 13)) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 6) || (position.column == 8)){
+    if((position.row > 0) && (postion.row <= 13)) {
+    move = TRUE;
+    }
+  }
+  if((postion.column == 7)){
+    if((position.row >= 0) && (postion.row <= 13)) {
+    move = TRUE;
+    }
+  }
+  return move;
+}
+  
 Game newGame (int discipline[], int dice[]){ // ??
     
     Game *g = NULL;
@@ -210,26 +340,26 @@ void makeAction (Game g, action a){
           } else if (a.Actioncode == BUILD_CAMPUS){
               //This builds a campus at the price of
               // 1 BPS, 1 B?, 1 MJ , 1 MTV
-              changeStudents(g, 0, -1, -1, -1, -1, 0);
+              changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
               changeKPI(g, 10);
               writeToBoard(g,a.destination,CAMPUS_A);
           } else if (a.Actioncode == BUILD_GO8) {
               //USE up two MJ and 3 MS
-              changeStudents(g, 0, 0, 0, -2, 0, -3);
+              changeStudents(g, 0, 0, 0, 0, -2, 0, -3);
               changeKPI(g, 10);
               writeToBoard(g,a.destination,GO8_A);
           } else if (a.Actioncode == OBTAIN_ARC) {
-              changeStudents(g, 0, -1, -1, -1, -1, 0);
+              changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
               changeKPI(g, 10);
               writeToBoard(g,a.destination,ARC_A);
               g.ARCsCreated++;
           } else if (a.Actioncode == START_SPINOFF) {
               //DO Nothing as this is an unexpected output
           } else if (a.Actioncode == OBTAIN_PUBLICATION) {
-              changeStudents(g, 0, 0, 0, -1, -1, -1);
+              changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
               g.pubsCreated++;
           } else if (a.Actioncode == OBTAIN_IP_PATENT) {
-              changeStudents(g, 0, 0, 0, -1, -1, -1);
+              changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
               changeKPI(g, 10);
           } else if (a.Actioncode == RETRAIN_STUDENTS) {
               grandExchange(g, a);
@@ -240,26 +370,26 @@ void makeAction (Game g, action a){
            } else if (a.Actioncode == BUILD_CAMPUS){
                //This builds a campus at the price of
                // 1 BPS, 1 B?, 1 MJ , 1 MTV
-               changeStudents(g, 0, -1, -1, -1, -1, 0);
+               changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,CAMPUS_B);
            } else if (a.Actioncode == BUILD_GO8) {
                //USE up two MJ and 3 MS
-               changeStudents(g, 0, 0, 0, -2, 0, -3);
+               changeStudents(g, 0, 0, 0, 0, -2, 0, -3);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,GO8_B);
            } else if (a.Actioncode == OBTAIN_ARC) {
-               changeStudents(g, 0, -1, -1, -1, -1, 0);
+               changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,ARC_B);
                g.ARCsCreated++;
            } else if (a.Actioncode == START_SPINOFF) {
                //DO Nothing as this is an unexpected output
            } else if (a.Actioncode == OBTAIN_PUBLICATION) {
-               changeStudents(g, 0, 0, 0, -1, -1, -1);
+               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                g.pubsCreated++;
            } else if (a.Actioncode == OBTAIN_IP_PATENT) {
-               changeStudents(g, 0, 0, 0, -1, -1, -1);
+               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                changeKPI(g, 10);
            } else if (a.Actioncode == RETRAIN_STUDENTS) {
                grandExchange(g, a);
@@ -270,26 +400,26 @@ void makeAction (Game g, action a){
            } else if (a.Actioncode == BUILD_CAMPUS){
                //This builds a campus at the price of
                // 1 BPS, 1 B?, 1 MJ , 1 MTV
-               changeStudents(g, 0, -1, -1, -1, -1, 0);
+               changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,CAMPUS_C);
            } else if (a.Actioncode == BUILD_GO8) {
                //USE up two MJ and 3 MS
-               changeStudents(g, 0, 0, 0, -2, 0, -3);
+               changeStudents(g, 0, 0, 0, 0, -2, 0, -3);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,GO8_C);
            } else if (a.Actioncode == OBTAIN_ARC) {
-               changeStudents(g, 0, -1, -1, -1, -1, 0);
+               changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
                writeToBoard(g,a.destination,ARC_C);
                g.ARCsCreated++;
            } else if (a.Actioncode == START_SPINOFF) {
                //DO Nothing as this is an unexpected output
            } else if (a.Actioncode == OBTAIN_PUBLICATION) {
-               changeStudents(g, 0, 0, 0, -1, -1, -1);
+               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                g.pubsCreated++;
            } else if (a.Actioncode == OBTAIN_IP_PATENT) {
-               changeStudents(g, 0, 0, 0, -1, -1, -1);
+               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                changeKPI(g, 10);
            } else if (a.Actioncode == RETRAIN_STUDENTS) {
                grandExchange(g, a);
@@ -299,26 +429,50 @@ void makeAction (Game g, action a){
 }
 
 void throwDice (Game g, int diceScore){
-   int regionID = diceToRegionID(g, diceScore);
-   int student = regionToStudent(g, regionID);
-   //edited by Josfer
-   //only takes into account if no duplicates in DEFAULT_DICE
-   //if anyone can think of a solution feel free to change
-   //missing function to give which coordinates are around the region
-   //then check if anyone has a campus or GO8 in those coordinates
-   //give them the students if they do
-   //maybe a linked list of coordinates? but im still trying to learn them
-   g.currentTurn++;
+
+   int students[19] = {-1};
+   int RegionID = 0;
+   int count = 0;
+   
+   while (regionID < 19) {
+      if(g->dice[regionID] == diceValue) {
+         students[count] = regionID;
+         count++;
+      }
+      regionID++;
+   }
+
+   count = 0;
+   IDcounter = 0
+   while (students[count] != -1){
+      while(IDcounter < 19);
+         if(student[count] == IDcounter){
+            //give co-ordinates around regionID[IDcounter] -> meaning in each region
+            //using 2D array to store co-ordinates in each region or linked lists
+            //check if theres duplicate co-ordinates and any campuses or GO8 in them
+            //give students discipline[student[count]] if theres a campus
+            //give 2 instead of 1 if GO8
+         }
+         IDcounter++;
+      }
+      count++;
+   }
+   if (g->playerTurn == UNI_C){
+      g->playerTurn == UNI_A;
+   } else {
+      g->playerTurn++;
+   }
+   g->currentTurn++;
 }
 
 //part of throwDice by Josfer
-static int diceToRegionID( Game g, int diceScore){
+/*static int diceToRegionID( Game g, int diceScore){
    int counter = 0;
    while((g->dice[counter]!=diceScore)&&(counter<19)){
       counter++;
    }
    return counter;
-}
+}*/
 
 /*static int studentAtRegion(game g, int regionID){
  
