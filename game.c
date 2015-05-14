@@ -290,7 +290,7 @@ static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int B
    int studentCount = 0;
    int addStudent[NUM_DISCIPLINES] = {ThD,BPS,BQN,MJ,MTV,MMONEY};
    while(studentCount <= NUM_DISCIPLINES){
-      temp->student[studentCount] == temp->student[studentCount] + addStudent[studentCount];
+      temp.student[studentCount] == temp.student[studentCount] + addStudent[studentCount];
       studentCount++;
    }
 }
@@ -327,7 +327,7 @@ static void changeKPI (Game g, int KPI){
    } else if (getWhoseTurn(g) == UNI_C){
       temp = g->playerthree;
    }
-   temp->KPI = temp->KPI + KPI;
+   temp.KPI = temp.KPI + KPI;
 
    /* Alternative Form:
 
