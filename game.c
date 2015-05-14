@@ -45,7 +45,7 @@ typedef struct _game {
     player playerone;
     player playertwo;
     player playerthree;
-    gameboard[53] = {0};
+    board gameboard;
     playercampus[53] = {NO_ONE}
     playercampustype[53] = {0}
     numberof GOE = 0;
@@ -200,114 +200,72 @@ static void grandExchange(Game g, action a){
 
 static void writeToBoard (Game g, path destination, int building){
    co_ordinate point = movedecoder(destination, type);
-   g.gameboard[point.row][point.column] = building;
+   g->gameboard[point.row][point.column] = building;
 }
 
-co_ordinate movedecoder (char* directions,char type) {
-   int counter = 0;
-   char route;
-   co_ordinate point = {0,4,0,TRUE,FALSE};
-   if (type == ARCco){
-      point.column = 5;
-      point.row = 1;
-      point.isARC = TRUE;
-   }
-   while ( (directions[counter] != 0) && (point.valid == TRUE)) {
-      route = directions[counter];
-      point = movement(point, route);
-      point.valid = islegalmovement (point);
-      counter++;      
-   }
-   return point;
+static void generateStudents (Game g, int start, int column, int studentType){
+    int campus;
+    int counter = start;
+    int THD = 0;
+    int BPS = 0;
+    int BQN = 0;
+    int MJ  = 0;
+    int MTV = 0;
+    int MMONEY = 0;
+    if (studentType == STUDENT_THD) {
+        THD = 1;
+    } else if (studentType == STUDENT_BPS){
+        BPS = 1;
+    } else if (studentType == STUDENT_BQN){
+        BQN = 1;
+    } else if (studentType == STUDENT_MJ){
+        MJ = 1;
+    } else if (studentType == STUDENT_MTV){
+        MTV = 1;
+    } else if (studentType == STUDENT_MMONEY){
+        MMONEY = 1;
+    }
+    while(counter < (start + 4){
+        campus = g->gameboard[counter][column];
+        if(campus > 0) {
+            if(campus == CAMPUS_A){
+                changeStudents( g, PLAYER_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
+            } else if ( campus == CAMPUS_B){
+                changeStudents( g, PLAYER_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
+            } else if ( campus == CAMPUS_C){
+                changeStudents( g, PLAYER_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
+            } else if ( campus == GO8_A){
+                changeStudents( g, PLAYER_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+            } else if ( campus == GO8_B){
+                changeStudents( g, PLAYER_B, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+            }else if ( campus == GO8_C){
+                changeStudents( g, PLAYER_C, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+            }
+        }
+        counter += 2;
+    }
+    counter = 0;
+    while(counter < (start + 4){
+        campus = g->gameboard[counter][column+2];
+        if(campus > 0) {
+            if(campus == CAMPUS_A){
+                changeStudents( g, PLAYER_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
+            } else if ( campus == CAMPUS_B){
+                changeStudents( g, PLAYER_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
+            } else if ( campus == CAMPUS_C){
+                changeStudents( g, PLAYER_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
+            } else if ( campus == GO8_A){
+                changeStudents( g, PLAYER_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+            } else if ( campus == GO8_B){
+                changeStudents( g, PLAYER_B, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+            }else if ( campus == GO8_C){
+                changeStudents( g, PLAYER_C, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
+            }
+        }
+        counter += 2;
+    }
 }
 
-co_ordinate movement (co_ordinate position, char route){
-  unsigned long long direction = (PATH_LIMIT * NUMBER_OF_DIRECTIONS);
-  int turning;
-  if (route == 'R') {
-    turning = -2;
-  } else if ( route == 'L') {
-    turning = 2;
-  } else {
-    turning = 0;
-  }
-  int move = direction + turning + position.orientation;
-  int travel = (move % 6);
-  int rowMove = 0;
-  int columnMove = 0;
-  if (travel == 0){
-    rowMove = -DIVISION;
-  } else if (travel == 1) {
-    columnMove = -DIVISION;
-  } else if (travel == 2) {
-    rowMove = DIVISION;       
-  } else if (travel == 3) {
-    rowMove = DIVISION;
-  } else if (travel == 4) {
-    columnMove = DIVISION;
-  } else if (travel == 5) {
-    rowMove = -DIVISION;
-  }
-  /*
-  if (position.isARC == FALSE){
-    rowMove = 2*rowMove;
-    columnMove = 2*columnMove;
-  }
-  */
-  position.row += rowMove;
-  position.column += columnMove;
- 
-  position.orientation = ((travel + (NUMBER_OF_DIRECTIONS/2)) % NUMBER_OF_DIRECTIONS); 
-  return position;
-}
-
-//movement is legal test
-//FOr each row it means that if the number is greater than 
-//the elements in the row or less than zero then the action is illegal
-int islegalmovement ( co_ordinate position) {
-  int move = FALSE;
-  if((position.column == 0) || (position.column == 10)){
-    if((position.row >= 5) && (postion.row <= 8)) {
-    move = TRUE;
-    }
-  }
-  if((postion.column == 1) || (position.column == 9)){
-    if((position.row >= 5 ) && (postion.row <= 8)) {
-    move = TRUE;
-    }
-  }
-  if((postion.column == 2) || (position.column == 8)){
-    if((position.row >= 2) && (postion.row < 10)) {
-    move = TRUE;
-    }
-  }
-  if((postion.column == 3) || (position.column == 7)){
-    if((position.row >= 2) && (postion.row < 10)) {
-    move = TRUE;
-    }
-  }
-  if((postion.column == 4) || (position.column == 8)){
-    if((position.row >= 2) && (postion.row < 10)) {
-    move = TRUE;
-    }
-  }
-  if((postion.column == 5) || (position.column == 9)){
-    if((position.row >= 2) && (postion.row < 13)) {
-    move = TRUE;
-    }
-  }
-  if((postion.column == 6) || (position.column == 8)){
-    if((position.row > 0) && (postion.row <= 13)) {
-    move = TRUE;
-    }
-  }
-  if((postion.column == 7)){
-    if((position.row >= 0) && (postion.row <= 13)) {
-    move = TRUE;
-    }
-  }
-  return move;
-}
   
 Game newGame (int discipline[], int dice[]){ // ??
     
