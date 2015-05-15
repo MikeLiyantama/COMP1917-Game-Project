@@ -1,6 +1,9 @@
 // tests for Game.c
 //Created by Michael, Josfer Lauchlan and Inura
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "Game.h"
 
 #define TERRA_NULLIUS -1
@@ -25,14 +28,14 @@ void testPlayer3State3 (Game g, int playerNumber);
 
 int main (int argc, char *argv[]) {
 
-   int disciplines[NUM_REGIONS] = {DEFAULT_DISCIPLINES};
-   int dice[NUM_REGIONS] = {DEFAULT_DICE};
+   int disciplines[NUM_REGIONS] = DEFAULT_DISCIPLINES;
+   int dice[NUM_REGIONS] = DEFAULT_DICE;
 
    Game g = newGame(disciplines, dice);
    
-   action p1 = {PASS,0,0,0};
-   action p2 = {PASS,0,0,0};
-   action p3 = {PASS,0,0,0};
+   action p1 = {PASS,[0],0,0};
+   action p2 = {PASS,[0],0,0};
+   action p3 = {PASS,[0],0,0};
    
 
    testGameState0(g);
