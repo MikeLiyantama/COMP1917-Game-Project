@@ -70,6 +70,16 @@ static int isLegalMovement ( co_ordinate position);
 static co_ordinate moveDecoder (char* directions,char type);
 static co_ordinate movement (co_ordinate position, char route);
 static void studentGenerator (Game g, int regionID, int studentType);
+static void studentAtRegion(Game g, int diceValue);
+static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY);
+static void changeKPI (Game g, int KPI);
+static void grandExchange(Game g, action a);
+static void writeToBoard (Game g, path destination, int building, int type);
+static void generateStudents (Game g, int start, int column, int studentType);
+
+
+
+
 
 static void studentGenerator (Game g, int regionID, int studentType) {
     int start;
@@ -243,7 +253,7 @@ static int isLegalMovement ( co_ordinate position) {
 }
 
 // Here is the function Lachlan wrote
-void studentAtRegion(Game g, int diceValue){
+static void studentAtRegion(Game g, int diceValue){
    int students[19] = {0};
    int tempCount = 0;
    int count = 0;
@@ -346,7 +356,7 @@ static void grandExchange(Game g, action a){
 
    int disciplineFrom = a.disciplineFrom;
    int disciplineTo = a.disciplineTo;
-   int rate = getExchangeRate(g,temp,disciplineFrom,disciplineTo);
+   int rate = getExchangeRate(g,((g->currentTurn%3)),disciplineFrom,disciplineTo);
 
    if (disciplineFrom = STUDENT_BPS){
       changeStudents(g,0,0,rate,0,0,0,0);
@@ -376,9 +386,10 @@ static void grandExchange(Game g, action a){
 //These are functions that are part of the prototype provided in game.h
 //They are need to have the same inputs and outputs
 
-static void writeToBoard (Game g, path destination, int building){
-   co_ordinate point = movedecoder(destination, type);
-   g->gameboard[point.row][point.column] = building;
+static void writeToBoard (Game g, path destination, int building, int type){
+   co_ordinate point;
+   point = moveDecoder(destination, type);
+   g->gameboard.gameboard[point.row][point.column] = building;
 }
 
 static void generateStudents (Game g, int start, int column, int studentType){
@@ -403,15 +414,15 @@ static void generateStudents (Game g, int start, int column, int studentType){
     } else if (studentType == STUDENT_MMONEY){
         MMONEY = 1;
     }
-    while(counter < (start + 4){
-        campus = g->gameboard[counter][column];
+    while(counter < (start + 4)){
+        campus = g->gameboard.gameboard[counter][column];
         if(campus > 0) {
             if(campus == CAMPUS_A){
                 changeStudents( g, UNI_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == CAMPUS_B){
-                changeStudents( g, UNI_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_B, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == CAMPUS_C){
-                changeStudents( g, UNI_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_C, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == GO8_A){
                 changeStudents( g, UNI_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             } else if ( campus == GO8_B){
@@ -423,15 +434,15 @@ static void generateStudents (Game g, int start, int column, int studentType){
         counter += 2;
     }
     counter = 0;
-    while(counter < (start + 4){
-        campus = g->gameboard[counter][column+2];
+    while(counter < (start + 4)){
+        campus = g->gameboard.gameboard[counter][column+2];
         if(campus > 0) {
             if(campus == CAMPUS_A){
                 changeStudents( g, UNI_A, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == CAMPUS_B){
-                changeStudents( g, UNI_B, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_B, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == CAMPUS_C){
-                changeStudents( g, UNI_C, THD, BPS, BQN, MJ,  MTV, MMONEY)
+                changeStudents( g, UNI_C, THD, BPS, BQN, MJ,  MTV, MMONEY);
             } else if ( campus == GO8_A){
                 changeStudents( g, UNI_A, 2*THD, 2*BPS, 2*BQN, 2*MJ, 2*MTV, 2*MMONEY);
             } else if ( campus == GO8_B){
@@ -445,11 +456,10 @@ static void generateStudents (Game g, int start, int column, int studentType){
 }
 
 
-Game newGame (int discipline[], int dice[]){ // ??
-
+Game newGame (int discipline[], int dice[]){
     Game *g = NULL;
     while ( g != NULL){
-        g = (Game) malloc (sizeof Game);
+        g = (*game) malloc (sizeof game);
     }
     return g;
 }
@@ -463,7 +473,7 @@ void makeAction (Game g, action a){
     player *temp = {0};
     int turn = getWhoseturn(g);
     if (turn == UNI_A){
-        temp = g->playerone;
+        temp = &(g->playerone);
     } else if (turn == UNI_B){
         temp = g->playertwo;
     } else if (turn == UNI_C){
@@ -532,7 +542,7 @@ void makeAction (Game g, action a){
                grandExchange(g, a);
            }
        }else if(turn == UNI_C){
-           if ( a.Actioncode == PASS){
+           if ( a.Actioncode == PASS) {
                //DO nothing as they have passed their turn
            } else if (a.Actioncode == BUILD_CAMPUS){
                //This builds a campus at the price of
@@ -563,6 +573,7 @@ void makeAction (Game g, action a){
            }
        }
 
+}
 }
 
 void throwDice (Game g, int diceScore){
