@@ -264,33 +264,33 @@ void studentAtRegion(Game g, int diceValue){
    }
 }
 //These are the prototypes for the functions that we have made for the project
-static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
+static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
    player *temp = {0};
-
+   int gamer;
    // enter 0 for playerNumber if this function is used during a player's turn
    // enter UNI_A, UNI_B, or UNI_C if used to update students when it is not their turn
    // ie. during throwDice
-   if (playerNumber == NO_ONE){ 
+   if (playerNumber == NO_ONE){
       if ((g->currentTurn%3) == UNI_A){
-         playerNumber = UNI_A;
+         gamer = UNI_A;
       } else if ((g->currentTurn%3) == UNI_B){
-         playerNumber = UNI_B;
+         gamer = UNI_B;
       } else if ((g->currentTurn%3) == UNI_C){
-         playerNuber = UNI_C;
+         gamer = UNI_C;
       }
    }
-   if (playerNumber == UNI_A){
-      temp = g->playerone;
-   } else if (playerNumber == UNI_B){
-      temp = g->playertwo;
-   } else if (playerNumber == UNI_C){
-      temp = g->playerthree;
+   if (gamer == UNI_A){
+      temp = &(g->playerone);
+   } else if (gamer == UNI_B){
+      temp = &(g->playertwo);
+   } else if (gamer == UNI_C){
+      temp = &(g->playerthree);
    }
 
    int studentCount = 0;
    int addStudent[NUM_DISCIPLINES] = {ThD,BPS,BQN,MJ,MTV,MMONEY};
    while(studentCount <= NUM_DISCIPLINES){
-      temp.student[studentCount] == temp.student[studentCount] + addStudent[studentCount];
+      temp->students[studentCount] == temp->students[studentCount] + addStudent[studentCount];
       studentCount++;
    }
 }
@@ -319,15 +319,15 @@ static void changeStudents (Game g, player playerNumber, int ThD, int BPS, int B
 
 }*/
 static void changeKPI (Game g, int KPI){
-   player *temp = {0};
+   player *temp;
    if (getWhoseTurn(g) == UNI_A){
-      temp = g->playerone;
+      temp = &(g->playerone);
    } else if (getWhoseTurn(g) == UNI_B){
-      temp = g->playertwo;
+      temp = &(g->playertwo);
    } else if (getWhoseTurn(g) == UNI_C){
-      temp = g->playerthree;
+      temp = &(g->playerthree);
    }
-   temp.KPI = temp.KPI + KPI;
+   temp->KPI = temp->KPI + KPI;
 
    /* Alternative Form:
 
