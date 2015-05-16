@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include "Game.h"
 
@@ -33,9 +34,12 @@ int main (int argc, char *argv[]) {
 
    Game g = newGame(disciplines, dice);
    
-   action p1 = {PASS,[0],0,0};
-   action p2 = {PASS,[0],0,0};
-   action p3 = {PASS,[0],0,0};
+   action p1;
+   p1.actionCode = PASS;
+   action p2;
+   p2.actionCode = PASS;
+   action p3;
+   p3.actionCode = PASS;
    
 
    testGameState0(g);
