@@ -8,8 +8,8 @@
 
 #define TERRA_NULLIUS -1
 #define WORKING_PATH {'L','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','L','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','L','B','R','R','R','R','R','R','R'}
-#define DEFAULT_DISCIPLINES {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS}
-#define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
+#define DEFAULT_DISCIPLINES[NUM_REGIONS] {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS}
+#define DEFAULT_DICE[NUM_REGIONS] {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
 
 void testGameState0 (Game g);
 void testPlayerState0 (Game g, int playerNumber);
@@ -79,7 +79,7 @@ int main (int argc, char *argv[]) {
    p2.actionCode=PASS;
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
-   throwDICE(g, 7);
+   throwDice(g, 7);
    
    p3.actionCode = OBTAIN_ARC;
    p3.destination = "LRLRLB";
@@ -108,7 +108,10 @@ int main (int argc, char *argv[]) {
    makeAction(g, p2);
    throwDICE(g, 2);
    
-   p3={RETRAIN_STUDENTS,[0],STUDENT_BPS,STUDENT_MMONEY};
+   p3.actionCode = RETRAIN_STUDENTS;
+   p3.destination = [0];
+   p3.disciplineFrom = STUDENT_BPS;
+   p3.disciplineTo = STUDENT_MMONEY;
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    p3.actionCode=PASS;
@@ -144,33 +147,33 @@ void testGameState0(Game g){
    assert(getWhoseTurn(g) == NO_ONE);
    
    int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   char tempPath1[90] = {'\0'};
+   char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
+      tempPath1[count] == workingPath1[count];
       if(count == 26 || count == 53){
-         assert(getCampus(g, tempPath) == CAMPUS_A);
+         assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44){
-         assert(getCampus(g, tempPath) == CAMPUS_B);
+         assert(getCampus(g, tempPath1) == CAMPUS_B);
       } else if(count == 8 || count == 35){
-         assert(getCampus(g, tempPath) == CAMPUS_C);
+         assert(getCampus(g, tempPath1) == CAMPUS_C);
       } else {
-         assert(getCampus(g, tempPath) == VACANT_VERTEX);
+         assert(getCampus(g, tempPath1) == VACANT_VERTEX);
       } 
       count++;
    }
    
    int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   char tempPath2[90] = {'\0'};
+   char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
-      assert(getArc(g, tempPath) == VACANT_ARC);
+      tempPath2[count] == workingPath2[count];
+      assert(getArc(g, tempPath2) == VACANT_ARC);
       count++;
    }
    
    assert(getMostPublications(g) == NO_ONE);
-   assert(getTurnNumber(g) == TERRA_NULLIUS)
+   assert(getTurnNumber(g) == TERRA_NULLIUS);
 
    int playerNumber = 1;
    while (playerNumber <= 3){
@@ -193,15 +196,15 @@ void testPlayerState0 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
    }
    
@@ -227,28 +230,28 @@ void testGameState1(Game g){
    assert(getWhoseTurn(g) == UNI_A);
    
    int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   char tempPath1[90] = {'\0'};
+   char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
+      tempPath1[count] == workingPath1[count];
       if(count == 26 || count == 53){
-         assert(getCampus(g, tempPath) == CAMPUS_A);
+         assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44){
-         assert(getCampus(g, tempPath) == CAMPUS_B);
+         assert(getCampus(g, tempPath1) == CAMPUS_B);
       } else if(count == 8 || count == 35){
-         assert(getCampus(g, tempPath) == CAMPUS_C);
+         assert(getCampus(g, tempPath1) == CAMPUS_C);
       } else {
-         assert(getCampus(g, tempPath) == VACANT_VERTEX);
+         assert(getCampus(g, tempPath1) == VACANT_VERTEX);
       } 
       count++;
    }
    
-   int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   count = 0;
+   char tempPath2[90] = {'\0'};
+   char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
-      assert(getArc(g, tempPath) == VACANT_ARC);
+      tempPath2[count] == workingPath2[count];
+      assert(getArc(g, tempPath2) == VACANT_ARC);
       count++;
    }
    
@@ -259,7 +262,7 @@ void testGameState1(Game g){
    while (playerNumber <= 3){
       if(playerNumber =1){
          testPlayer1State1(g, playerNumber);
-      } else if{playerNumber = 2){
+      } else if(playerNumber = 2){
          testPlayer2State1(g, playerNumber);
       } else {
          testPlayer3State1(g, playerNumber);
@@ -280,15 +283,15 @@ void testPlayer1State1 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
    }
    
@@ -319,15 +322,15 @@ void testPlayer2State1 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 5);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
    }
    
@@ -358,15 +361,15 @@ void testPlayer3State1 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 2);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 2);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
    }
    
@@ -392,37 +395,37 @@ void testGameState2(Game g);
    assert(getWhoseTurn(g) == UNI_A);
    
    int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   char tempPath1[90] = {'\0'};
+   char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
+      tempPath1[count] == workingPath1[count];
       if(count == 26 || count == 51 || count == 53){
-         assert(getCampus(g, tempPath) == CAMPUS_A);
+         assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44 || count == 42){
-         assert(getCampus(g, tempPath) == CAMPUS_B);
+         assert(getCampus(g, tempPath1) == CAMPUS_B);
       } else if(count == 8 || count == 35){
-         assert(getCampus(g, tempPath) == CAMPUS_C);
+         assert(getCampus(g, tempPath1) == CAMPUS_C);
       } else {
-         assert(getCampus(g, tempPath) == VACANT_VERTEX);
+         assert(getCampus(g, tempPath1) == VACANT_VERTEX);
       } 
       count++;
    }
    
-   int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   count = 0;
+   char tempPath2[90] = {'\0'};
+   char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
+      tempPath2[count] == workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
-         assert(getArc(g, tempPath) == ARC_A);
+         assert(getArc(g, tempPath2) == ARC_A);
       } else if(count == 44 || count == 43 || count == 42){
-         assert(getArc(g, tempPath) == ARC_B);
+         assert(getArc(g, tempPath2) == ARC_B);
       } else if(count == 8 || count == 6 || count == 7 || count == 58){
-         assert(getArc(g, tempPath) == ARC_C);
+         assert(getArc(g, tempPath2) == ARC_C);
       } else {
-         assert(getArc(g, tempPath) == VACANT_ARC);
+         assert(getArc(g, tempPath2) == VACANT_ARC);
       } 
-      assert(getArc(g, tempPath) == VACANT_ARC);
+      assert(getArc(g, tempPath2) == VACANT_ARC);
       count++;
    }
    
@@ -433,7 +436,7 @@ void testGameState2(Game g);
    while (playerNumber <= 3){
       if(playerNumber =1){
          testPlayer1State1(g, playerNumber);
-      } else if{playerNumber = 2){
+      } else if(playerNumber = 2){
          testPlayer2State1(g, playerNumber);
       } else {
          testPlayer3State1(g, playerNumber);
@@ -454,15 +457,15 @@ void testPlayer1State2 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
    }
    
@@ -493,15 +496,15 @@ void testPlayer2State2 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 2);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
    }
    
@@ -532,15 +535,15 @@ void testPlayer3State2 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
    }
    
@@ -566,37 +569,37 @@ void testGameState3(Game g);
    assert(getWhoseTurn(g) == UNI_A);
    
    int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   char tempPath1[90] = {'\0'};
+   char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
+      tempPath1[count] == workingPath1[count];
       if(count == 26 || count == 51 || count == 53){
-         assert(getCampus(g, tempPath) == CAMPUS_A);
+         assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44 || count == 42){
-         assert(getCampus(g, tempPath) == CAMPUS_B);
+         assert(getCampus(g, tempPath1) == CAMPUS_B);
       } else if(count == 8 || count == 35){
-         assert(getCampus(g, tempPath) == CAMPUS_C);
+         assert(getCampus(g, tempPath1) == CAMPUS_C);
       } else {
-         assert(getCampus(g, tempPath) == VACANT_VERTEX);
+         assert(getCampus(g, tempPath1) == VACANT_VERTEX);
       } 
       count++;
    }
    
-   int count = 0;
-   char tempPath[90] = {'\0'};
-   char workingPath[90] = WORKING_PATH;
+   count = 0;
+   char tempPath2[90] = {'\0'};
+   char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath[count] == workingPath[count];
+      tempPath2[count] == workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
-         assert(getArc(g, tempPath) == ARC_A);
+         assert(getArc(g, tempPath2) == ARC_A);
       } else if(count == 44 || count == 43 || count == 42){
-         assert(getArc(g, tempPath) == ARC_B);
+         assert(getArc(g, tempPath2) == ARC_B);
       } else if(count == 8 || count == 6 || count == 7 || count == 58){
-         assert(getArc(g, tempPath) == ARC_C);
+         assert(getArc(g, tempPath2) == ARC_C);
       } else {
-         assert(getArc(g, tempPath) == VACANT_ARC);
+         assert(getArc(g, tempPath2) == VACANT_ARC);
       } 
-      assert(getArc(g, tempPath) == VACANT_ARC);
+      assert(getArc(g, tempPath2) == VACANT_ARC);
       count++;
    }
    
@@ -607,7 +610,7 @@ void testGameState3(Game g);
    while (playerNumber <= 3){
       if(playerNumber =1){
          testPlayer1State1(g, playerNumber);
-      } else if{playerNumber = 2){
+      } else if(playerNumber = 2){
          testPlayer2State1(g, playerNumber);
       } else {
          testPlayer3State1(g, playerNumber);
@@ -628,15 +631,15 @@ void testPlayer1State3 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
    }
    
@@ -667,15 +670,15 @@ void testPlayer2State3 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 2);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
    }
    
@@ -706,15 +709,15 @@ void testPlayer3State3 (Game g, int playerNumber){
    
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BPS);
+   numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 0);
-   int numStudents = getStudents(g, playerNumber, STUDENT_BQN);
+   numStudents = getStudents(g, playerNumber, STUDENT_BQN);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MJ);
+   numStudents = getStudents(g, playerNumber, STUDENT_MJ);
    assert (numStudents == 3);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MTV);
+   numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 1);
-   int numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
+   numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
    }
    
