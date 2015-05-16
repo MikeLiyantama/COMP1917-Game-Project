@@ -51,10 +51,11 @@ int main (int argc, char *argv[]) {
    throwDice(g, 8);
    testGameState1(g);
    
-   p1={OBTAIN_ARC,[R],0,0};
+   p1.actionCode = OBTAIN_ARC;
+   p1.destination = "R";
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
-   p1.destination=[RR];
+   p1.destination = "RR";
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
    p1.actionCode=BUILD_CAMPUS;
@@ -65,10 +66,11 @@ int main (int argc, char *argv[]) {
    makeAction(g, p1);
    throwDice(g, 9);
    
-   p2={OBTAIN_ARC,[RRLRLL],0,0};
+   p2.actionCode = OBTAIN_ARC;
+   p2.destination = "RRLRLL";
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
-   p2={OBTAIN_ARC,[RRLRLLL],0,0};
+   p2.destination = "RRLRLLL";
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    p2.actionCode=BUILD_CAMPUS;
@@ -79,7 +81,8 @@ int main (int argc, char *argv[]) {
    makeAction(g, p2);
    throwDICE(g, 7);
    
-   p3={OBTAIN_ARC,[LRLRLB],0,0};
+   p3.actionCode = OBTAIN_ARC;
+   p3.destination = "LRLRLB";
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    p3.destination=[LRLRR];
