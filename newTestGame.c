@@ -9,8 +9,8 @@
 
 #define TERRA_NULLIUS -1
 #define WORKING_PATH {'L','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','L','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','L','B','R','R','R','R','R','R','R'}
-#define DEFAULT_DISCIPLINES[NUM_REGIONS] {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS}
-#define DEFAULT_DICE[NUM_REGIONS] {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
+#define DEFAULT_DISCIPLINES {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS}
+#define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
 
 void testGameState0 (Game g);
 void testPlayerState0 (Game g, int playerNumber);
@@ -56,10 +56,10 @@ int main (int argc, char *argv[]) {
    testGameState1(g);
    
    p1.actionCode = OBTAIN_ARC;
-   p1.destination = "R";
+   strncpy(p1.destination, "R", PATH_LIMIT);
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
-   p1.destination = "RR";
+   strncpy(p1.destination, "RR", PATH_LIMIT);
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
    p1.actionCode=BUILD_CAMPUS;
@@ -69,12 +69,13 @@ int main (int argc, char *argv[]) {
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
    throwDice(g, 9);
+
    
    p2.actionCode = OBTAIN_ARC;
-   p2.destination = "RRLRLL";
+   strncpy(p2.destination, "RRLRLL", PATH_LIMIT);
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
-   p2.destination = "RRLRLLL";
+   strncpy(p2.destination, "RRLRLLL", PATH_LIMIT);
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    p2.actionCode=BUILD_CAMPUS;
@@ -84,15 +85,16 @@ int main (int argc, char *argv[]) {
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    throwDice(g, 7);
+
    
    p3.actionCode = OBTAIN_ARC;
-   p3.destination = "LRLRLB";
+   strncpy(p3.destination, "LRLRLB", PATH_LIMIT);
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
-   p3.destination=[LRLRR];
+   strncpy(p3.destination, "LRLRR", PATH_LIMIT);
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
-   p3.destination=[LRLRRR];
+   strncpy(p3.destination, "LRLRRR", PATH_LIMIT);
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    p3.actionCode=PASS;
@@ -210,7 +212,6 @@ void testPlayerState0 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -297,7 +298,6 @@ void testPlayer1State1 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -336,7 +336,6 @@ void testPlayer2State1 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -375,7 +374,6 @@ void testPlayer3State1 (Game g, int playerNumber){
    assert (numStudents == 2);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -471,7 +469,6 @@ void testPlayer1State2 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -510,7 +507,6 @@ void testPlayer2State2 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -549,7 +545,6 @@ void testPlayer3State2 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -645,7 +640,6 @@ void testPlayer1State3 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -684,7 +678,6 @@ void testPlayer2State3 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
@@ -723,7 +716,6 @@ void testPlayer3State3 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   }
    
    int exchangeRate = 0;
    int disciplineFrom = STUDENT_BPS;
