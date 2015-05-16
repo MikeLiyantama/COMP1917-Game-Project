@@ -115,7 +115,7 @@ int main (int argc, char *argv[]) {
    throwDICE(g, 2);
    
    p3.actionCode = RETRAIN_STUDENTS;
-   p3.destination = [0];
+   strncpy(p3.destination, "\0", PATH_LIMIT);
    p3.disciplineFrom = STUDENT_BPS;
    p3.disciplineTo = STUDENT_MMONEY;
    assert(isLegalAction(g,p3)==TRUE);
@@ -124,6 +124,7 @@ int main (int argc, char *argv[]) {
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    throwDice(g, 2);
+
    
    
    int counter=0;
@@ -262,9 +263,9 @@ void testGameState1(Game g){
 
    int playerNumber = 1;
    while (playerNumber <= 3){
-      if(playerNumber =1){
+      if(playerNumber ==1){
          testPlayer1State1(g, playerNumber);
-      } else if(playerNumber = 2){
+      } else if(playerNumber == 2){
          testPlayer2State1(g, playerNumber);
       } else {
          testPlayer3State1(g, playerNumber);
@@ -427,9 +428,9 @@ void testGameState2(Game g);
 
    int playerNumber = 1;
    while (playerNumber <= 3){
-      if(playerNumber =1){
+      if(playerNumber ==1){
          testPlayer1State1(g, playerNumber);
-      } else if(playerNumber = 2){
+      } else if(playerNumber == 2){
          testPlayer2State1(g, playerNumber);
       } else {
          testPlayer3State1(g, playerNumber);
@@ -592,9 +593,9 @@ void testGameState3(Game g);
 
    int playerNumber = 1;
    while (playerNumber <= 3){
-      if(playerNumber =1){
+      if(playerNumber ==1){
          testPlayer1State1(g, playerNumber);
-      } else if(playerNumber = 2){
+      } else if(playerNumber == 2){
          testPlayer2State1(g, playerNumber);
       } else {
          testPlayer3State1(g, playerNumber);
