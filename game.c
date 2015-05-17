@@ -358,27 +358,27 @@ static void grandExchange(Game g, action a){
    int disciplineTo = a.disciplineTo;
    int rate = getExchangeRate(g,((g->currentTurn%3)),disciplineFrom,disciplineTo);
 
-   if (disciplineFrom = STUDENT_BPS){
+   if (disciplineFrom == STUDENT_BPS){
       changeStudents(g,0,0,rate,0,0,0,0);
-   }else if (disciplineFrom = STUDENT_BQN){
+   }else if (disciplineFrom == STUDENT_BQN){
       changeStudents(g,0,0,0,rate,0,0,0);
-   }else if (disciplineFrom = STUDENT_MJ){
+   }else if (disciplineFrom == STUDENT_MJ){
       changeStudents(g,0,0,0,0,rate,0,0);
-   }else if (disciplineFrom = STUDENT_MTV){
+   }else if (disciplineFrom == STUDENT_MTV){
       changeStudents(g,0,0,0,0,0,rate,0);
-   }else if (disciplineFrom = STUDENT_MMONEY){
+   }else if (disciplineFrom == STUDENT_MMONEY){
       changeStudents(g,0,0,0,0,0,0,rate);
    }
 
-   if (disciplineTo = STUDENT_BPS){
+   if (disciplineTo == STUDENT_BPS){
       changeStudents(g,0,0,1,0,0,0,0);
-   }else if (disciplineTo = STUDENT_BQN){
+   }else if (disciplineTo == STUDENT_BQN){
       changeStudents(g,0,0,0,1,0,0,0);
-   }else if (disciplineTo = STUDENT_MJ){
+   }else if (disciplineTo == STUDENT_MJ){
       changeStudents(g,0,0,0,0,1,0,0);
-   }else if (disciplineTo = STUDENT_MTV){
+   }else if (disciplineTo == STUDENT_MTV){
       changeStudents(g,0,0,0,0,0,1,0);
-   }else if (disciplineTo = STUDENT_MMONEY){
+   }else if (disciplineTo == STUDENT_MMONEY){
       changeStudents(g,0,0,0,0,0,0,1);
    }
 }
@@ -457,9 +457,9 @@ static void generateStudents (Game g, int start, int column, int studentType){
 
 
 Game newGame (int discipline[], int dice[]){
-    Game *g = NULL;
+    Game g /*= NULL*/;
     while ( g != NULL){
-        g = (*game) malloc (sizeof game);
+       // g = (*game) malloc (sizeof game);
     }
     return g;
 }
@@ -471,104 +471,104 @@ void disposeGame (Game g){
 
 void makeAction (Game g, action a){
     player *temp = {0};
-    int turn = getWhoseturn(g);
+    int turn = getWhoseTurn(g);
     if (turn == UNI_A){
         temp = &(g->playerone);
     } else if (turn == UNI_B){
-        temp = g->playertwo;
+        temp = &(g->playertwo);
     } else if (turn == UNI_C){
-        temp = g->playerthree;
+        temp = &(g->playerthree);
     }
 
     if(isLegalAction(g,a) == TRUE){
        if(turn == UNI_A){
-          if ( a.Actioncode == PASS){
+          if ( a.actionCode == PASS){
               //DO nothing as they have passed their turn
-          } else if (a.Actioncode == BUILD_CAMPUS){
+          } else if (a.actionCode == BUILD_CAMPUS){
               //This builds a campus at the price of
               // 1 BPS, 1 B?, 1 MJ , 1 MTV
               changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
               changeKPI(g, 10);
-              writeToBoard(g,a.destination,CAMPUS_A);
-          } else if (a.Actioncode == BUILD_GO8) {
+              writeToBoard(g,a.destination,CAMPUS_A, 0);
+          } else if (a.actionCode == BUILD_GO8) {
               //USE up two MJ and 3 MS
               changeStudents(g, 0, 0, 0, 0, -2, 0, -3);
               changeKPI(g, 10);
-              writeToBoard(g,a.destination,GO8_A);
-          } else if (a.Actioncode == OBTAIN_ARC) {
+              writeToBoard(g,a.destination,GO8_A, 0);
+          } else if (a.actionCode == OBTAIN_ARC) {
               changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
               changeKPI(g, 10);
-              writeToBoard(g,a.destination,ARC_A);
+              writeToBoard(g,a.destination,ARC_A, 'A');
               g->ARCsCreated++;
-          } else if (a.Actioncode == START_SPINOFF) {
+          } else if (a.actionCode == START_SPINOFF) {
               //DO Nothing as this is an unexpected output
-          } else if (a.Actioncode == OBTAIN_PUBLICATION) {
+          } else if (a.actionCode == OBTAIN_PUBLICATION) {
               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
               g->pubsCreated++;
-          } else if (a.Actioncode == OBTAIN_IP_PATENT) {
+          } else if (a.actionCode == OBTAIN_IP_PATENT) {
               changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
               changeKPI(g, 10);
-          } else if (a.Actioncode == RETRAIN_STUDENTS) {
+          } else if (a.actionCode == RETRAIN_STUDENTS) {
               grandExchange(g, a);
           }
        }else if(turn == UNI_B){
-           if ( a.Actioncode == PASS){
+           if ( a.actionCode == PASS){
                //DO nothing as they have passed their turn
-           } else if (a.Actioncode == BUILD_CAMPUS){
+           } else if (a.actionCode == BUILD_CAMPUS){
                //This builds a campus at the price of
                // 1 BPS, 1 B?, 1 MJ , 1 MTV
                changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
-               writeToBoard(g,a.destination,CAMPUS_B);
-           } else if (a.Actioncode == BUILD_GO8) {
+               writeToBoard(g,a.destination,CAMPUS_B, 0);
+           } else if (a.actionCode == BUILD_GO8) {
                //USE up two MJ and 3 MS
                changeStudents(g, 0, 0, 0, 0, -2, 0, -3);
                changeKPI(g, 10);
-               writeToBoard(g,a.destination,GO8_B);
-           } else if (a.Actioncode == OBTAIN_ARC) {
+               writeToBoard(g,a.destination,GO8_B,0);
+           } else if (a.actionCode == OBTAIN_ARC) {
                changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
-               writeToBoard(g,a.destination,ARC_B);
+               writeToBoard(g,a.destination,ARC_B,'A');
                g->ARCsCreated++;
-           } else if (a.Actioncode == START_SPINOFF) {
+           } else if (a.actionCode == START_SPINOFF) {
                //DO Nothing as this is an unexpected output
-           } else if (a.Actioncode == OBTAIN_PUBLICATION) {
+           } else if (a.actionCode == OBTAIN_PUBLICATION) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                g->pubsCreated++;
-           } else if (a.Actioncode == OBTAIN_IP_PATENT) {
+           } else if (a.actionCode == OBTAIN_IP_PATENT) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                changeKPI(g, 10);
-           } else if (a.Actioncode == RETRAIN_STUDENTS) {
+           } else if (a.actionCode == RETRAIN_STUDENTS) {
                grandExchange(g, a);
            }
        }else if(turn == UNI_C){
-           if ( a.Actioncode == PASS) {
+           if ( a.actionCode == PASS) {
                //DO nothing as they have passed their turn
-           } else if (a.Actioncode == BUILD_CAMPUS){
+           } else if (a.actionCode == BUILD_CAMPUS){
                //This builds a campus at the price of
                // 1 BPS, 1 B?, 1 MJ , 1 MTV
                changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
-               writeToBoard(g,a.destination,CAMPUS_C);
-           } else if (a.Actioncode == BUILD_GO8) {
+               writeToBoard(g,a.destination,CAMPUS_C,0);
+           } else if (a.actionCode == BUILD_GO8) {
                //USE up two MJ and 3 MS
                changeStudents(g, 0, 0, 0, 0, -2, 0, -3);
                changeKPI(g, 10);
-               writeToBoard(g,a.destination,GO8_C);
-           } else if (a.Actioncode == OBTAIN_ARC) {
+               writeToBoard(g,a.destination,GO8_C,0);
+           } else if (a.actionCode == OBTAIN_ARC) {
                changeStudents(g, 0, 0, -1, -1, -1, -1, 0);
                changeKPI(g, 10);
-               writeToBoard(g,a.destination,ARC_C);
+               writeToBoard(g,a.destination,ARC_C,'A');
                g->ARCsCreated++;
-           } else if (a.Actioncode == START_SPINOFF) {
+           } else if (a.actionCode == START_SPINOFF) {
                //DO Nothing as this is an unexpected output
-           } else if (a.Actioncode == OBTAIN_PUBLICATION) {
+           } else if (a.actionCode == OBTAIN_PUBLICATION) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                g->pubsCreated++;
-           } else if (a.Actioncode == OBTAIN_IP_PATENT) {
+           } else if (a.actionCode == OBTAIN_IP_PATENT) {
                changeStudents(g, 0, 0, 0, 0, -1, -1, -1);
                changeKPI(g, 10);
-           } else if (a.Actioncode == RETRAIN_STUDENTS) {
+           } else if (a.actionCode == RETRAIN_STUDENTS) {
                grandExchange(g, a);
            }
        }
@@ -605,11 +605,6 @@ void throwDice (Game g, int diceScore){
       }
       count++;
    }*/
-   if (g->playerTurn == UNI_C){
-      g->playerTurn == UNI_A;
-   } else {
-      g->playerTurn++;
-   }
    g->currentTurn++;
 }
 
@@ -670,7 +665,7 @@ int getMostARCs(Game g){
 
 int getMostPublications(Game g){
     int ID = NO_ONE;
-    if(g.pubsCreated>0){
+    if(g->pubsCreated>0){
         if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
             ID = UNI_A;
         }
@@ -707,14 +702,14 @@ int getWhoseTurn (Game g){
 int getCampus (Game g, path pathToVortex){
     co_ordinate point;
     point = moveDecoder (pathToVortex, 7);
-    int campus = g->gameboard[point.row][point.column];
+    int campus = g->gameboard.gameboard[point.row][point.column];
     return campus;
 }
 
 int getARC (Game g, path pathToEdge){
     co_ordinate point;
     point = moveDecoder (pathToEdge, 7);
-    int arc = g->gameboard[point.row][point.column];
+    int arc = g->gameboard.gameboard[point.row][point.column];
     return arc;
 }
 
@@ -723,37 +718,37 @@ int isLegalAction (Game g, action a){
     if(g->currentTurn == -1){
         bool == FALSE;
     }
-    if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
-        bool == FALSE
+    if(a.actionCode == OBTAIN_PUBLICATION || a.actionCode == OBTAIN_IP_PATENT){
+        bool == FALSE;
     }
     //if(/* Anything related to vertex/movement here*/){
     //}
 
     // Check for sufficient students to do action(s)
 
-    if(a.Actioncode == BUILD_CAMPUS || a.Actioncode == OBTAIN_ARC){
-        int temp = 0;
+    if(a.actionCode == BUILD_CAMPUS || a.actionCode == OBTAIN_ARC){
+        player *temp;
         if(getWhoseTurn == UNI_A){
-            temp = g->playerone;
+            temp = &(g->playerone);
         }else if(getWhoseTurn == UNI_B){
-            temp = g->playertwo;
+            temp = &(g->playertwo);
         }else if(getWhoseTurn == UNI_C){
-            temp = g->playerthree;
+            temp = &(g->playerthree);
         }
 
-        if(temp.BPS >= 1 && temp.BQN >= 1 && temp.MJ >= 1 && temp.MTV >=1){
+        if(temp->students[1] >= 1 && temp->students[2] >= 1 && temp->students[3] >= 1 && temp->students[4] >=1){
             bool == TRUE;
         }
     }
 
-    if(a.Actioncode == BUILD_GO8){
-        int temp = 0;
+    if(a.actionCode == BUILD_GO8){
+        player * temp;
         if(getWhoseTurn == UNI_A){
-            temp = g->playerone;
+            temp = &(g->playerone);
         }else if(getWhoseTurn == UNI_B){
-            temp = g->playertwo;
+            temp = &(g->playertwo);
         }else if(getWhoseTurn == UNI_C){
-            temp = g->playerthree;
+            temp = &(g->playerthree);
         }
 
         if(temp.MJ >= 2 && temp.MS >=3){
