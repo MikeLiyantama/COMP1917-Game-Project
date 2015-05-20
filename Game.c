@@ -45,7 +45,7 @@ typedef struct _player {
     numberof retrain_MMONEY;
 } player;
 typedef struct _game {
-    //int playerTurn = NO_ONE;
+    int playerTurn = NO_ONE;
     player playerone;
     player playertwo;
     player playerthree;
@@ -276,7 +276,10 @@ static void studentAtRegion(Game g, int diceValue){
 //These are the prototypes for the functions that we have made for the project
 static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
    player *temp = {0};
-   int gamer;
+   int gamer = getWhoseTurn(g);
+   
+   /* NOTE: We can use getWhoseTurn Function to determine whose turn [Michael] (commented IFs below)
+    
    // enter 0 for playerNumber if this function is used during a player's turn
    // enter UNI_A, UNI_B, or UNI_C if used to update students when it is not their turn
    // ie. during throwDice
@@ -288,7 +291,8 @@ static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN,
       } else if ((g->currentTurn%3) == UNI_C){
          gamer = UNI_C;
       }
-   }
+   }*/
+    
    if (gamer == UNI_A){
       temp = &(g->playerone);
    } else if (gamer == UNI_B){
@@ -305,26 +309,7 @@ static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN,
    }
 }
 
-   /* Alternative form:
-    if(getWhoseTurn == UNI_A){
-       g.playerone.ThD = g.playerone.ThD + ThD;
-       g.playerone.BPS = g.playerone.BPS + BPS;
-       g.playerone.MJ = g.playerone.MJ + MJ;
-       g.playerone.MTV = g.playerone.MTV + MTV;
-       g.playerone.MMONEY = g.playerone.MMONEY + MMONEY;
-    } else if(getWhoseTurn == UNI_B){
-       g.playertwo.ThD = g.playertwo.ThD + ThD;
-       g.playertwo.BPS = g.playertwo.BPS + BPS;
-       g.playertwo.MJ = g.playertwo.MJ + MJ;
-       g.playertwo.MTV = g.playertwo.MTV + MTV;
-       g.playertwo.MMONEY = g.playertwo.MMONEY + MMONEY;
-    }else if(getWhoseTurn == UNI_C){
-       g.playerthree.ThD = g.playerthree.ThD + ThD;
-       g.playerthree.BPS = g.playerthree.BPS + BPS;
-       g.playerthree.MJ = g.playerthree.MJ + MJ;
-       g.playerthree.MTV = g.playerthree.MTV + MTV;
-       g.playerthree.MMONEY = g.playerthree.MMONEY + MMONEY;
-}*/
+
 static void changeKPI (Game g, int KPI){
    player *temp;
    if (getWhoseTurn(g) == UNI_A){
@@ -335,17 +320,8 @@ static void changeKPI (Game g, int KPI){
       temp = &(g->playerthree);
    }
    temp->KPI = temp->KPI + KPI;
-
-   /* Alternative Form:
-    if(getWhoseTurn == UNI_A){
-       g.playerone.KPI = g.playerone.KPI + KPI;
-    } else if(getWhoseTurn == UNI_B){
-       g.playertwo.KPI = g.playertwo.KPI + KPI;
-    } else if(getWhoseTurn == UNI_C){
-       g.playerthree.KPI = g.playerthree.KPI + KPI;
-    }
-    */
 }
+
 
 static void grandExchange(Game g, action a){
 
@@ -576,6 +552,7 @@ void throwDice (Game g, int diceScore){
    /*int students[19] = {-1};
    int RegionID = 0;
    int count = 0;
+
    while (regionID < 19) {
       if(g->dice[regionID] == diceValue) {
          students[count] = regionID;
@@ -583,6 +560,7 @@ void throwDice (Game g, int diceScore){
       }
       regionID++;
    }
+
    count = 0;
    IDcounter = 0
    while (students[count] != -1){
@@ -611,6 +589,7 @@ void throwDice (Game g, int diceScore){
 }*/
 
 /*static int studentAtRegion(game g, int regionID){
+
    int students[19] = {0};
    int tempCount = 0;
    int count = 0;
@@ -660,11 +639,9 @@ int getMostPublications(Game g){
     if(g->pubsCreated>0){
         if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
             ID = UNI_A;
-        }
-        else if((g->playertwo.pubs > g->playerone.pubs) && (g->playertwo.pubs > g->playerthree.pubs)){
+        } else if((g->playertwo.pubs > g->playerone.pubs) && (g->playertwo.pubs > g->playerthree.pubs)){
             ID = UNI_B;
-        }
-        else if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
+        } else if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
             ID = UNI_C;
         }
     }
@@ -681,11 +658,9 @@ int getWhoseTurn (Game g){
     int ID = NO_ONE;
     if (g->currentTurn % 3 == 0){
         ID = UNI_A;
-    }
-    else if (g->currentTurn % 3 == 1){
+    } else if (g->currentTurn % 3 == 1){
         ID = UNI_B;
-    }
-    else if (g->currentTurn % 3 == 2){
+    } else if (g->currentTurn % 3 == 2){
         ID = UNI_C;
     }
     return ID;
@@ -709,15 +684,19 @@ int isLegalAction (Game g, action a){
     int bool = TRUE;
     if(g->currentTurn == -1){
         bool == FALSE;
+<<<<<<< HEAD:game.c
     }
     if(a.actionCode == OBTAIN_PUBLICATION || a.actionCode == OBTAIN_IP_PATENT){
         bool == FALSE;
+=======
+    }else if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
+        bool == FALSE
+>>>>>>> origin/master:Game.c
     }
-    //if(/* Anything related to vertex/movement here*/){
-    //}
 
     // Check for sufficient students to do action(s)
 
+<<<<<<< HEAD:game.c
     if(a.actionCode == BUILD_CAMPUS || a.actionCode == OBTAIN_ARC){
         player *temp;
         if(getWhoseTurn == UNI_A){
@@ -726,11 +705,22 @@ int isLegalAction (Game g, action a){
             temp = &(g->playertwo);
         }else if(getWhoseTurn == UNI_C){
             temp = &(g->playerthree);
+=======
+    else if(a.Actioncode == BUILD_CAMPUS || a.Actioncode == OBTAIN_ARC){
+        int temp = 0;
+        if(getWhoseTurn(g) == UNI_A){
+            temp = g->playerone;
+        }else if(getWhoseTurn(g) == UNI_B){
+            temp = g->playertwo;
+        }else if(getWhoseTurn(g) == UNI_C){
+            temp = g->playerthree;
+>>>>>>> origin/master:Game.c
         }
 
         if(temp->students[1] >= 1 && temp->students[2] >= 1 && temp->students[3] >= 1 && temp->students[4] >=1){
             bool == TRUE;
         }
+<<<<<<< HEAD:game.c
     }
 
     if(a.actionCode == BUILD_GO8){
@@ -741,24 +731,93 @@ int isLegalAction (Game g, action a){
             temp = &(g->playertwo);
         }else if(getWhoseTurn == UNI_C){
             temp = &(g->playerthree);
+=======
+    } else if(a.Actioncode == BUILD_GO8){
+        int temp = 0;
+        if(getWhoseTurn(g) == UNI_A){
+            temp = g->playerone;
+        } else if(getWhoseTurn(g) == UNI_B){
+            temp = g->playertwo;
+        } else if(getWhoseTurn(g) == UNI_C){
+            temp = g->playerthree;
+>>>>>>> origin/master:Game.c
         }
 
         if(temp.MJ >= 2 && temp.MS >=3){
             bool == TRUE;
         }
-    }
-    if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
+    } else if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
         int temp = 0;
-        if(getWhoseTurn == UNI_A){
+        if(getWhoseTurn(g) == UNI_A){
             temp = g->playerone;
-        }else if(getWhoseTurn == UNI_B){
+        } else if(getWhoseTurn(g) == UNI_B){
             temp = g->playertwo;
-        }else if(getWhoseTurn == UNI_C){
+        } else if(getWhoseTurn(g) == UNI_C){
             temp = g->playerthree;
         }
 
         if(temp.MJ >= 1 && temp.MTV >=1 && temp.MMONEY >= 1){
             bool == TRUE;
+        }
+    } else if(a.Actioncode == RETRAIN_STUDENTS){
+        if(getWhoseTurn(g)(g) == UNI_A){
+            temp = g->playerone;
+        } else if(getWhoseTurn(g) == UNI_B){
+            temp = g->playertwo;
+        } else if(getWhoseTurn(g) == UNI_C){
+            temp = g->playerthree;
+        }
+        
+        if (a.disciplineFrom = STUDENT_BPS){
+            if(/*Specific player has retraining centre */){
+                if(temp.BPS>=2){
+                    bool == TRUE;
+                }
+            }else{
+                if(temp.BPS >=3){
+                    bool == TRUE;
+                }
+            }
+        }else if (a.disciplineFrom = STUDENT_BQN){
+            if(/*Specific player has retraining centre */){
+                if(temp.BQN>=2){
+                    bool == TRUE;
+                }
+            }else{
+                if(temp.BQN >=3){
+                    bool == TRUE;
+                }
+            }
+        }else if (a.disciplineFrom = STUDENT_MJ){
+            if(/*Specific player has retraining centre */){
+                if(temp.MJ>=2){
+                    bool == TRUE;
+                }
+            }else{
+                if(temp.MJ >=3){
+                    bool == TRUE;
+                }
+            }
+        }else if (a.disciplineFrom = STUDENT_MTV){
+            if(/*Specific player has retraining centre */){
+                if(temp.MTV>=2){
+                    bool == TRUE;
+                }
+            }else{
+                if(temp.MTV >=3){
+                    bool == TRUE;
+                }
+            }
+        }else if (a.disciplineFrom = STUDENT_MMONEY){
+            if(/*Specific player has retraining centre */){
+                if(temp.MMONEY>=2){
+                    bool == TRUE;
+                }
+            }else{
+                if(temp.MMONEY >=3){
+                    bool == TRUE;
+                }
+            }
         }
     }
 }
