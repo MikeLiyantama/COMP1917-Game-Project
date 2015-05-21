@@ -684,19 +684,15 @@ int isLegalAction (Game g, action a){
     int bool = TRUE;
     if(g->currentTurn == -1){
         bool == FALSE;
-<<<<<<< HEAD:game.c
     }
     if(a.actionCode == OBTAIN_PUBLICATION || a.actionCode == OBTAIN_IP_PATENT){
         bool == FALSE;
-=======
     }else if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
         bool == FALSE
->>>>>>> origin/master:Game.c
     }
 
     // Check for sufficient students to do action(s)
 
-<<<<<<< HEAD:game.c
     if(a.actionCode == BUILD_CAMPUS || a.actionCode == OBTAIN_ARC){
         player *temp;
         if(getWhoseTurn == UNI_A){
@@ -705,7 +701,6 @@ int isLegalAction (Game g, action a){
             temp = &(g->playertwo);
         }else if(getWhoseTurn == UNI_C){
             temp = &(g->playerthree);
-=======
     else if(a.Actioncode == BUILD_CAMPUS || a.Actioncode == OBTAIN_ARC){
         int temp = 0;
         if(getWhoseTurn(g) == UNI_A){
@@ -714,13 +709,11 @@ int isLegalAction (Game g, action a){
             temp = g->playertwo;
         }else if(getWhoseTurn(g) == UNI_C){
             temp = g->playerthree;
->>>>>>> origin/master:Game.c
         }
 
         if(temp->students[1] >= 1 && temp->students[2] >= 1 && temp->students[3] >= 1 && temp->students[4] >=1){
             bool == TRUE;
         }
-<<<<<<< HEAD:game.c
     }
 
     if(a.actionCode == BUILD_GO8){
@@ -731,7 +724,6 @@ int isLegalAction (Game g, action a){
             temp = &(g->playertwo);
         }else if(getWhoseTurn == UNI_C){
             temp = &(g->playerthree);
-=======
     } else if(a.Actioncode == BUILD_GO8){
         int temp = 0;
         if(getWhoseTurn(g) == UNI_A){
@@ -740,7 +732,6 @@ int isLegalAction (Game g, action a){
             temp = g->playertwo;
         } else if(getWhoseTurn(g) == UNI_C){
             temp = g->playerthree;
->>>>>>> origin/master:Game.c
         }
 
         if(temp.MJ >= 2 && temp.MS >=3){
