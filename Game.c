@@ -935,41 +935,25 @@ int getStudents (Game g, int player, int discipline){
 
 int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
     int exchangeRate = 0;
+    player * temp = NULL;
     if (player == UNI_A){
-        if (disciplineFrom == STUDENT_BPS){
-            exchangeRate = g->playerone.retrain_BPS;
-        } else if (disciplineFrom == STUDENT_BQN) {
-            exchangeRate = g->playerone.retrain_BQN;
-        } else if (disciplineFrom == STUDENT_MJ) {
-            exchangeRate = g->playerone.retrain_MJ;
-        } else if (disciplineFrom == STUDENT_MTV) {
-            exchangeRate = g->playerone.retrain_MTV;
-        } else if (disciplineFrom == STUDENT_MMONEY) {
-            exchangeRate = g->playerone.retrain_MMONEY;
-        }
-    } else if (player == UNI_B) {
-        if (disciplineFrom == STUDENT_BPS){
-            exchangeRate = g->playertwo.retrain_BPS;
-        } else if (disciplineFrom == STUDENT_BQN) {
-            exchangeRate = g->playertwo.retrain_BQN;
-        } else if (disciplineFrom == STUDENT_MJ) {
-            exchangeRate = g->playertwo.retrain_MJ;
-        } else if (disciplineFrom == STUDENT_MTV) {
-            exchangeRate = g->playertwo.retrain_MTV;
-        } else if (disciplineFrom == STUDENT_MMONEY) {
-            exchangeRate = g->playertwo.retrain_MMONEY;
-        }
+        temp = &(g->playerone);
+    } else if (player == UNI_B){
+        temp = &(g->playertwo);
+    } else if (player == UNI_B){
+        temp = &(g->playerthree);
+    }
     } else if (player == UNI_C) {
         if (disciplineFrom == STUDENT_BPS){
-           exchangeRate =  g->playerthree.retrain_BPS;
+           exchangeRate =  temp->retrain_BPS;
         } else if (disciplineFrom == STUDENT_BQN) {
-            exchangeRate = g->playerthree.retrain_BQN;
+            exchangeRate = temp->retrain_BQN;
         } else if (disciplineFrom == STUDENT_MJ) {
-            exchangeRate = g->playerthree.retrain_MJ;
+            exchangeRate = temp->retrain_MJ;
         } else if (disciplineFrom == STUDENT_MTV) {
-            exchangeRate = g->playerthree.retrain_MTV;
+            exchangeRate = temp->retrain_MTV;
         } else if (disciplineFrom == STUDENT_MMONEY) {
-            exchangeRate = g->playerthree.retrain_MMONEY;
+            exchangeRate = temp->retrain_MMONEY;
         }
     }
     return exchangeRate;
