@@ -8,7 +8,7 @@
 #include "Game.h"
 
 #define TERRA_NULLIUS -1
-#define WORKING_PATH {'L','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','L','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','L','B','R','R','R','R','R','R','R'}
+#define WORKING_PATH {'L','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','R','B','R','R','R','R','B','R','R','L','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','R','B','R','R','R','L','B','L','L','R','R','R','R','R'}
 #define DEFAULT_DISCIPLINES {STUDENT_BQN, STUDENT_MMONEY, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MJ, STUDENT_BPS, STUDENT_MTV, STUDENT_MTV, STUDENT_BPS,STUDENT_MTV, STUDENT_BQN, STUDENT_MJ, STUDENT_BQN, STUDENT_THD, STUDENT_MJ, STUDENT_MMONEY, STUDENT_MTV, STUDENT_BQN, STUDENT_BPS}
 #define DEFAULT_DICE {9,10,8,12,6,5,3,11,3,11,4,6,4,7,9,2,8,10,5}
 
@@ -16,15 +16,15 @@ void testGameState0 (Game g);
 void testPlayerState0 (Game g, int playerNumber);
 void testGameState1 (Game g);
 void testPlayer1State1 (Game g, int playerNumber);
-void testPlaye2State1 (Game g, int playerNumber);
+void testPlayer2State1 (Game g, int playerNumber);
 void testPlayer3State1 (Game g, int playerNumber);
 void testGameState2(Game g);
 void testPlayer1State2 (Game g, int playerNumber);
-void testPlaye2State2 (Game g, int playerNumber);
+void testPlayer2State2 (Game g, int playerNumber);
 void testPlayer3State2 (Game g, int playerNumber);
 void testGameState3(Game g);
 void testPlayer1State3 (Game g, int playerNumber);
-void testPlaye2State3 (Game g, int playerNumber);
+void testPlayer2State3 (Game g, int playerNumber);
 void testPlayer3State3 (Game g, int playerNumber);
 
 int main (int argc, char *argv[]) {
@@ -250,8 +250,8 @@ void testGameState1(Game g){
    }
    
    count = 0;
-   char tempPath2[90] = {'\0'};
-   char workingPath2[90] = WORKING_PATH;
+   tempPath2[90] = {'\0'};
+   workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] == workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
@@ -383,7 +383,7 @@ void testPlayer3State1 (Game g, int playerNumber){
 
 }
 
-void testGameState2(Game g);
+void testGameState2(Game g) {
 
    assert(getMostARCs(g) == UNI_C);   
    assert(getWhoseTurn(g) == UNI_A);
@@ -406,8 +406,8 @@ void testGameState2(Game g);
    }
    
    count = 0;
-   char tempPath2[90] = {'\0'};
-   char workingPath2[90] = WORKING_PATH;
+   tempPath2[90] = {'\0'};
+   workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] == workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
@@ -440,7 +440,7 @@ void testGameState2(Game g);
    printf("Test Game State 2 passed!\n");
 }
 
-void testPlayer1State2 (Game g, int playerNumber){
+void testPlayer1State2 (Game g, int playerNumber) {
 
    assert(getKPIpoints(g, playerNumber) == 34);
    assert(getARCs(g, playerNumber) == 2);
@@ -548,7 +548,7 @@ void testPlayer3State2 (Game g, int playerNumber){
 
 }
 
-void testGameState3(Game g);
+void testGameState3(Game g) {
 
    assert(getMostARCs(g) == UNI_C);   
    assert(getWhoseTurn(g) == UNI_A);
@@ -571,8 +571,8 @@ void testGameState3(Game g);
    }
    
    count = 0;
-   char tempPath2[90] = {'\0'};
-   char workingPath2[90] = WORKING_PATH;
+   tempPath2[90] = {'\0'};
+   workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] == workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
