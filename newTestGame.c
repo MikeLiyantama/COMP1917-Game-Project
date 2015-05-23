@@ -112,7 +112,7 @@ int main (int argc, char *argv[]) {
    p2.actionCode=PASS;
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
-   throwDICE(g, 2);
+   throwDice(g, 2);
    
    p3.actionCode = RETRAIN_STUDENTS;
    strncpy(p3.destination, "\0", PATH_LIMIT);
