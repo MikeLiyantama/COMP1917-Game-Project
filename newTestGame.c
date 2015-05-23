@@ -250,8 +250,8 @@ void testGameState1(Game g){
    }
    
    count = 0;
-   tempPath2[90] = {'\0'};
-   workingPath2[90] = WORKING_PATH;
+   char tempPath2[90] = {'\0'};
+   char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] == workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
@@ -383,7 +383,7 @@ void testPlayer3State1 (Game g, int playerNumber){
 
 }
 
-void testGameState2(Game g) {
+void testGameState2(Game g){
 
    assert(getMostARCs(g) == UNI_C);   
    assert(getWhoseTurn(g) == UNI_A);
@@ -406,8 +406,8 @@ void testGameState2(Game g) {
    }
    
    count = 0;
-   tempPath2[90] = {'\0'};
-   workingPath2[90] = WORKING_PATH;
+   char tempPath2[90] = {'\0'};
+   char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] == workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
@@ -440,7 +440,7 @@ void testGameState2(Game g) {
    printf("Test Game State 2 passed!\n");
 }
 
-void testPlayer1State2 (Game g, int playerNumber) {
+void testPlayer1State2 (Game g, int playerNumber){
 
    assert(getKPIpoints(g, playerNumber) == 34);
    assert(getARCs(g, playerNumber) == 2);
@@ -548,7 +548,7 @@ void testPlayer3State2 (Game g, int playerNumber){
 
 }
 
-void testGameState3(Game g) {
+void testGameState3(Game g){
 
    assert(getMostARCs(g) == UNI_C);   
    assert(getWhoseTurn(g) == UNI_A);
@@ -571,8 +571,8 @@ void testGameState3(Game g) {
    }
    
    count = 0;
-   tempPath2[90] = {'\0'};
-   workingPath2[90] = WORKING_PATH;
+   char tempPath2[90] = {'\0'};
+   char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] == workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
