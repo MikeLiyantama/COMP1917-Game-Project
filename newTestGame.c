@@ -159,7 +159,7 @@ void testGameState0(Game g){
    char tempPath1[90] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath1[count] == workingPath1[count];
+      tempPath1[count] = workingPath1[count];
       if(count == 26 || count == 53){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44){
@@ -176,7 +176,7 @@ void testGameState0(Game g){
    char tempPath2[90] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath2[count] == workingPath2[count];
+      tempPath2[count] = workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
       count++;
    }
@@ -238,7 +238,7 @@ void testGameState1(Game g){
    char tempPath1[90] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath1[count] == workingPath1[count];
+      tempPath1[count] = workingPath1[count];
       if(count == 26 || count == 53){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44){
@@ -255,7 +255,7 @@ void testGameState1(Game g){
    char tempPath2[90] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath2[count] == workingPath2[count];
+      tempPath2[count] = workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
       count++;
    }
@@ -394,7 +394,7 @@ void testGameState2(Game g){
    char tempPath1[90] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath1[count] == workingPath1[count];
+      tempPath1[count] = workingPath1[count];
       if(count == 26 || count == 51 || count == 53){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44 || count == 42){
@@ -411,7 +411,7 @@ void testGameState2(Game g){
    char tempPath2[90] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath2[count] == workingPath2[count];
+      tempPath2[count] = workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
          assert(getARC(g, tempPath2) == ARC_A);
       } else if(count == 44 || count == 43 || count == 42){
@@ -426,7 +426,7 @@ void testGameState2(Game g){
    }
    
    assert(getMostPublications(g) == NO_ONE);
-   assert(getTurnNumber(g) == 6)
+   assert(getTurnNumber(g) == 6);
 
    int playerNumber = 1;
    while (playerNumber <= 3){
@@ -559,7 +559,7 @@ void testGameState3(Game g){
    char tempPath1[90] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
-      tempPath1[count] == workingPath1[count];
+      tempPath1[count] = workingPath1[count];
       if(count == 26 || count == 51 || count == 53){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
       } else if(count == 17 || count == 44 || count == 42){
@@ -576,7 +576,7 @@ void testGameState3(Game g){
    char tempPath2[90] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
-      tempPath2[count] == workingPath2[count];
+      tempPath2[count] = workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
          assert(getARC(g, tempPath2) == ARC_A);
       } else if(count == 44 || count == 43 || count == 42){
@@ -591,7 +591,7 @@ void testGameState3(Game g){
    }
    
    assert(getMostPublications(g) == NO_ONE);
-   assert(getTurnNumber(g) == 9)
+   assert(getTurnNumber(g) == 9);
 
    int playerNumber = 1;
    while (playerNumber <= 3){
