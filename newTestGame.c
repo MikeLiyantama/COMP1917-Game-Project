@@ -160,7 +160,7 @@ void testGameState0(Game g){
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
       tempPath1[count] = workingPath1[count];
-      if(count == 26 || count == 53){
+      if(count == 26 || count == 51){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
          printf("testing campus A\n");
       } else if(count == 17 || count == 44){
