@@ -182,7 +182,7 @@ void testGameState0(Game g){
    while(count<90){
       tempPath2[count] = workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
-      printf("testing arc %d", count);
+      printf("testing arc %d\n", count);
       count++;
    }
    
@@ -255,7 +255,7 @@ void testGameState1(Game g){
          printf("testing campus C\n");
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
-         printf("testing vertex %d", count);
+         printf("testing vertex %d\n", count);
       } 
       count++;
    }
@@ -266,7 +266,7 @@ void testGameState1(Game g){
    while(count<90){
       tempPath2[count] = workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
-      printf("testing arc %d", count);
+      printf("testing arc %d\n", count);
       count++;
    }
    
@@ -416,7 +416,7 @@ void testGameState2(Game g){
          printf("campus C\n");
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
-         printf("testing vertex %d", count);
+         printf("testing vertex %d\n", count);
       } 
       count++;
    }
@@ -434,8 +434,10 @@ void testGameState2(Game g){
          printf("testing arc B\n");
       } else if(count == 8 || count == 6 || count == 7 || count == 58){
          assert(getARC(g, tempPath2) == ARC_C);
+         printf("testing arc C\n");
       } else {
          assert(getARC(g, tempPath2) == VACANT_ARC);
+         printf("testing arc %d\n", count);
       } 
       assert(getARC(g, tempPath2) == VACANT_ARC);
       count++;
