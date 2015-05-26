@@ -449,11 +449,11 @@ void testGameState2(Game g){
    int playerNumber = 1;
    while (playerNumber <= 3){
       if(playerNumber ==1){
-         testPlayer1State1(g, playerNumber);
+         testPlayer1State2(g, playerNumber);
       } else if(playerNumber == 2){
-         testPlayer2State1(g, playerNumber);
+         testPlayer2State2(g, playerNumber);
       } else {
-         testPlayer3State1(g, playerNumber);
+         testPlayer3State2(g, playerNumber);
       }
       playerNumber++;
    }
