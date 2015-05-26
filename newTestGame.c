@@ -182,6 +182,7 @@ void testGameState0(Game g){
    while(count<90){
       tempPath2[count] = workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
+      printf("testing arc %d", count);
       count++;
    }
    
@@ -239,28 +240,33 @@ void testGameState1(Game g){
    assert((getWhoseTurn(g)) == UNI_A);
    
    int count = 0;
-   char tempPath1[90] = {'\0'};
+   char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
       tempPath1[count] = workingPath1[count];
-      if(count == 26 || count == 53){
+      if(count == 26 || count == 51){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
+         printf("testing campus A\n");
       } else if(count == 17 || count == 44){
          assert(getCampus(g, tempPath1) == CAMPUS_B);
+         printf("testing campus B\n");
       } else if(count == 8 || count == 35){
          assert(getCampus(g, tempPath1) == CAMPUS_C);
+         printf("testing campus C\n");
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
+         printf("testing vertex %d", count);
       } 
       count++;
    }
    
    count = 0;
-   char tempPath2[90] = {'\0'};
+   char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] = workingPath2[count];
       assert(getARC(g, tempPath2) == VACANT_ARC);
+      printf("testing arc %d", count);
       count++;
    }
    
@@ -395,31 +401,37 @@ void testGameState2(Game g){
    assert(getWhoseTurn(g) == UNI_A);
    
    int count = 0;
-   char tempPath1[90] = {'\0'};
+   char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
       tempPath1[count] = workingPath1[count];
       if(count == 26 || count == 51 || count == 53){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
+         printf("testing campus A\n");
       } else if(count == 17 || count == 44 || count == 42){
          assert(getCampus(g, tempPath1) == CAMPUS_B);
+         printf("testing campus B\n");
       } else if(count == 8 || count == 35){
          assert(getCampus(g, tempPath1) == CAMPUS_C);
+         printf("campus C\n");
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
+         printf("testing vertex %d", count);
       } 
       count++;
    }
    
    count = 0;
-   char tempPath2[90] = {'\0'};
+   char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] = workingPath2[count];
       if(count == 51 || count == 52 || count == 53){
          assert(getARC(g, tempPath2) == ARC_A);
+         printf("testing arc A\n");
       } else if(count == 44 || count == 43 || count == 42){
          assert(getARC(g, tempPath2) == ARC_B);
+         printf("testing arc B\n");
       } else if(count == 8 || count == 6 || count == 7 || count == 58){
          assert(getARC(g, tempPath2) == ARC_C);
       } else {
@@ -560,7 +572,7 @@ void testGameState3(Game g){
    assert(getWhoseTurn(g) == UNI_A);
    
    int count = 0;
-   char tempPath1[90] = {'\0'};
+   char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
       tempPath1[count] = workingPath1[count];
@@ -577,7 +589,7 @@ void testGameState3(Game g){
    }
    
    count = 0;
-   char tempPath2[90] = {'\0'};
+   char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] = workingPath2[count];
