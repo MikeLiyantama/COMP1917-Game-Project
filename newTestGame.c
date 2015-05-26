@@ -59,7 +59,7 @@ int main (int argc, char *argv[]) {
    strncpy(p1.destination, "R", PATH_LIMIT);
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
-   strncpy(p1.destination, "RR", PATH_LIMIT);
+   strncpy(p1.destination, "RL", PATH_LIMIT);
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
    p1.actionCode=BUILD_CAMPUS;
@@ -125,7 +125,7 @@ int main (int argc, char *argv[]) {
    makeAction(g, p3);
    throwDice(g, 2);
 
-   
+   testGameState3(g);
    
    int counter=0;
    while (counter<12){
