@@ -129,14 +129,16 @@ int main (int argc, char *argv[]) {
    
    int counter=0;
    while (counter<12){
-      assert(getDiscipline(g,counter)==DEFAULT_DISCIPLINES[counter]);
+      assert(getDiscipline(g,counter)==disciplines[counter]);
+      //assert(getDiscipline(g,counter)==DEFAULT_DISCIPLINES[counter]);
       counter++;
    }
 
    counter = 0;
 
    while (counter<12){
-      assert(getDiceValue(g,counter)==DEFAULT_DICE[counter]);
+      assert(getDiceValue(g,counter)==dice[counter]);
+      //assert(getDiceValue(g,counter)==DEFAULT_DICE[counter]);
       counter++;
    }
 
