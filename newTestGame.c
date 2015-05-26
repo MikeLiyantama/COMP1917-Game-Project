@@ -162,12 +162,16 @@ void testGameState0(Game g){
       tempPath1[count] = workingPath1[count];
       if(count == 26 || count == 53){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
+         printf("testing campus A\n");
       } else if(count == 17 || count == 44){
          assert(getCampus(g, tempPath1) == CAMPUS_B);
+         printf("testing campus B\n");
       } else if(count == 8 || count == 35){
          assert(getCampus(g, tempPath1) == CAMPUS_C);
+         printf("testing campus C\n");
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
+         printf("testing vertex %d", count);
       } 
       count++;
    }
