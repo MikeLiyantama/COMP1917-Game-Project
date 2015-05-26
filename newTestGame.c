@@ -156,7 +156,7 @@ void testGameState0(Game g){
    assert((getWhoseTurn(g)) == NO_ONE);
    
    int count = 0;
-   char tempPath1[90] = {'\0'};
+   char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
       tempPath1[count] = workingPath1[count];
@@ -177,7 +177,7 @@ void testGameState0(Game g){
    }
    
    count = 0;
-   char tempPath2[90] = {'\0'};
+   char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] = workingPath2[count];
