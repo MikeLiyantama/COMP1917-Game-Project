@@ -440,7 +440,6 @@ void testGameState2(Game g){
          assert(getARC(g, tempPath2) == VACANT_ARC);
          printf("testing arc %d\n", count);
       } 
-      assert(getARC(g, tempPath2) == VACANT_ARC);
       count++;
    }
    
