@@ -405,10 +405,10 @@ void testGameState2(Game g){
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
       tempPath1[count] = workingPath1[count];
-      if(count == 26 || count == 51 || count == 53){
+      if(count == 26 || count == 51 || count == 53|| count == 81){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
          printf("testing campus A\n");
-      } else if(count == 17 || count == 44 || count == 42){
+      } else if(count == 17 || count == 44 || count == 42 || count == 78) {
          assert(getCampus(g, tempPath1) == CAMPUS_B);
          printf("testing campus B\n");
       } else if(count == 8 || count == 35){
