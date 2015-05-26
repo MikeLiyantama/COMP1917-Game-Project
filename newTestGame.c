@@ -171,7 +171,7 @@ void testGameState0(Game g){
          printf("testing campus C\n");
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
-         printf("testing vertex %d", count);
+         printf("testing vertex %d\n", count);
       } 
       count++;
    }
