@@ -599,6 +599,7 @@ void testGameState3(Game g){
    char workingPath2[90] = WORKING_PATH;
    while(count<90){
       tempPath2[count] = workingPath2[count];
+      printf("[%d]:",count);
       if(count == 51 || count == 52 || count == 53){
          assert(getARC(g, tempPath2) == ARC_A);
          printf("testing arc A\n");
@@ -612,7 +613,6 @@ void testGameState3(Game g){
          assert(getARC(g, tempPath2) == VACANT_ARC);
          printf("testing arc %d\n", count);
       } 
-      assert(getARC(g, tempPath2) == VACANT_ARC);
       count++;
    }
    
