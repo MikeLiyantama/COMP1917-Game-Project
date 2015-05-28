@@ -546,9 +546,9 @@ void testPlayer3State2 (Game g, int playerNumber){
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_BQN);
-   assert (numStudents == 1);
+   assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MJ);
-   assert (numStudents == 2);
+   assert (numStudents == 3);
    numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
