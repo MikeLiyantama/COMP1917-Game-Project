@@ -534,7 +534,7 @@ void testPlayer2State2 (Game g, int playerNumber){
 
 void testPlayer3State2 (Game g, int playerNumber){
 
-   assert(getKPIpoints(g, playerNumber) == 26);
+   assert(getKPIpoints(g, playerNumber) == 36);
    assert(getARCs(g, playerNumber) == 3);
    assert(getGO8s(g, playerNumber) == 0);
    assert(getCampuses(g, playerNumber) == 2);
