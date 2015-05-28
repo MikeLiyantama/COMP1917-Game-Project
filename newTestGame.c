@@ -116,7 +116,7 @@ int main (int argc, char *argv[]) {
    
    p3.actionCode = RETRAIN_STUDENTS;
    strncpy(p3.destination, "\0", PATH_LIMIT);
-   p3.disciplineFrom = STUDENT_BPS;
+   p3.disciplineFrom = STUDENT_MJ;
    p3.disciplineTo = STUDENT_MMONEY;
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
@@ -578,10 +578,10 @@ void testGameState3(Game g){
    char workingPath1[90] = WORKING_PATH;
    while(count<90){
       tempPath1[count] = workingPath1[count];
-      if(count == 26 || count == 51 || count == 53){
+      if(count == 26 || count == 51 || count == 53 || count == 81){
          assert(getCampus(g, tempPath1) == CAMPUS_A);
          printf("testing campusA\n");
-      } else if(count == 17 || count == 44 || count == 42){
+      } else if(count == 17 || count == 44 || count == 42 || count == 78){
          assert(getCampus(g, tempPath1) == CAMPUS_B);
          printf("testing campusB\n");
       } else if(count == 8 || count == 35){
@@ -707,7 +707,7 @@ void testPlayer2State3 (Game g, int playerNumber){
 
 void testPlayer3State3 (Game g, int playerNumber){
 
-   assert(getKPIpoints(g, playerNumber) == 26);
+   assert(getKPIpoints(g, playerNumber) == 36);
    assert(getARCs(g, playerNumber) == 3);
    assert(getGO8s(g, playerNumber) == 0);
    assert(getCampuses(g, playerNumber) == 2);
@@ -719,9 +719,9 @@ void testPlayer3State3 (Game g, int playerNumber){
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_BQN);
-   assert (numStudents == 3);
+   assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MJ);
-   assert (numStudents == 3);
+   assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MTV);
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
