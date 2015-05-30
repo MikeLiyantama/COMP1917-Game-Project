@@ -45,7 +45,7 @@ typedef struct _player {
     numberof retrain_MMONEY;
 } player;
 typedef struct _game {
-    int playerTurn = NO_ONE;
+    int playerTurn;
     player playerone;
     player playertwo;
     player playerthree;
@@ -275,11 +275,11 @@ static void studentAtRegion(Game g, int diceValue){
 }
 //These are the prototypes for the functions that we have made for the project
 static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
-   player *temp = {0};
+   player *temp;
    int gamer = getWhoseTurn(g);
-   
+
    /* NOTE: We can use getWhoseTurn Function to determine whose turn [Michael] (commented IFs below)
-    
+
    // enter 0 for playerNumber if this function is used during a player's turn
    // enter UNI_A, UNI_B, or UNI_C if used to update students when it is not their turn
    // ie. during throwDice
@@ -292,7 +292,7 @@ static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN,
          gamer = UNI_C;
       }
    }*/
-    
+
    if (gamer == UNI_A){
       temp = &(g->playerone);
    } else if (gamer == UNI_B){
@@ -304,7 +304,7 @@ static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN,
    int studentCount = 0;
    int addStudent[NUM_DISCIPLINES] = {ThD,BPS,BQN,MJ,MTV,MMONEY};
    while(studentCount <= NUM_DISCIPLINES){
-      temp->students[studentCount] == temp->students[studentCount] + addStudent[studentCount];
+      temp->students[studentCount] = temp->students[studentCount] + addStudent[studentCount];
       studentCount++;
    }
 }
@@ -441,15 +441,16 @@ void disposeGame (Game g){
 }
 
 void makeAction (Game g, action a){
-    player *temp = {0};
+    /*player *temp = {0}; */
     int turn = getWhoseTurn(g);
+    /*
     if (turn == UNI_A){
         temp = &(g->playerone);
     } else if (turn == UNI_B){
         temp = &(g->playertwo);
     } else if (turn == UNI_C){
         temp = &(g->playerthree);
-    }
+    } */
 
     if(isLegalAction(g,a) == TRUE){
        if(turn == UNI_A){
@@ -680,138 +681,7 @@ int getARC (Game g, path pathToEdge){
     return arc;
 }
 
-int isLegalAction (Game g, action a){
-    int bool = TRUE;
-    if(g->currentTurn == -1){
-        bool == FALSE;
-    }
-    if(a.actionCode == OBTAIN_PUBLICATION || a.actionCode == OBTAIN_IP_PATENT){
-        bool == FALSE;
-    }else if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
-        bool == FALSE
-    }
 
-    // Check for sufficient students to do action(s)
-
-    if(a.actionCode == BUILD_CAMPUS || a.actionCode == OBTAIN_ARC){
-        player *temp;
-        if(getWhoseTurn == UNI_A){
-            temp = &(g->playerone);
-        }else if(getWhoseTurn == UNI_B){
-            temp = &(g->playertwo);
-        }else if(getWhoseTurn == UNI_C){
-            temp = &(g->playerthree);
-    else if(a.Actioncode == BUILD_CAMPUS || a.Actioncode == OBTAIN_ARC){
-        int temp = 0;
-        if(getWhoseTurn(g) == UNI_A){
-            temp = g->playerone;
-        }else if(getWhoseTurn(g) == UNI_B){
-            temp = g->playertwo;
-        }else if(getWhoseTurn(g) == UNI_C){
-            temp = g->playerthree;
-        }
-
-        if(temp->students[1] >= 1 && temp->students[2] >= 1 && temp->students[3] >= 1 && temp->students[4] >=1){
-            bool == TRUE;
-        }
-    }
-
-    if(a.actionCode == BUILD_GO8){
-        player * temp;
-        if(getWhoseTurn == UNI_A){
-            temp = &(g->playerone);
-        }else if(getWhoseTurn == UNI_B){
-            temp = &(g->playertwo);
-        }else if(getWhoseTurn == UNI_C){
-            temp = &(g->playerthree);
-    } else if(a.Actioncode == BUILD_GO8){
-        int temp = 0;
-        if(getWhoseTurn(g) == UNI_A){
-            temp = g->playerone;
-        } else if(getWhoseTurn(g) == UNI_B){
-            temp = g->playertwo;
-        } else if(getWhoseTurn(g) == UNI_C){
-            temp = g->playerthree;
-        }
-
-        if(temp.MJ >= 2 && temp.MS >=3){
-            bool == TRUE;
-        }
-    } else if(a.Actioncode == OBTAIN_PUBLICATION || a.Actioncode == OBTAIN_IP_PATENT){
-        int temp = 0;
-        if(getWhoseTurn(g) == UNI_A){
-            temp = g->playerone;
-        } else if(getWhoseTurn(g) == UNI_B){
-            temp = g->playertwo;
-        } else if(getWhoseTurn(g) == UNI_C){
-            temp = g->playerthree;
-        }
-
-        if(temp.MJ >= 1 && temp.MTV >=1 && temp.MMONEY >= 1){
-            bool == TRUE;
-        }
-    } else if(a.Actioncode == RETRAIN_STUDENTS){
-        if(getWhoseTurn(g)(g) == UNI_A){
-            temp = g->playerone;
-        } else if(getWhoseTurn(g) == UNI_B){
-            temp = g->playertwo;
-        } else if(getWhoseTurn(g) == UNI_C){
-            temp = g->playerthree;
-        }
-        
-        if (a.disciplineFrom = STUDENT_BPS){
-            if(/*Specific player has retraining centre */){
-                if(temp.BPS>=2){
-                    bool == TRUE;
-                }
-            }else{
-                if(temp.BPS >=3){
-                    bool == TRUE;
-                }
-            }
-        }else if (a.disciplineFrom = STUDENT_BQN){
-            if(/*Specific player has retraining centre */){
-                if(temp.BQN>=2){
-                    bool == TRUE;
-                }
-            }else{
-                if(temp.BQN >=3){
-                    bool == TRUE;
-                }
-            }
-        }else if (a.disciplineFrom = STUDENT_MJ){
-            if(/*Specific player has retraining centre */){
-                if(temp.MJ>=2){
-                    bool == TRUE;
-                }
-            }else{
-                if(temp.MJ >=3){
-                    bool == TRUE;
-                }
-            }
-        }else if (a.disciplineFrom = STUDENT_MTV){
-            if(/*Specific player has retraining centre */){
-                if(temp.MTV>=2){
-                    bool == TRUE;
-                }
-            }else{
-                if(temp.MTV >=3){
-                    bool == TRUE;
-                }
-            }
-        }else if (a.disciplineFrom = STUDENT_MMONEY){
-            if(/*Specific player has retraining centre */){
-                if(temp.MMONEY>=2){
-                    bool == TRUE;
-                }
-            }else{
-                if(temp.MMONEY >=3){
-                    bool == TRUE;
-                }
-            }
-        }
-    }
-}
 
 int getKPIpoints(Game g, int player){
     int KPI = 0;
@@ -887,48 +757,26 @@ int getPublications (Game g, int player){
 
 int getStudents (Game g, int player, int discipline){
     int studentnum = 0;
+    player* temp;
     if (player == UNI_A){
-        if (discipline == STUDENT_THD) {
-            studentnum = g->playerone.THD;
-        } else if (discipline == STUDENT_BPS){
-            studentnum = g->playerone.BPS;
-        } else if (discipline == STUDENT_BQN) {
-            studentnum = g->playerone.BQN;
-        } else if (discipline == STUDENT_MJ) {
-            studentnum = g->playerone.MJ;
-        } else if (discipline == STUDENT_MTV) {
-            studentnum = g->playerone.MTV;
-        } else if (discipline == STUDENT_MMONEY) {
-            studentnum = g->playerone.MMONEY;
-        }
+        temp = &(g->playerone);
     } else if (player == UNI_B){
-        if (discipline == STUDENT_THD) {
-            studentnum = g->playertwo.THD;
-        } else if (discipline == STUDENT_BPS){
-            studentnum = g->playertwo.BPS;
-        } else if (discipline == STUDENT_BQN) {
-            studentnum = g->playertwo.BQN;
-        } else if (discipline == STUDENT_MJ) {
-            studentnum = g->playertwo.MJ;
-        } else if (discipline == STUDENT_MTV) {
-            studentnum = g->playertwo.MTV;
-        } else if (discipline == STUDENT_MMONEY) {
-            studentnum = g->playertwo.MMONEY;
-        }
-    } else if (player == UNI_C){
-        if (discipline == STUDENT_THD) {
-            studentnum = g->playerthree.THD;
-        } else if (discipline == STUDENT_BPS){
-            studentnum = g->playerthree.BPS;
-        } else if (discipline == STUDENT_BQN) {
-            studentnum = g->playerthree.BQN;
-        } else if (discipline == STUDENT_MJ) {
-            studentnum = g->playerthree.MJ;
-        } else if (discipline == STUDENT_MTV) {
-            studentnum = g->playerthree.MTV;
-        } else if (discipline == STUDENT_MMONEY) {
-            studentnum = g->playerthree.MMONEY;
-        }
+        temp = &(g->playertwo);
+    } else if (player == UNI_B){
+        temp = &(g->playerthree);
+    }
+    if (discipline == STUDENT_THD) {
+        studentnum = temp->students[0];
+    } else if (discipline == STUDENT_BPS){
+        studentnum = temp->students[0];
+    } else if (discipline == STUDENT_BQN) {
+        studentnum = temp->students[0];
+    } else if (discipline == STUDENT_MJ) {
+        studentnum = temp->students[0];
+    } else if (discipline == STUDENT_MTV) {
+        studentnum = temp->students[0];
+    } else if (discipline == STUDENT_MMONEY) {
+        studentnum = temp->students[0];
     }
     return studentnum;
 }
@@ -943,18 +791,16 @@ int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
     } else if (player == UNI_B){
         temp = &(g->playerthree);
     }
-    } else if (player == UNI_C) {
-        if (disciplineFrom == STUDENT_BPS){
-           exchangeRate =  temp->retrain_BPS;
-        } else if (disciplineFrom == STUDENT_BQN) {
-            exchangeRate = temp->retrain_BQN;
-        } else if (disciplineFrom == STUDENT_MJ) {
-            exchangeRate = temp->retrain_MJ;
-        } else if (disciplineFrom == STUDENT_MTV) {
-            exchangeRate = temp->retrain_MTV;
-        } else if (disciplineFrom == STUDENT_MMONEY) {
-            exchangeRate = temp->retrain_MMONEY;
-        }
+    if (disciplineFrom == STUDENT_BPS){
+        exchangeRate =  temp->retrain_BPS;
+    } else if (disciplineFrom == STUDENT_BQN) {
+        exchangeRate = temp->retrain_BQN;
+    } else if (disciplineFrom == STUDENT_MJ) {
+        exchangeRate = temp->retrain_MJ;
+    } else if (disciplineFrom == STUDENT_MTV) {
+        exchangeRate = temp->retrain_MTV;
+    } else if (disciplineFrom == STUDENT_MMONEY) {
+        exchangeRate = temp->retrain_MMONEY;
     }
     return exchangeRate;
 }
