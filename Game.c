@@ -43,23 +43,22 @@ typedef struct _player {
     numberof retrain_MJ;
     numberof retrain_MTV;
     numberof retrain_MMONEY;
-} player;
+} Player;
 typedef struct _game {
     int playerTurn;
-    player playerone;
-    player playertwo;
-    player playerthree;
+    Player playerone;
+    Player playertwo;
+    Player playerthree;
     board gameboard;
     numberof GOE;
     unsigned char mostArc;
     unsigned char mostPub;
     int currentTurn;
-
     int dice[19];
     int disciplines[19];
+    int ARCsCreated;
+    int pubsCreated;
 
-    int pubsCreated; // To count pubs created for getMostPublications
-    int ARCsCreated; // same as above but for ARCs.
 } game;
 
 // Here are the movement functions written by Inura
@@ -275,7 +274,7 @@ static void studentAtRegion(Game g, int diceValue){
 }
 //These are the prototypes for the functions that we have made for the project
 static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN, int MJ, int MTV, int MMONEY){
-   player *temp;
+   Player *temp;
    int gamer = getWhoseTurn(g);
 
    /* NOTE: We can use getWhoseTurn Function to determine whose turn [Michael] (commented IFs below)
@@ -311,7 +310,7 @@ static void changeStudents (Game g, int playerNumber, int ThD, int BPS, int BQN,
 
 
 static void changeKPI (Game g, int KPI){
-   player *temp;
+   Player *temp;
    if (getWhoseTurn(g) == UNI_A){
       temp = &(g->playerone);
    } else if (getWhoseTurn(g) == UNI_B){
@@ -428,9 +427,26 @@ static void generateStudents (Game g, int start, int column, int studentType){
 
 
 Game newGame (int discipline[], int dice[]){
-    Game g /*= NULL*/;
-    while ( g != NULL){
-       // g = (*game) malloc (sizeof game);
+    Game g = (Game) malloc(sizeof(Game));
+    int counter = 0;
+    if( g != NULL){
+        g->playerTurn = NO_ONE;
+        g->GOE = 0;
+        g->mostArc = NO_ONE;
+        g->mostPub = NO_ONE;
+        g->currentTurn = -1;
+
+        counter++;
+        while ( counter < 19 ){
+            g->dice[counter] = dice[counter];
+            counter ++;
+        }
+
+        counter = 0;
+        while (counter < 19){
+            g->disciplines[counter] = discipline[counter];
+            counter++;
+        }
     }
     return g;
 }
@@ -549,7 +565,7 @@ void makeAction (Game g, action a){
 }
 
 void throwDice (Game g, int diceScore){
-
+    studentAtRegion(g, diceScore);
    /*int students[19] = {-1};
    int RegionID = 0;
    int count = 0;
@@ -620,24 +636,19 @@ int getDiceValue (Game g, int regionID){
 
 int getMostARCs(Game g){
     int ID = NO_ONE;
-    if(g->ARCsCreated>0){
         if((g->playerone.Arc > g->playertwo.Arc) && (g->playerone.Arc > g->playerthree.Arc)){
             ID = UNI_A;
-        }
-        else if((g->playertwo.Arc > g->playerone.Arc) && (g->playertwo.Arc > g->playerthree.Arc)){
+        } else if((g->playertwo.Arc > g->playerone.Arc) && (g->playertwo.Arc > g->playerthree.Arc)){
             ID = UNI_B;
-        }
-        else if((g->playerone.Arc > g->playertwo.Arc) && (g->playerone.Arc > g->playerthree.Arc)){
+        } else if((g->playerone.Arc > g->playertwo.Arc) && (g->playerone.Arc > g->playerthree.Arc)){
             ID = UNI_C;
         }
-    }
     return ID;
 
 }
 
 int getMostPublications(Game g){
     int ID = NO_ONE;
-    if(g->pubsCreated>0){
         if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
             ID = UNI_A;
         } else if((g->playertwo.pubs > g->playerone.pubs) && (g->playertwo.pubs > g->playerthree.pubs)){
@@ -645,7 +656,6 @@ int getMostPublications(Game g){
         } else if((g->playerone.pubs > g->playertwo.pubs) && (g->playerone.pubs > g->playerthree.pubs)){
             ID = UNI_C;
         }
-    }
     return ID;
 }
 
@@ -681,6 +691,9 @@ int getARC (Game g, path pathToEdge){
     return arc;
 }
 
+int isLegalAction (Game g, action a){
+    return FALSE;
+}
 
 
 int getKPIpoints(Game g, int player){
@@ -756,8 +769,8 @@ int getPublications (Game g, int player){
 }
 
 int getStudents (Game g, int player, int discipline){
+    Player* temp;
     int studentnum = 0;
-    player* temp;
     if (player == UNI_A){
         temp = &(g->playerone);
     } else if (player == UNI_B){
@@ -783,7 +796,7 @@ int getStudents (Game g, int player, int discipline){
 
 int getExchangeRate (Game g, int player, int disciplineFrom, int disciplineTo){
     int exchangeRate = 0;
-    player * temp = NULL;
+    Player * temp = NULL;
     if (player == UNI_A){
         temp = &(g->playerone);
     } else if (player == UNI_B){
