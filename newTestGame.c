@@ -33,19 +33,19 @@ int main (int argc, char *argv[]) {
    int dice[NUM_REGIONS] = DEFAULT_DICE;
 
    Game g = newGame(disciplines, dice);
-   
+
    action p1;
    p1.actionCode = PASS;
    action p2;
    p2.actionCode = PASS;
    action p3;
    p3.actionCode = PASS;
-   
+
 
    testGameState0(g);
-   throwDice(g, 4); 
+   throwDice(g, 4);
    assert(isLegalAction(g,p1)==TRUE);
-   makeAction(g, p1); 
+   makeAction(g, p1);
    throwDice(g, 5);
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
@@ -54,7 +54,7 @@ int main (int argc, char *argv[]) {
    makeAction(g, p3);
    throwDice(g, 8);
    testGameState1(g);
-   
+
    p1.actionCode = OBTAIN_ARC;
    strncpy(p1.destination, "R", PATH_LIMIT);
    assert(isLegalAction(g,p1)==TRUE);
@@ -70,7 +70,7 @@ int main (int argc, char *argv[]) {
    makeAction(g, p1);
    throwDice(g, 9);
 
-   
+
    p2.actionCode = OBTAIN_ARC;
    strncpy(p2.destination, "RRLRLL", PATH_LIMIT);
    assert(isLegalAction(g,p2)==TRUE);
@@ -86,7 +86,7 @@ int main (int argc, char *argv[]) {
    makeAction(g, p2);
    throwDice(g, 7);
 
-   
+
    p3.actionCode = OBTAIN_ARC;
    strncpy(p3.destination, "LRLRLB", PATH_LIMIT);
    assert(isLegalAction(g,p3)==TRUE);
@@ -101,19 +101,19 @@ int main (int argc, char *argv[]) {
    assert(isLegalAction(g,p3)==TRUE);
    makeAction(g, p3);
    throwDice(g, 8);
-   
+
    testGameState2(g);
-   
+
    p1.actionCode=PASS;
    assert(isLegalAction(g,p1)==TRUE);
    makeAction(g, p1);
    throwDice(g, 2);
-   
+
    p2.actionCode=PASS;
    assert(isLegalAction(g,p2)==TRUE);
    makeAction(g, p2);
    throwDice(g, 2);
-   
+
    p3.actionCode = RETRAIN_STUDENTS;
    strncpy(p3.destination, "\0", PATH_LIMIT);
    p3.disciplineFrom = STUDENT_MJ;
@@ -126,7 +126,7 @@ int main (int argc, char *argv[]) {
    throwDice(g, 2);
 
    testGameState3(g);
-   
+
    int counter=0;
    while (counter<12){
       assert(getDiscipline(g,counter)==disciplines[counter]);
@@ -134,7 +134,6 @@ int main (int argc, char *argv[]) {
       counter++;
    }
 
-   counter = 0;
 
    while (counter<12){
       assert(getDiceValue(g,counter)==dice[counter]);
@@ -142,7 +141,14 @@ int main (int argc, char *argv[]) {
       counter++;
    }
 
-   /*disposeGame(g);        
+   counter = 10;
+   while( counter < 10000){
+      throwDice(g,2);
+      printf("%d",getTurnNumber(g));
+      assert(getTurnNumber(g)== counter);
+      counter++;
+   }
+   /*disposeGame(g);
    assert(g == NULL);*/
    printf("All tests passed!\n You are awesome!!\n");
 
@@ -152,9 +158,9 @@ int main (int argc, char *argv[]) {
 //tests the state of the game at Terra Nullis
 void testGameState0(Game g){
 
-   assert((getMostARCs(g)) == NO_ONE);   
+   assert((getMostARCs(g)) == NO_ONE);
    assert((getWhoseTurn(g)) == NO_ONE);
-   
+
    int count = 0;
    char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
@@ -172,10 +178,10 @@ void testGameState0(Game g){
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
          printf("testing vertex %d\n", count);
-      } 
+      }
       count++;
    }
-   
+
    count = 0;
    char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
@@ -185,7 +191,7 @@ void testGameState0(Game g){
       printf("testing arc %d\n", count);
       count++;
    }
-   
+
    assert(getMostPublications(g) == NO_ONE);
    assert(getTurnNumber(g) == TERRA_NULLIUS);
 
@@ -206,7 +212,7 @@ void testPlayerState0 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 2);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -219,7 +225,7 @@ void testPlayerState0 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -229,16 +235,16 @@ void testPlayerState0 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   }   
+   }
    printf("test player state 0 passed!\n");
 
 }
 
 void testGameState1(Game g){
-   
-   assert((getMostARCs(g)) == NO_ONE);   
+
+   assert((getMostARCs(g)) == NO_ONE);
    assert((getWhoseTurn(g)) == UNI_A);
-   
+
    int count = 0;
    char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
@@ -256,10 +262,10 @@ void testGameState1(Game g){
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
          printf("testing vertex %d\n", count);
-      } 
+      }
       count++;
    }
-   
+
    count = 0;
    char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
@@ -269,7 +275,7 @@ void testGameState1(Game g){
       printf("testing arc %d\n", count);
       count++;
    }
-   
+
    assert(getMostPublications(g) == NO_ONE);
    assert(getTurnNumber(g) == 3);
 
@@ -295,7 +301,7 @@ void testPlayer1State1 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 2);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -308,7 +314,7 @@ void testPlayer1State1 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -318,7 +324,7 @@ void testPlayer1State1 (Game g, int playerNumber){
       }
       disciplineTo = STUDENT_BPS;
       disciplineFrom++;
-   }   
+   }
    printf("test player 1 state 1 passed!\n");
 
 }
@@ -331,7 +337,7 @@ void testPlayer2State1 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 2);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -344,7 +350,7 @@ void testPlayer2State1 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -367,7 +373,7 @@ void testPlayer3State1 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 2);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -380,7 +386,7 @@ void testPlayer3State1 (Game g, int playerNumber){
    assert (numStudents == 2);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -390,16 +396,16 @@ void testPlayer3State1 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   } 
+   }
    printf("test player 3 state 1 passed!\n");
 
 }
 
 void testGameState2(Game g){
 
-   assert(getMostARCs(g) == UNI_C);   
+   assert(getMostARCs(g) == UNI_C);
    assert(getWhoseTurn(g) == UNI_A);
-   
+
    int count = 0;
    char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
@@ -417,10 +423,10 @@ void testGameState2(Game g){
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
          printf("testing vertex %d\n", count);
-      } 
+      }
       count++;
    }
-   
+
    count = 0;
    char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
@@ -439,10 +445,10 @@ void testGameState2(Game g){
       } else {
          assert(getARC(g, tempPath2) == VACANT_ARC);
          printf("testing arc %d\n", count);
-      } 
+      }
       count++;
    }
-   
+
    assert(getMostPublications(g) == NO_ONE);
    assert(getTurnNumber(g) == 6);
 
@@ -468,7 +474,7 @@ void testPlayer1State2 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 3);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -481,7 +487,7 @@ void testPlayer1State2 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -491,7 +497,7 @@ void testPlayer1State2 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   } 
+   }
    printf("test player 1 state 2 passed!\n");
 
 }
@@ -504,7 +510,7 @@ void testPlayer2State2 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 3);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -517,7 +523,7 @@ void testPlayer2State2 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -527,7 +533,7 @@ void testPlayer2State2 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   } 
+   }
    printf("test player 2 state 2 passed!\n");
 
 }
@@ -540,7 +546,7 @@ void testPlayer3State2 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 2);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 3);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -553,7 +559,7 @@ void testPlayer3State2 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -563,16 +569,16 @@ void testPlayer3State2 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   } 
+   }
    printf("test player 3 state 2 passed!\n");
 
 }
 
 void testGameState3(Game g){
 
-   assert(getMostARCs(g) == UNI_C);   
+   assert(getMostARCs(g) == UNI_C);
    assert(getWhoseTurn(g) == UNI_A);
-   
+
    int count = 0;
    char tempPath1[91] = {'\0'};
    char workingPath1[90] = WORKING_PATH;
@@ -590,10 +596,10 @@ void testGameState3(Game g){
       } else {
          assert(getCampus(g, tempPath1) == VACANT_VERTEX);
          printf("testing vertex %d\n", count);
-      } 
+      }
       count++;
    }
-   
+
    count = 0;
    char tempPath2[91] = {'\0'};
    char workingPath2[90] = WORKING_PATH;
@@ -612,10 +618,10 @@ void testGameState3(Game g){
       } else {
          assert(getARC(g, tempPath2) == VACANT_ARC);
          printf("testing arc %d\n", count);
-      } 
+      }
       count++;
    }
-   
+
    assert(getMostPublications(g) == NO_ONE);
    assert(getTurnNumber(g) == 9);
 
@@ -641,7 +647,7 @@ void testPlayer1State3 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 3);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -654,7 +660,7 @@ void testPlayer1State3 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -664,7 +670,7 @@ void testPlayer1State3 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   } 
+   }
    printf("test player 1 state 3 passed!\n");
 
 }
@@ -677,7 +683,7 @@ void testPlayer2State3 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 3);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -690,7 +696,7 @@ void testPlayer2State3 (Game g, int playerNumber){
    assert (numStudents == 0);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 0);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -700,7 +706,7 @@ void testPlayer2State3 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   }   
+   }
    printf("test player 2 state 3 passed!\n");
 
 }
@@ -713,7 +719,7 @@ void testPlayer3State3 (Game g, int playerNumber){
    assert(getCampuses(g, playerNumber) == 2);
    assert(getIPs(g, playerNumber) == 0);
    assert(getPublications(g, playerNumber) == 0);
-   
+
    int numStudents = getStudents(g, playerNumber, STUDENT_THD);
    assert (numStudents == 3);
    numStudents = getStudents(g, playerNumber, STUDENT_BPS);
@@ -726,7 +732,7 @@ void testPlayer3State3 (Game g, int playerNumber){
    assert (numStudents == 1);
    numStudents = getStudents(g, playerNumber, STUDENT_MMONEY);
    assert (numStudents == 1);
-   
+
    int disciplineFrom = STUDENT_BPS;
    int disciplineTo = STUDENT_BPS;
    while (disciplineFrom <= STUDENT_MMONEY){
@@ -736,7 +742,7 @@ void testPlayer3State3 (Game g, int playerNumber){
       }
    disciplineTo = STUDENT_BPS;
    disciplineFrom++;
-   }   
+   }
    printf("test player 3 state 3 passed!\n");
 
 }
