@@ -436,16 +436,44 @@ Game newGame (int discipline[], int dice[]){
         g->mostPub = NO_ONE;
         g->currentTurn = -1;
 
+
+        while(counter < 3){
+            Player* temp;
+            if (counter == 0){
+                temp = &(g->playerone);
+            } else if (counter == 1){
+                temp = &(g->playertwo);
+            } else if (counter == 2){
+            temp = &(g->playerthree);
+            }
+            temp->KPI = 20;
+            temp->Arc=0;
+            temp->pubs=0;
+            temp->campuses=2;
+            temp->GOEs=0;
+            temp->ips=0;
+            temp->students[0] = 0;
+            temp->students[1] = 3;
+            temp->students[2] = 3;
+            temp->students[3] = 1;
+            temp->students[4] = 1;
+            temp->students[5] = 1;
+            temp->retrain_BPS=3;
+            temp->retrain_BQN=3;
+            temp->retrain_MJ=3;
+            temp->retrain_MTV=3;
+            temp->retrain_MMONEY=3;
+            counter++;
+        }
+        counter = 0;
         while ( counter < 19 ){
             g->dice[counter] = dice[counter];
-            printf("%d",g->dice[counter]);
             counter ++;
         }
 
         counter = 0;
         while (counter < 19){
             g->disciplines[counter] = discipline[counter];
-            printf("%d",g->disciplines[counter]);
             counter++;
         }
     }
@@ -567,33 +595,28 @@ void makeAction (Game g, action a){
 
 void throwDice (Game g, int diceScore){
     studentAtRegion(g, diceScore);
-   /*int students[19] = {-1};
-   int RegionID = 0;
-   int count = 0;
+    //Below lies an attempt to hard code the retraining centres
+    /*Player* temp;
+    if (player == UNI_A){
+        temp = &(g->playerone);
+    } else if (player == UNI_B){
+        temp = &(g->playertwo);
+    } else if (player == UNI_C){
+        temp = &(g->playerthree);
+    }
+    int campus;
+    int vertcounter = 0;
+    int horicounter = 0;
+    while (horicounter < 21){
+        while(vertcounter < 11){
+            campus = g->gameboard.gameboard[vertcounter][horicounter];
+            if((vertcounter == 2)||(vertcounter == 4)){
+                if(horicounter == 2){
 
-   while (regionID < 19) {
-      if(g->dice[regionID] == diceValue) {
-         students[count] = regionID;
-         count++;
-      }
-      regionID++;
-   }
-
-   count = 0;
-   IDcounter = 0
-   while (students[count] != -1){
-      while(IDcounter < 19);
-         if(student[count] == IDcounter){
-            //give co-ordinates around regionID[IDcounter] -> meaning in each region
-            //using 2D array to store co-ordinates in each region or linked lists
-            //check if theres duplicate co-ordinates and any campuses or GO8 in them
-            //give students discipline[student[count]] if theres a campus
-            //give 2 instead of 1 if GO8
-         }
-         IDcounter++;
-      }
-      count++;
-   }*/
+                }
+            }
+        }
+    }*/
    g->currentTurn++;
 }
 
@@ -644,6 +667,7 @@ int getMostARCs(Game g){
         } else if((g->playerone.Arc > g->playertwo.Arc) && (g->playerone.Arc > g->playerthree.Arc)){
             ID = UNI_C;
         }
+        printf("The highest arcs is %d",ID);
     return ID;
 
 }
