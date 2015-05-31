@@ -1,5 +1,6 @@
 int isLegalAction (Game g, action a){
     int bool = FALSE;
+    int uni = getWhoseTurn(g);
     //legalmovement(moveDecoder (a.destination,char type),
     //This is making temp equal to the player
     player *temp;
@@ -13,8 +14,8 @@ int isLegalAction (Game g, action a){
 
     //This will encode for the spinoffs
     if(a.actionCode == START_SPINOFF){
-        if((temp->student[3] > 0)&&(temp->student[4] > 0 )){
-            if(temp->student[4] > 0 ){
+        if((temp->students[3] >= 1)&&(temp->students[4] >= 1)){
+            if(temp->students[4] >= 1){
                 bool = TRUE;
             }
         }
@@ -32,9 +33,47 @@ int isLegalAction (Game g, action a){
     }
 
     if(a.actionCode == BUILD_GO8){
-
+        if((temp->students[3] >=2 )&&(temp->students[5] >= 3 )){
+            if((getCampus (g,a.destination)== uni)){
+                bool=TRUE;
+            }
+        }
     }
 
-    if
+    if(a.actionCode == OBTAIN_ARC){
+        if((temp->students[1]>= 1)&& (temp->students[2] >=1)){
+            if(getARC(g,a.destination))== VACANT_ARC){
+                bool = TRUE;
+            }
+
+        }
+    }
+
+    if(a.actionCode == RETRAIN_STUDENTS){
+
+        if(a.disciplineFrom ==  STUDENT_BPS){
+            if(temp->students[1] >= temp->retrain_BPS){
+                bool = TRUE;
+            }
+        }else if(a.disciplineFrom == STUDENT_BQN){
+            if(temp->students[2] >= temp->retrain_BQN){
+                bool = TRUE;
+            }
+        }else if(a.disciplineFrom == STUDENT_MJ){
+            if(temp->students[3] >= temp->retrain_MJ){
+                bool = TRUE;
+            }
+        }else if(a.disciplineFrom == STUDENT_MTV){
+            if(temp->students[4] >= temp->retrain_MTV){
+                bool = TRUE;
+            }
+        }else if(a.disciplineFrom == STUDENT_MMONEY){
+            if(temp->students[5] >= temp->retrain_MMONEY){
+                bool = TRUE;
+            }
+
+        }
+    }
+
     return bool;
 }
